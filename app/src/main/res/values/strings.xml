@@ -1,5 +1,5 @@
 <resources>
-    <string-array name="tabLayput_array">
+    <string-array name="tabLayout_array">
         <item>Playlists</item>
         <item>Songs</item>
         <item>Albums</item>
