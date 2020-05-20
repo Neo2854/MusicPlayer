@@ -4,4 +4,5 @@
         <item>Songs</item>
         <item>Albums</item>
     </string-array>
+    <string name="app_name">MusicPlayer</string>
 </resources>
