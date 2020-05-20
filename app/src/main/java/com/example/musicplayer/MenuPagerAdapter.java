@@ -37,6 +37,7 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
+        /*
         switch (position){
             case 0:
                 return "Playlists";
@@ -45,7 +46,11 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return "Albums";
             default:
+
+
                 return null;
         }
+        */
+         return null;
     }
 }
