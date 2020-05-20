@@ -85,11 +85,6 @@ public class SongsFragment extends Fragment {
                 return o1.getTitle().compareTo(o2.getTitle());
             }
         });
-
-        for(int i=0;i<1000;i++){
-            titlesList.add(Integer.toString(i));
-        }
-
     }
 
     private void populateSongs(){
