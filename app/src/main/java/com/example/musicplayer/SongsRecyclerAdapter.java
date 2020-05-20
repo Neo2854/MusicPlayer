@@ -23,7 +23,7 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
     @Override
     public SongsRecyclerAdapter.SongViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater songInflater = LayoutInflater.from(parent.getContext());
-        View songView = songInflater.inflate(null,parent,false);
+        View songView = songInflater.inflate(R.layout.songs_recyclerview,parent,false);
         return new SongViewAdapter(songView);
     }
 
@@ -40,8 +40,11 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
 
     public class SongViewAdapter extends RecyclerView.ViewHolder {
         private TextView tv;
+
         public SongViewAdapter(@NonNull View itemView) {
             super(itemView);
+
+            tv = itemView.findViewById(R.id.textView);
         }
     }
 }

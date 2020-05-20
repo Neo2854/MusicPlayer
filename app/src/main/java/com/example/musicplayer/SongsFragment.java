@@ -29,6 +29,10 @@ public class SongsFragment extends Fragment {
     private View fragmentView;
     private RecyclerView songsRecyclerView;
     private SongsRecyclerAdapter songsRecyclerAdapter;
+    private ContentResolver musicResolver;
+    private Cursor musicCursor;
+
+    private Uri musicUri;
 
     @Nullable
     @Override
@@ -42,17 +46,22 @@ public class SongsFragment extends Fragment {
         return fragmentView;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        musicCursor.close();
+    }
+
     private void Initialize(){
-        songsRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.recyclerView);
+        songsRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.songsRecyclerView);
         songsList         = new ArrayList<>();
         titlesList        = new ArrayList<>();
+
+        musicResolver = getActivity().getContentResolver();
+        musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
     }
 
     private void createSongsList(){
-        ContentResolver musicResolver = getActivity().getContentResolver();
-        Uri musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor = null;
-
         if(musicResolver != null){
             musicCursor = musicResolver.query(musicUri,null,null,null,null);
         }
