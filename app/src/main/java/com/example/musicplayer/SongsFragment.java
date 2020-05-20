@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.net.URI;
@@ -21,10 +22,13 @@ import java.util.Comparator;
 
 public class SongsFragment extends Fragment {
 
+    private ArrayList<String> titlesList;
+
     private ArrayList<Song> songsList;
 
     private View fragmentView;
     private RecyclerView songsRecyclerView;
+    private SongsRecyclerAdapter songsRecyclerAdapter;
 
     @Nullable
     @Override
@@ -33,6 +37,7 @@ public class SongsFragment extends Fragment {
 
         Initialize();
         createSongsList();
+        populateSongs();
 
         return fragmentView;
     }
@@ -40,6 +45,7 @@ public class SongsFragment extends Fragment {
     private void Initialize(){
         songsRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.recyclerView);
         songsList         = new ArrayList<>();
+        titlesList        = new ArrayList<>();
     }
 
     private void createSongsList(){
@@ -60,6 +66,7 @@ public class SongsFragment extends Fragment {
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
                 songsList.add(new Song(id,title,artist));
+                titlesList.add(title);
             }while (musicCursor.moveToNext());
         }
 
@@ -70,5 +77,11 @@ public class SongsFragment extends Fragment {
             }
         });
 
+    }
+
+    private void populateSongs(){
+        songsRecyclerAdapter = new SongsRecyclerAdapter(titlesList);
+        songsRecyclerView.setAdapter(songsRecyclerAdapter);
+        songsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }
