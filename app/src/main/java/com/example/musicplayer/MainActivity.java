@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Initialize(){
-        viewPager = (ViewPager) findViewById(R.id.ViewPager);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         viewPager.setAdapter(new MenuPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));

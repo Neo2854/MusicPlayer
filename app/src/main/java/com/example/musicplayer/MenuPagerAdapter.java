@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MenuPagerAdapter extends FragmentPagerAdapter {
 
-    private int menuItemsCount = 3;
+    private final int menuItemsCount = 3;
 
     public MenuPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
