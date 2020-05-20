@@ -53,7 +53,7 @@ public class SongsFragment extends Fragment {
     }
 
     private void Initialize(){
-        songsRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.songsRecyclerView);
+        songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);
         songsList         = new ArrayList<>();
         titlesList        = new ArrayList<>();
 
@@ -85,6 +85,10 @@ public class SongsFragment extends Fragment {
                 return o1.getTitle().compareTo(o2.getTitle());
             }
         });
+
+        for(int i=0;i<1000;i++){
+            titlesList.add(Integer.toString(i));
+        }
 
     }
 
