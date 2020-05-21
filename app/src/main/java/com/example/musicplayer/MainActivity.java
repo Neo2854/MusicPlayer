@@ -38,7 +38,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        if(arePermissionsGranted()){
+            Initialize();
+        }
+        else{
+            requestStoragePermissions();
+        }
     }
 
     private boolean arePermissionsGranted(){
@@ -48,11 +53,11 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             }
+            return true;
         }
         else {
             return true;
         }
-        return true;
     }
 
     private void requestStoragePermissions(){
