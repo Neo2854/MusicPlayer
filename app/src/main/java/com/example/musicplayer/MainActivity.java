@@ -84,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 requestPermissions(PERMISSIONS,STORAGE_PERMISSION_CODE);
-                if(!arePermissionsGranted()){
-                    requestPermissions(PERMISSIONS,STORAGE_PERMISSION_CODE);
-                }
             }
         }
     }
@@ -113,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 Toast.makeText(this,"Permissions are needed",Toast.LENGTH_SHORT).show();
+                requestStoragePermissions();
             }
         }
         else {
