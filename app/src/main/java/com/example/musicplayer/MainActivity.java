@@ -73,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                             }
-                        });
+                        })
+                        .create()
+                        .show();
             }
             else {
                 requestPermissions(PERMISSIONS,STORAGE_PERMISSION_CODE);
