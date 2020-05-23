@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,8 +22,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class SongsFragment extends Fragment {
-
-    private ArrayList<String> titlesList;
 
     private ArrayList<Song> songsList;
 
@@ -42,6 +41,7 @@ public class SongsFragment extends Fragment {
         Initialize();
         createSongsList();
         populateSongs();
+        setRecyclerViewListener();
 
         return fragmentView;
     }
@@ -55,7 +55,6 @@ public class SongsFragment extends Fragment {
     private void Initialize(){
         songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);
         songsList         = new ArrayList<>();
-        titlesList        = new ArrayList<>();
 
         songsRecyclerView.setHasFixedSize(true);
 
@@ -77,7 +76,6 @@ public class SongsFragment extends Fragment {
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
                 songsList.add(new Song(id,title,artist));
-                titlesList.add(title);
             }while (musicCursor.moveToNext());
         }
 
@@ -90,8 +88,21 @@ public class SongsFragment extends Fragment {
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(titlesList);
+        songsRecyclerAdapter = new SongsRecyclerAdapter(songsList);
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    private void make(String s){
+        Toast.makeText(getContext(),s,Toast.LENGTH_SHORT).show();
+    }
+
+    private void setRecyclerViewListener(){
+        songsRecyclerAdapter.setOnItemClickListener(new SongsRecyclerAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                make(songsList.get(position).getTitle());
+            }
+        });
     }
 }

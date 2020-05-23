@@ -1,5 +1,8 @@
 package com.example.musicplayer;
 
+import android.content.Context;
+import android.widget.Toast;
+
 public class Song {
 
     private long id;
@@ -23,4 +26,5 @@ public class Song {
     public String getArtist() {
         return artist;
     }
+
 }
