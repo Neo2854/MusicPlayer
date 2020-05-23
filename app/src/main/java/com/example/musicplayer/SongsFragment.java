@@ -1,6 +1,7 @@
 package com.example.musicplayer;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -93,15 +94,12 @@ public class SongsFragment extends Fragment {
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void make(String s){
-        Toast.makeText(getContext(),s,Toast.LENGTH_SHORT).show();
-    }
-
     private void setRecyclerViewListener(){
         songsRecyclerAdapter.setOnItemClickListener(new SongsRecyclerAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                make(songsList.get(position).getTitle());
+                Intent intent = new Intent(getContext(),Player.class);
+                startActivity(intent);
             }
         });
     }
