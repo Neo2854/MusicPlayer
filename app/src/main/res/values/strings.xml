@@ -5,4 +5,16 @@
         <item>Albums</item>
     </string-array>
     <string name="app_name">MusicPlayer</string>
+    <string name="song_name">songName</string>
+    <string name="_00_00">00:00</string>
+    <string name="image_of_the_song">image of the song</string>
+    <string name="_10_00">00:00</string>
+    <string name="to_pause">To pause</string>
+    <string name="to_go_to_previous_song">To go to previous song</string>
+    <string name="to_go_to_next_song">To go to next song</string>
+    <string name="to_repeat">To repeat</string>
+    <string name="to_open_menu">To open menu</string>
+    <string name="to_add_to_favourites">To add to favourites</string>
+    <string name="to_shuffle">to shuffle</string>
+    <string name="to_collapse">To collapse</string>
 </resources>

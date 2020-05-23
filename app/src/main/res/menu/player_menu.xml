@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item android:title="Add to"
+            android:id="@+id/add_to">
+            <menu>
+                <item android:title="Playlist"
+                    android:id="@+id/playlist"></item>
+                <item android:title="Queue"
+                    android:id="@+id/queue"></item>
+            </menu>
+        </item>
+
+        <item android:title="Go to"
+            android:id="@+id/go_to">
+            <menu>
+                <item android:title="Playlist"
+                    android:id="@+id/playlist_i"></item>
+                <item android:title="Album"
+                    android:id="@+id/album"></item>
+            </menu>
+        </item>
+
+        <item android:title="Edit info"
+            android:id="@+id/edit_info">
+            <menu>
+                <item android:title="Photo"
+                    android:id="@+id/photo"></item>
+                <item android:title="Artist"
+                    android:id="@+id/artist"></item>
+                <item android:title="Song Name"
+                    android:id="@+id/song_name"></item>
+            </menu>
+        </item>
+
+        <item android:title="Delete"
+            android:icon="@drawable/delete_icon"
+            android:id="@+id/delete"></item>
+
+        <item android:title="Share"
+            android:icon="@drawable/share_icon"
+            android:id="@+id/share"></item>
+
+    </group>
+</menu>

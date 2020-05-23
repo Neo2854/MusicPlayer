@@ -45,7 +45,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
-        app:logo="@drawable/menu_icon"
         app:titleMarginStart="40dp"/>
 
 
