@@ -16,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3"
-        app:srcCompat="@android:drawable/divider_horizontal_bright" />
+        app:srcCompat="@android:drawable/divider_horizontal_bright"
+        android:contentDescription="@string/image_of_the_song" />
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -40,7 +41,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/pause_icon" />
+        app:srcCompat="@drawable/pause_icon"
+        android:contentDescription="@string/to_pause" />
 
     <ImageButton
         android:id="@+id/previous"
@@ -52,7 +54,8 @@
         app:layout_constraintEnd_toStartOf="@+id/pause"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/previous_icon" />
+        app:srcCompat="@drawable/previous_icon"
+        android:contentDescription="@string/to_go_to_previous_song" />
 
     <ImageButton
         android:id="@+id/next"
@@ -64,13 +67,15 @@
         app:layout_constraintStart_toEndOf="@+id/pause"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/next_icon" />
+        app:srcCompat="@drawable/next_icon"
+        android:contentDescription="@string/to_go_to_next_song" />
 
     <ImageButton
         android:id="@+id/shuffle"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@color/colorWhite"
+        android:contentDescription="@string/to_shufle"
         android:onClick="shuffle"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toStartOf="@+id/previous"
@@ -88,7 +93,8 @@
         app:layout_constraintStart_toEndOf="@+id/next"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/repeat_icon" />
+        app:srcCompat="@drawable/repeat_icon"
+        android:contentDescription="@string/to_repeat" />
 
     <ImageButton
         android:id="@+id/collapseIcon"
@@ -98,7 +104,8 @@
         android:background="@color/colorWhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/collapse_icon" />
+        app:srcCompat="@drawable/collapse_icon"
+        android:contentDescription="@string/to_collapse" />
 
     <ImageButton
         android:id="@+id/vertical3Dots"
@@ -108,7 +115,8 @@
         android:background="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/vertical_3dots_icon" />
+        app:srcCompat="@drawable/vertical_3dots_icon"
+        android:contentDescription="@string/to_open_menu" />
 
     <ImageButton
         android:id="@+id/favourite"
@@ -120,13 +128,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@drawable/heart_outline_icon" />
+        app:srcCompat="@drawable/heart_outline_icon"
+        android:contentDescription="@string/to_add_to_favourites" />
 
     <TextView
         android:id="@+id/songName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="songName"
+        android:text="@string/song_name"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
@@ -138,7 +147,7 @@
         android:id="@+id/com_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00"
+        android:text="@string/_00_00"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/seekBar"
         app:layout_constraintEnd_toStartOf="@+id/seekBar"
@@ -149,7 +158,7 @@
         android:id="@+id/rem_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00"
+        android:text="@string/_10_00"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
