@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.80" />
+        app:layout_constraintVertical_bias="0.8" />
 
     <ImageButton
         android:id="@+id/pause"
@@ -39,7 +39,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.80"
+        app:layout_constraintVertical_bias="0.8"
         app:srcCompat="@drawable/pause_icon" />
 
     <ImageButton
@@ -51,7 +51,7 @@
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toStartOf="@+id/pause"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.80"
+        app:layout_constraintVertical_bias="0.8"
         app:srcCompat="@drawable/previous_icon" />
 
     <ImageButton
@@ -61,7 +61,6 @@
         android:background="@color/colorWhite"
         android:onClick="next"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
-        app:layout_constraintEnd_toStartOf="@+id/repeat"
         app:layout_constraintStart_toEndOf="@+id/pause"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.8"
@@ -76,7 +75,7 @@
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toStartOf="@+id/previous"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.80"
+        app:layout_constraintVertical_bias="0.8"
         app:srcCompat="@drawable/shuffle_icon" />
 
     <ImageButton
