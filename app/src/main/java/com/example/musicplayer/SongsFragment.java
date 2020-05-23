@@ -57,6 +57,8 @@ public class SongsFragment extends Fragment {
         songsList         = new ArrayList<>();
         titlesList        = new ArrayList<>();
 
+        songsRecyclerView.setHasFixedSize(true);
+
         musicResolver = getActivity().getContentResolver();
         musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
     }
