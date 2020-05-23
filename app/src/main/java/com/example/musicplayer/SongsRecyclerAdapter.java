@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdapter.SongViewHolder> {
 
-    private ArrayList<String> titles;
+    private ArrayList<Song> Songs;
     private onItemClickListener listener;
 
     public interface onItemClickListener{
@@ -24,22 +25,30 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
         this.listener = listener;
     }
 
-    public SongsRecyclerAdapter(ArrayList<String> titles){
-        this.titles   = titles;
+    public SongsRecyclerAdapter(ArrayList<Song> titles){
+        this.Songs   = titles;
     }
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv;
+        private TextView songTv;
+        private TextView artistTv;
+        private ImageView albumIv;
 
         public SongViewHolder(@NonNull View itemView, final onItemClickListener listener) {
             super(itemView);
 
-            tv = itemView.findViewById(R.id.textView);
+            songTv   = itemView.findViewById(R.id.sName);
+            artistTv = itemView.findViewById(R.id.aName);
+            albumIv  = itemView.findViewById(R.id.image);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(listener != null){
-
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
                     }
                 }
             });
@@ -50,18 +59,20 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
     @Override
     public SongsRecyclerAdapter.SongViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater songInflater = LayoutInflater.from(parent.getContext());
-        View songView = songInflater.inflate(R.layout.songs_recyclerview,parent,false);
+        View songView = songInflater.inflate(R.layout.songs_cardview,parent,false);
         return new SongViewHolder(songView,listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SongsRecyclerAdapter.SongViewHolder holder, int position) {
-        holder.tv.setText(titles.get(position));
+        holder.songTv.setText(Songs.get(position).getTitle());
+        holder.artistTv.setText(Songs.get(position).getArtist());
+
     }
 
     @Override
     public int getItemCount() {
-        return titles.size();
+        return Songs.size();
     }
 
 }
