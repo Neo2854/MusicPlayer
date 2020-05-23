@@ -19,6 +19,16 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
         this.titles   = titles;
     }
 
+    public class SongViewAdapter extends RecyclerView.ViewHolder {
+        private TextView tv;
+
+        public SongViewAdapter(@NonNull View itemView) {
+            super(itemView);
+
+            tv = itemView.findViewById(R.id.textView);
+        }
+    }
+
     @NonNull
     @Override
     public SongsRecyclerAdapter.SongViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,7 +40,6 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull SongsRecyclerAdapter.SongViewAdapter holder, int position) {
         holder.tv.setText(titles.get(position));
-
     }
 
     @Override
@@ -38,13 +47,4 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
         return titles.size();
     }
 
-    public class SongViewAdapter extends RecyclerView.ViewHolder {
-        private TextView tv;
-
-        public SongViewAdapter(@NonNull View itemView) {
-            super(itemView);
-
-            tv = itemView.findViewById(R.id.textView);
-        }
-    }
 }
