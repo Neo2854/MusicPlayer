@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:background="?attr/colorPrimaryDark"
     tools:ignore="ExtraText">
 
     <com.google.android.material.tabs.TabLayout
@@ -13,10 +14,10 @@
         android:layout_height="wrap_content"
         app:tabMode="fixed"
         app:tabIconTint="@color/tab_selector_color"
-        app:tabIndicatorColor="@color/colorRed"
-        app:tabRippleColor="@color/colorRed"
+        app:tabIndicatorColor="@color/colorWhite"
+        app:tabRippleColor="@color/colorWhite"
         app:tabIndicatorHeight="100dp"
-        android:background="@color/colorYellow"
+        android:background="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -38,13 +39,14 @@
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="?attr/colorPrimaryDark"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
+        app:titleTextColor="?attr/colorPrimary"
         app:titleMarginStart="40dp"/>
 
 

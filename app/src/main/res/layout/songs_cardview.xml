@@ -3,12 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@color/semiTransparent"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:layout_marginBottom="2dp">
+
 
         <ImageView
             android:id="@+id/image"
@@ -22,9 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/image"
             android:text="songName"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/aName"
@@ -32,8 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_toEndOf="@+id/image"
-            android:text="albumName" />
+            android:textColor="@color/colorWhite"
+            android:text="albumName"
+            android:ellipsize="end"
+            android:maxLines="1"/>
     </RelativeLayout>
-
 
 </androidx.cardview.widget.CardView>
