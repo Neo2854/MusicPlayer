@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import java.util.Comparator;
 public class SongsFragment extends Fragment {
 
     private ArrayList<Song> songsList;
+    private ArrayList<Long> songIDsList;
 
     private View fragmentView;
     private RecyclerView songsRecyclerView;
@@ -77,6 +79,7 @@ public class SongsFragment extends Fragment {
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
                 songsList.add(new Song(id,title,artist));
+                songIDsList.add(id);
             }while (musicCursor.moveToNext());
         }
 

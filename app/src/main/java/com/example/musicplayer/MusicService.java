@@ -2,8 +2,11 @@ package com.example.musicplayer;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.os.Binder;
 import android.os.IBinder;
+import android.os.PowerManager;
 
 import androidx.annotation.Nullable;
 
@@ -16,7 +19,7 @@ public class MusicService extends Service implements
 
     private int position;
 
-    private ArrayList<Song> songsList;
+    private ArrayList<Long> songIDsList;
 
     private MediaPlayer mediaPlayer;
 
@@ -45,5 +48,32 @@ public class MusicService extends Service implements
     @Override
     public void onPrepared(MediaPlayer mp) {
 
+    }
+
+    //Initialization
+    private void Initialize(){
+        mediaPlayer = new MediaPlayer();
+        position    = 0;
+
+        mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
+        mediaPlayer.setAudioAttributes(new AudioAttributes
+                                            .Builder()
+                                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                            .build());
+
+        mediaPlayer.setOnPreparedListener(this);
+        mediaPlayer.setOnCompletionListener(this);
+        mediaPlayer.setOnErrorListener(this);
+    }
+
+    //copying songs via IDs into songIDsList
+    public void setSongIDs(ArrayList<Long> songIDsList){
+        this.songIDsList = songIDsList;
+    }
+
+    public class MusicBinder extends Binder{
+        MusicService getService(){
+            return MusicService.this;
+        }
     }
 }
