@@ -50,6 +50,12 @@ public class SongsFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         musicCursor.close();
@@ -102,6 +108,9 @@ public class SongsFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(getContext(),Player.class);
+
+                intent.putExtra("songIDsList",songIDsList);
+                intent.putExtra("songPosition",position);
                 startActivity(intent);
             }
         });
