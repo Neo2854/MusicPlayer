@@ -99,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i=0;i<tabIconsCount;i++){
             tabLayout.getTabAt(i).setIcon(tabIcons[i]);
         }
+
+        //Setting default page
+        viewPager.setCurrentItem(1);
     }
 
     @Override

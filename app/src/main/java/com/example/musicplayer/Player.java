@@ -50,4 +50,6 @@ public class Player extends AppCompatActivity {
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
     }
+
+
 }
