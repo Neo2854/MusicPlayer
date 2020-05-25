@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +25,20 @@ import java.util.Comparator;
 
 public class SongsFragment extends Fragment {
 
+    //Variables
+    private boolean firstLaunch;
+    //Lists
     private ArrayList<Song> songsList;
 
     private View fragmentView;
     private RecyclerView songsRecyclerView;
     private SongsRecyclerAdapter songsRecyclerAdapter;
+
     private ContentResolver musicResolver;
     private Cursor musicCursor;
-
+    //Intents and Uris
     private Uri musicUri;
+    private Intent playerActivityIntent;
 
     @Nullable
     @Override
@@ -48,15 +54,21 @@ public class SongsFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         musicCursor.close();
     }
 
     private void Initialize(){
-        songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);
-        songsList         = new ArrayList<>();
+        songsList = new ArrayList<Song>();
 
+        songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);
         songsRecyclerView.setHasFixedSize(true);
 
         musicResolver = getActivity().getContentResolver();
@@ -98,8 +110,10 @@ public class SongsFragment extends Fragment {
         songsRecyclerAdapter.setOnItemClickListener(new SongsRecyclerAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(getContext(),Player.class);
-                startActivity(intent);
+                playerActivityIntent = new Intent(getContext(),Player.class);
+                playerActivityIntent.putParcelableArrayListExtra("songsList",songsList);
+                playerActivityIntent.putExtra("songPosition",position);
+                startActivity(playerActivityIntent);
             }
         });
     }

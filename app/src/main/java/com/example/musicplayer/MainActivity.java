@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int STORAGE_PERMISSION_CODE = 1;
     private static final String[] PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.WAKE_LOCK
     };
 
     private final int tabIconsCount = 3;
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private void requestStoragePermissions(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(shouldShowRequestPermissionRationale(PERMISSIONS[0]) &&
-                shouldShowRequestPermissionRationale(PERMISSIONS[1])){
+                shouldShowRequestPermissionRationale(PERMISSIONS[1]) &&
+                shouldShowRequestPermissionRationale(PERMISSIONS[2])){
                 new AlertDialog.Builder(this)
                         .setTitle("Permission needed")
                         .setMessage("Permission needed to read and display songs")
@@ -108,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == STORAGE_PERMISSION_CODE){
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-               grantResults[1] == PackageManager.PERMISSION_GRANTED){
+               grantResults[1] == PackageManager.PERMISSION_GRANTED &&
+               grantResults[2] == PackageManager.PERMISSION_GRANTED ){
                 Initialize();
             }
             else {
