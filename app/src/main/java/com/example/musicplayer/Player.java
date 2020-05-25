@@ -97,26 +97,7 @@ public class Player extends AppCompatActivity {
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
 
-        Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,songsList.get(songPosition).getId());
-        MediaPlayer mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioAttributes(new AudioAttributes
-                                            .Builder()
-                                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                            .build());
-        try {
-            mediaPlayer.setDataSource(this, trackUri);
-        }
-        catch (Exception e){
-            Log.d("EXCEPTION","Song found error");
-        }
 
-        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.start();
-            }
-        });
-        mediaPlayer.prepareAsync();
     }
 
 }
