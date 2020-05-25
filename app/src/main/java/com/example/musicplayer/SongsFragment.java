@@ -25,16 +25,20 @@ import java.util.Comparator;
 
 public class SongsFragment extends Fragment {
 
+    //Variables
+    private boolean firstLaunch;
+    //Lists
     private ArrayList<Song> songsList;
-    private ArrayList<Long> songIDsList;
 
     private View fragmentView;
     private RecyclerView songsRecyclerView;
     private SongsRecyclerAdapter songsRecyclerAdapter;
+
     private ContentResolver musicResolver;
     private Cursor musicCursor;
-
+    //Intents and Uris
     private Uri musicUri;
+    private Intent playerActivityIntent;
 
     @Nullable
     @Override
@@ -62,9 +66,9 @@ public class SongsFragment extends Fragment {
     }
 
     private void Initialize(){
-        songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);
-        songsList         = new ArrayList<>();
+        songsList = new ArrayList<Song>();
 
+        songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);
         songsRecyclerView.setHasFixedSize(true);
 
         musicResolver = getActivity().getContentResolver();
@@ -85,7 +89,6 @@ public class SongsFragment extends Fragment {
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
                 songsList.add(new Song(id,title,artist));
-                songIDsList.add(id);
             }while (musicCursor.moveToNext());
         }
 
@@ -107,11 +110,10 @@ public class SongsFragment extends Fragment {
         songsRecyclerAdapter.setOnItemClickListener(new SongsRecyclerAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(getContext(),Player.class);
-
-                intent.putExtra("songIDsList",songIDsList);
-                intent.putExtra("songPosition",position);
-                startActivity(intent);
+                playerActivityIntent = new Intent(getContext(),Player.class);
+                playerActivityIntent.putParcelableArrayListExtra("songsList",songsList);
+                playerActivityIntent.putExtra("songPosition",position);
+                startActivity(playerActivityIntent);
             }
         });
     }
