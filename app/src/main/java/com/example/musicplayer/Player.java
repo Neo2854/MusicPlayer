@@ -21,13 +21,15 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
 public class Player extends AppCompatActivity {
 
     //Values and variables
-    private int songPosition;
+    private int songCurrPosition;
+    private int songToSetPosition;
     //Lists
     private ArrayList<Song> songsList;
     //Views in activity
@@ -44,6 +46,8 @@ public class Player extends AppCompatActivity {
     private ImageButton collapseBt;
     private ImageButton menuBt;
     private ImageButton favouriteBt;
+    //Intents
+    private Intent playIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +66,6 @@ public class Player extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-
     }
 
     @Override
@@ -71,17 +74,17 @@ public class Player extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+    }
+
     //Initializing all Views
     private void Initialize(){
         songsList = new ArrayList<>();
-
-        Intent songsDataIntent = getIntent();
-        Bundle songsDataBundle = songsDataIntent.getExtras();
-
-        if(songsDataBundle != null){
-            songPosition = songsDataBundle.getInt("songPosition");
-            songsList    = songsDataBundle.getParcelableArrayList("songsList");
-        }
+        songCurrPosition = -1;
 
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
@@ -96,6 +99,8 @@ public class Player extends AppCompatActivity {
         collapseBt  = findViewById(R.id.collapseIcon);
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
+
+
 
 
     }
