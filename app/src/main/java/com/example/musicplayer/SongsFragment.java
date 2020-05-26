@@ -67,6 +67,7 @@ public class SongsFragment extends Fragment {
 
     private void Initialize(){
         songsList = new ArrayList<Song>();
+        firstLaunch = true;
 
         songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);
         songsRecyclerView.setHasFixedSize(true);
@@ -113,6 +114,9 @@ public class SongsFragment extends Fragment {
                 playerActivityIntent = new Intent(getContext(),Player.class);
                 playerActivityIntent.putParcelableArrayListExtra("songsList",songsList);
                 playerActivityIntent.putExtra("songPosition",position);
+                if(!firstLaunch){
+                    playerActivityIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                }
                 startActivity(playerActivityIntent);
             }
         });
