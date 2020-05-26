@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,13 +28,11 @@ public class SongsFragment extends Fragment {
 
     //Variables
     private boolean firstLaunch;
-    //Lists
-    private ArrayList<Song> songsList;
-
+    //Views
     private View fragmentView;
     private RecyclerView songsRecyclerView;
     private SongsRecyclerAdapter songsRecyclerAdapter;
-
+    //Contents
     private ContentResolver musicResolver;
     private Cursor musicCursor;
     //Intents and Uris
@@ -66,7 +65,7 @@ public class SongsFragment extends Fragment {
     }
 
     private void Initialize(){
-        songsList = new ArrayList<Song>();
+        Songs.songsList = new ArrayList<Song>();
         firstLaunch = true;
 
         songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);
@@ -89,11 +88,11 @@ public class SongsFragment extends Fragment {
                 long id       = musicCursor.getLong(idCol);
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
-                songsList.add(new Song(id,title,artist));
+                Songs.songsList.add(new Song(id,title,artist));
             }while (musicCursor.moveToNext());
         }
 
-        Collections.sort(songsList, new Comparator<Song>() {
+        Collections.sort(Songs.songsList, new Comparator<Song>() {
             @Override
             public int compare(Song o1, Song o2) {
                 return o1.getTitle().compareTo(o2.getTitle());
@@ -102,7 +101,7 @@ public class SongsFragment extends Fragment {
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(songsList);
+        songsRecyclerAdapter = new SongsRecyclerAdapter(Songs.songsList);
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -112,13 +111,16 @@ public class SongsFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 playerActivityIntent = new Intent(getContext(),Player.class);
-                playerActivityIntent.putParcelableArrayListExtra("songsList",songsList);
-                playerActivityIntent.putExtra("songPosition",position);
+                Songs.position = position;
                 if(!firstLaunch){
                     playerActivityIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                }
+                else {
+                    firstLaunch = false;
                 }
                 startActivity(playerActivityIntent);
             }
         });
     }
+
 }

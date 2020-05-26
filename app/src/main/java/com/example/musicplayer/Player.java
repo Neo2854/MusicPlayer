@@ -29,9 +29,6 @@ public class Player extends AppCompatActivity {
 
     //Values and variables
     private int songCurrPosition;
-    private int songToSetPosition;
-    //Lists
-    private ArrayList<Song> songsList;
     //Views in activity
     private SeekBar playerSb;
     private TextView songTv;
@@ -46,8 +43,6 @@ public class Player extends AppCompatActivity {
     private ImageButton collapseBt;
     private ImageButton menuBt;
     private ImageButton favouriteBt;
-    //Intents
-    private Intent playIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,13 +59,13 @@ public class Player extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
 
+
+        super.onResume();
     }
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
     }
 
@@ -83,9 +78,8 @@ public class Player extends AppCompatActivity {
 
     //Initializing all Views
     private void Initialize(){
-        songsList = new ArrayList<>();
-        songCurrPosition = -1;
 
+        Toast.makeText(this,"Created",Toast.LENGTH_SHORT).show();
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
         comTimeTv   = findViewById(R.id.com_time);
@@ -99,10 +93,6 @@ public class Player extends AppCompatActivity {
         collapseBt  = findViewById(R.id.collapseIcon);
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
-
-
-
-
     }
 
 }
