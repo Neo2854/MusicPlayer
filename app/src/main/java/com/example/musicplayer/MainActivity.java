@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String[] PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.WAKE_LOCK
+            Manifest.permission.WAKE_LOCK,
+            Manifest.permission.FOREGROUND_SERVICE
     };
 
     private final int tabIconsCount = 3;
@@ -84,6 +85,25 @@ public class MainActivity extends AppCompatActivity {
                         .create()
                         .show();
             }
+            else if(shouldShowRequestPermissionRationale(PERMISSIONS[0])){
+                new AlertDialog.Builder(this)
+                        .setTitle("Permission needed")
+                        .setMessage("Permission needed to run Music Player")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                requestPermissions(PERMISSIONS,STORAGE_PERMISSION_CODE);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+            }
             else {
                 requestPermissions(PERMISSIONS,STORAGE_PERMISSION_CODE);
             }
@@ -111,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == STORAGE_PERMISSION_CODE){
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                grantResults[1] == PackageManager.PERMISSION_GRANTED &&
-               grantResults[2] == PackageManager.PERMISSION_GRANTED ){
+               grantResults[2] == PackageManager.PERMISSION_GRANTED &&
+               grantResults[3] == PackageManager.PERMISSION_GRANTED ){
                 Initialize();
             }
             else {
