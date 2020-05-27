@@ -26,12 +26,6 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 
 public class Player extends AppCompatActivity {
-
-    //Values and variables
-    private int songCurrPosition;
-    private int songToSetPosition;
-    //Lists
-    private ArrayList<Song> songsList;
     //Views in activity
     private SeekBar playerSb;
     private TextView songTv;
@@ -64,13 +58,15 @@ public class Player extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        if(Songs.position >=0 && Songs.position != Songs.songCurrPosition){
+            Songs.songCurrPosition = Songs.position;
+            startServiceWithCommand(Songs.PLAY_SONG);
+        }
         super.onResume();
-
     }
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
     }
 
@@ -83,8 +79,6 @@ public class Player extends AppCompatActivity {
 
     //Initializing all Views
     private void Initialize(){
-        songsList = new ArrayList<>();
-        songCurrPosition = -1;
 
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
@@ -100,9 +94,11 @@ public class Player extends AppCompatActivity {
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
 
-
-
-
+        playIntent = new Intent(this,MusicService.class);
     }
 
+    private void startServiceWithCommand(int command){
+        playIntent.putExtra("command",command);
+        ContextCompat.startForegroundService(this,playIntent);
+    }
 }
