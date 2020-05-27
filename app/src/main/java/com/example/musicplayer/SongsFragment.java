@@ -65,7 +65,6 @@ public class SongsFragment extends Fragment {
     }
 
     private void Initialize(){
-        Songs.songsList = new ArrayList<Song>();
         firstLaunch = true;
 
         songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);

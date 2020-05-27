@@ -26,9 +26,6 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 
 public class Player extends AppCompatActivity {
-
-    //Values and variables
-    private int songCurrPosition;
     //Views in activity
     private SeekBar playerSb;
     private TextView songTv;
@@ -43,6 +40,8 @@ public class Player extends AppCompatActivity {
     private ImageButton collapseBt;
     private ImageButton menuBt;
     private ImageButton favouriteBt;
+    //Intents
+    private Intent playIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,8 +58,10 @@ public class Player extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
-
+        if(Songs.position >=0 && Songs.position != Songs.songCurrPosition){
+            Songs.songCurrPosition = Songs.position;
+            startServiceWithCommand(Songs.PLAY_SONG);
+        }
         super.onResume();
     }
 
@@ -79,7 +80,6 @@ public class Player extends AppCompatActivity {
     //Initializing all Views
     private void Initialize(){
 
-        Toast.makeText(this,"Created",Toast.LENGTH_SHORT).show();
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
         comTimeTv   = findViewById(R.id.com_time);
@@ -93,6 +93,12 @@ public class Player extends AppCompatActivity {
         collapseBt  = findViewById(R.id.collapseIcon);
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
+
+        playIntent = new Intent(this,MusicService.class);
     }
 
+    private void startServiceWithCommand(int command){
+        playIntent.putExtra("command",command);
+        ContextCompat.startForegroundService(this,playIntent);
+    }
 }
