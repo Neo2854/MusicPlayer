@@ -46,7 +46,10 @@ public class SongsFragment extends Fragment {
 
         Initialize();
 
-        createSongsList();
+        if(MusicService.firstLaunch){
+            createSongsList();
+            MusicService.firstLaunch = false;
+        }
 
         populateSongs();
         setRecyclerViewListener();
