@@ -9,14 +9,30 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
 import android.provider.MediaStore;
+import android.util.ArraySet;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 import static com.example.musicplayer.App.MUSCI_CHANNEL_ID;
 
 public class MusicService extends Service {
+    public static final int PLAY_SONG  = 0;
+    public static final int PAUSE_N_SONG = 1;
+
+    public static ArrayList<Song> songsList = new ArrayList<>();
+
+    public static int position;
+    public static int songCurrPosition;
+    //Variables
+    public static boolean firstLaunch = true;
+    public static boolean isPlaying = false;
+    public static boolean isPaused;
+
     private MediaPlayer mediaPlayer;
 
     private Song song;
@@ -34,16 +50,7 @@ public class MusicService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(mediaPlayer.isPlaying()){
-            if(trackUri != ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                                                        Songs.songsList.get(Songs.position).getId())){
-                mediaPlayer.reset();
-                startAll();
-            }
-        }
-        else {
-            startAll();
-        }
+        executeCommand(intent.getIntExtra("command",-1));
 
         return START_STICKY;
     }
@@ -55,6 +62,7 @@ public class MusicService extends Service {
     }
 
     private void Initialize(){
+        songCurrPosition = -1;
         mediaPlayer = new MediaPlayer();
 
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -118,12 +126,40 @@ public class MusicService extends Service {
     }
 
     private void startAll(){
-        song = Songs.songsList.get(Songs.position);
+        song = songsList.get(position);
 
-        buildNotification();
         setSong();
+        buildNotification();
         playSong();
         startForeground(1,musicNotification);
     }
 
+    private void executeCommand(int command){
+        switch (command){
+            case PLAY_SONG:
+                if(mediaPlayer.isPlaying()){
+                    if(trackUri != ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                            songsList.get(position).getId())){
+                        mediaPlayer.reset();
+                        startAll();
+                    }
+                }
+                else {
+                    if(isPaused){
+                        mediaPlayer.reset();
+                    }
+                    startAll();
+                }
+                break;
+            case PAUSE_N_SONG:
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.pause();
+                    isPaused = true;
+                }
+                else {
+                    mediaPlayer.start();
+                }
+                break;
+        }
+    }
 }

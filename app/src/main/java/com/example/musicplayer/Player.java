@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -26,6 +27,8 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 
 public class Player extends AppCompatActivity {
+    //Variables
+
     //Views in activity
     private SeekBar playerSb;
     private TextView songTv;
@@ -40,8 +43,6 @@ public class Player extends AppCompatActivity {
     private ImageButton collapseBt;
     private ImageButton menuBt;
     private ImageButton favouriteBt;
-    //Intents
-    private Intent playIntent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,9 +59,11 @@ public class Player extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if(Songs.position >=0 && Songs.position != Songs.songCurrPosition){
-            Songs.songCurrPosition = Songs.position;
-            startServiceWithCommand(Songs.PLAY_SONG);
+        if(MusicService.position >=0 && MusicService.position != MusicService.songCurrPosition){
+            MusicService.songCurrPosition = MusicService.position;
+            startServiceWithCommand(MusicService.PLAY_SONG);
+            MusicService.isPlaying = true;
+            pauseBt.setImageResource(R.drawable.pause_icon);
         }
         super.onResume();
     }
@@ -70,16 +73,8 @@ public class Player extends AppCompatActivity {
         super.onDestroy();
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this,MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
-    }
-
     //Initializing all Views
     private void Initialize(){
-
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
         comTimeTv   = findViewById(R.id.com_time);
@@ -94,11 +89,65 @@ public class Player extends AppCompatActivity {
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
 
-        playIntent = new Intent(this,MusicService.class);
+        if(MusicService.isPlaying){
+            pauseBt.setImageResource(R.drawable.pause_icon);
+        }
+        else {
+            pauseBt.setImageResource(R.drawable.play_icon);
+        }
+
+        pauseBt.setOnClickListener(buttonListener);
+
     }
 
+    private View.OnClickListener buttonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.pause:
+                    if(MusicService.isPlaying){
+                        MusicService.isPlaying = false;
+                        pauseBt.setImageResource(R.drawable.play_icon);
+                        startServiceWithCommand(MusicService.PAUSE_N_SONG);
+                    }
+                    else {
+                        MusicService.isPlaying = true;
+                        pauseBt.setImageResource(R.drawable.pause_icon);
+                        startServiceWithCommand(MusicService.PAUSE_N_SONG);
+                    }
+                    break;
+                case R.id.previous:
+
+                    break;
+                case R.id.next:
+
+                    break;
+                case R.id.shuffle:
+
+                    break;
+                case R.id.repeat:
+
+                    break;
+                case R.id.collapseIcon:
+
+                    break;
+                case R.id.vertical3Dots:
+
+                    break;
+                case R.id.favourite:
+
+                    break;
+                default:
+
+                    break;
+            }
+        }
+    };
+
     private void startServiceWithCommand(int command){
-        playIntent.putExtra("command",command);
-        ContextCompat.startForegroundService(this,playIntent);
+        Intent intent = new Intent(this,MusicService.class);
+
+        intent.putExtra("command",command);
+        ContextCompat.startForegroundService(this,intent);
     }
 }
