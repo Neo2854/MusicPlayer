@@ -26,8 +26,8 @@ public class PlaylistRecyclerAdapter extends RecyclerView.Adapter<PlaylistRecycl
         public PlaylistViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            itemView.findViewById(R.id.playlistImage);
-            itemView.findViewById(R.id.playlistName);
+            Iv = itemView.findViewById(R.id.playlistImage);
+            Tv = itemView.findViewById(R.id.playlistName);
         }
     }
 
