@@ -1,31 +1,28 @@
 package com.example.musicplayer;
 
 import android.content.ComponentName;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.media.AudioAttributes;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import java.util.ArrayList;
-
 public class Player extends AppCompatActivity {
+    //Variables
+    private boolean serviceBound;
     //Views in activity
     private SeekBar playerSb;
     private TextView songTv;
@@ -40,8 +37,22 @@ public class Player extends AppCompatActivity {
     private ImageButton collapseBt;
     private ImageButton menuBt;
     private ImageButton favouriteBt;
-    //Intents
-    private Intent playIntent;
+    //Services
+    private MusicService musicService;
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MusicService.MusicBinder musicBinder = (MusicService.MusicBinder) service;
+            musicService = musicBinder.getService();
+            serviceBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            serviceBound = false;
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +60,7 @@ public class Player extends AppCompatActivity {
         setContentView(R.layout.player);
 
         Initialize();
+        playAudio(getIntent().getLongExtra("mediaID",-1));
     }
 
     @Override
@@ -58,28 +70,33 @@ public class Player extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if(Songs.position >=0 && Songs.position != Songs.songCurrPosition){
-            Songs.songCurrPosition = Songs.position;
-            startServiceWithCommand(Songs.PLAY_SONG);
-        }
         super.onResume();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (serviceBound) {
+            unbindService(serviceConnection);
+            //service is active
+            musicService.stopSelf();
+        }
     }
 
     @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this,MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean("ServiceState", serviceBound);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        serviceBound = savedInstanceState.getBoolean("ServiceState");
     }
 
     //Initializing all Views
     private void Initialize(){
-
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
         comTimeTv   = findViewById(R.id.com_time);
@@ -93,12 +110,53 @@ public class Player extends AppCompatActivity {
         collapseBt  = findViewById(R.id.collapseIcon);
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
-
-        playIntent = new Intent(this,MusicService.class);
     }
 
-    private void startServiceWithCommand(int command){
-        playIntent.putExtra("command",command);
-        ContextCompat.startForegroundService(this,playIntent);
+    private View.OnClickListener buttonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.pause:
+
+                    break;
+                case R.id.previous:
+
+                    break;
+                case R.id.next:
+
+                    break;
+                case R.id.shuffle:
+
+                    break;
+                case R.id.repeat:
+
+                    break;
+                case R.id.collapseIcon:
+
+                    break;
+                case R.id.vertical3Dots:
+
+                    break;
+                case R.id.favourite:
+
+                    break;
+                default:
+
+                    break;
+            }
+        }
+    };
+
+    private void playAudio(long mediaID){
+        if(!serviceBound){
+            Intent intent = new Intent(this,MusicService.class);
+            intent.putExtra("mediaID",mediaID);
+            startService(intent);
+            bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE);
+        }
+        else {
+
+        }
     }
+
 }
