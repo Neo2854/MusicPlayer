@@ -28,6 +28,7 @@ public class PlaylistRecyclerAdapter extends RecyclerView.Adapter<PlaylistRecycl
 
             Iv = itemView.findViewById(R.id.playlistImage);
             Tv = itemView.findViewById(R.id.playlistName);
+            Iv.setImageResource(R.drawable.heart_filled_icon);
         }
     }
 

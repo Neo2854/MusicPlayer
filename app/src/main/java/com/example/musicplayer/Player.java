@@ -117,7 +117,6 @@ public class Player extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.pause:
-
                     break;
                 case R.id.previous:
 
