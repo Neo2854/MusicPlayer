@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.WAKE_LOCK,
-            Manifest.permission.FOREGROUND_SERVICE
+            Manifest.permission.FOREGROUND_SERVICE,
+            Manifest.permission.READ_PHONE_STATE
     };
 
     private final int tabIconsCount = 3;
@@ -85,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
                         .create()
                         .show();
             }
-            else if(shouldShowRequestPermissionRationale(PERMISSIONS[0])){
+            else if(shouldShowRequestPermissionRationale(PERMISSIONS[3]) &&
+                    shouldShowRequestPermissionRationale(PERMISSIONS[4])) {
                 new AlertDialog.Builder(this)
                         .setTitle("Permission needed")
                         .setMessage("Permission needed to run Music Player")
@@ -132,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                grantResults[1] == PackageManager.PERMISSION_GRANTED &&
                grantResults[2] == PackageManager.PERMISSION_GRANTED &&
-               grantResults[3] == PackageManager.PERMISSION_GRANTED ){
+               grantResults[3] == PackageManager.PERMISSION_GRANTED &&
+               grantResults[4] == PackageManager.PERMISSION_GRANTED ){
                 Initialize();
             }
             else {

@@ -19,12 +19,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class SongsFragment extends Fragment {
+
+    private ArrayList<Song> songsList = new ArrayList<>();
 
     //Variables
 
@@ -45,12 +46,7 @@ public class SongsFragment extends Fragment {
         fragmentView = inflater.inflate(R.layout.songs_fragment,container,false);
 
         Initialize();
-
-        if(MusicService.firstLaunch){
-            createSongsList();
-            MusicService.firstLaunch = false;
-        }
-
+        createSongsList();
         populateSongs();
         setRecyclerViewListener();
 
@@ -90,11 +86,11 @@ public class SongsFragment extends Fragment {
                 long id       = musicCursor.getLong(idCol);
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
-                MusicService.songsList.add(new Song(id,title,artist));
+                songsList.add(new Song(id,title,artist));
             }while (musicCursor.moveToNext());
         }
 
-        Collections.sort(MusicService.songsList, new Comparator<Song>() {
+        Collections.sort(songsList, new Comparator<Song>() {
             @Override
             public int compare(Song o1, Song o2) {
                 return o1.getTitle().compareTo(o2.getTitle());
@@ -103,7 +99,7 @@ public class SongsFragment extends Fragment {
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(MusicService.songsList);
+        songsRecyclerAdapter = new SongsRecyclerAdapter(songsList);
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -113,7 +109,7 @@ public class SongsFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 playerActivityIntent = new Intent(getContext(),Player.class);
-                MusicService.position = position;
+                playerActivityIntent.putExtra("mediaID",songsList.get(position).getId());
                 startActivity(playerActivityIntent);
             }
         });
