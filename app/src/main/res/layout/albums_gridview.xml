@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="5dp"
     app:cardPreventCornerOverlap="true"
@@ -14,26 +15,28 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/playlistImage"
+            android:id="@+id/albumImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/reputation"/>
+            android:src="@drawable/reputation" />
 
         <TextView
-            android:id="@+id/playlistName"
+            android:id="@+id/albumName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="playlistName"
-            android:layout_below="@+id/playlistImage"
-            android:layout_marginTop="10dp"
+            android:layout_below="@+id/albumImage"
             android:layout_marginLeft="5dp"
-            android:textSize="20sp"
+            android:layout_marginTop="10dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/colorWhite"/>
+            android:text="albumName"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
 
     </RelativeLayout>
+
+
 
 </androidx.cardview.widget.CardView>
