@@ -10,10 +10,30 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class AlbumFragment extends Fragment {
+    //Views
+    private View fragmentView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.album_fragment,container,false);
+        fragmentView = inflater.inflate(R.layout.album_fragment,container,false);
+
+        Initialize();
+        createAlbums();
+        populateAlbums();
+
+        return fragmentView;
+    }
+
+    private void Initialize(){
+
+    }
+
+    private void createAlbums(){
+
+    }
+
+    private void populateAlbums(){
+
     }
 }

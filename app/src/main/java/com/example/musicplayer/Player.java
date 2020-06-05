@@ -40,11 +40,11 @@ public class Player extends AppCompatActivity {
     //Services
     private MusicService musicService;
 
-    private ServiceConnection serviceConnection = new ServiceConnection() {
+    private ServiceConnection musicServiceConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MusicService.MusicBinder musicBinder = (MusicService.MusicBinder) service;
-            musicService = musicBinder.getService();
+            musicService = ((MusicService.MusicBinder) service).getService();
             serviceBound = true;
         }
 
@@ -59,13 +59,17 @@ public class Player extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player);
 
+        Intent intent = new Intent(this,MusicService.class);
+        ContextCompat.startForegroundService(this,intent);
+
         Initialize();
-        playAudio(getIntent().getLongExtra("mediaID",-1));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        Intent intent = new Intent(this,MusicService.class);
+        bindService(intent,musicServiceConn, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -76,23 +80,6 @@ public class Player extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (serviceBound) {
-            unbindService(serviceConnection);
-            //service is active
-            musicService.stopSelf();
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean("ServiceState", serviceBound);
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        serviceBound = savedInstanceState.getBoolean("ServiceState");
     }
 
     //Initializing all Views
@@ -110,6 +97,15 @@ public class Player extends AppCompatActivity {
         collapseBt  = findViewById(R.id.collapseIcon);
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
+
+        pauseBt.setOnClickListener(buttonListener);
+        previousBt.setOnClickListener(buttonListener);
+        nextBt.setOnClickListener(buttonListener);
+        shuffleBt.setOnClickListener(buttonListener);
+        repeatBt.setOnClickListener(buttonListener);
+        collapseBt.setOnClickListener(buttonListener);
+        menuBt.setOnClickListener(buttonListener);
+        favouriteBt.setOnClickListener(buttonListener);
     }
 
     private View.OnClickListener buttonListener = new View.OnClickListener() {
@@ -146,16 +142,5 @@ public class Player extends AppCompatActivity {
         }
     };
 
-    private void playAudio(long mediaID){
-        if(!serviceBound){
-            Intent intent = new Intent(this,MusicService.class);
-            intent.putExtra("mediaID",mediaID);
-            startService(intent);
-            bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE);
-        }
-        else {
-
-        }
-    }
 
 }
