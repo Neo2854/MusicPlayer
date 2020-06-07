@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,9 +24,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class SongsFragment extends Fragment {
-
-    private ArrayList<Song> songsList = new ArrayList<>();
-
     //Variables
 
     //Views
@@ -44,6 +41,10 @@ public class SongsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.songs_fragment,container,false);
+
+        if(MusicService.songsList == null){
+            MusicService.songsList = new ArrayList<>();
+        }
 
         Initialize();
         createSongsList();
@@ -86,11 +87,11 @@ public class SongsFragment extends Fragment {
                 long id       = musicCursor.getLong(idCol);
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
-                songsList.add(new Song(id,title,artist));
+                MusicService.songsList.add(new Song(id,title,artist));
             }while (musicCursor.moveToNext());
         }
 
-        Collections.sort(songsList, new Comparator<Song>() {
+        Collections.sort(MusicService.songsList, new Comparator<Song>() {
             @Override
             public int compare(Song o1, Song o2) {
                 return o1.getTitle().compareTo(o2.getTitle());
@@ -99,7 +100,7 @@ public class SongsFragment extends Fragment {
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(songsList);
+        songsRecyclerAdapter = new SongsRecyclerAdapter(MusicService.songsList);
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -109,7 +110,7 @@ public class SongsFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 playerActivityIntent = new Intent(getContext(),Player.class);
-                playerActivityIntent.putExtra("mediaID",songsList.get(position).getId());
+                MusicService.songPosition = position;
                 startActivity(playerActivityIntent);
             }
         });
