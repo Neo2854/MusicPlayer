@@ -69,12 +69,28 @@ public class Player extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Intent intent = new Intent(this,MusicService.class);
-        bindService(intent,musicServiceConn, Context.BIND_AUTO_CREATE);
+        if(!serviceBound){
+            bindService(intent,musicServiceConn,Context.BIND_AUTO_CREATE);
+        }
+
+        if(MusicService.isPaused){
+            pauseBt.setImageResource(R.drawable.play_icon);
+        }
+        else{
+            pauseBt.setImageResource(R.drawable.pause_icon);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unbindService(musicServiceConn);
+        musicService = null;
     }
 
     @Override
@@ -84,6 +100,8 @@ public class Player extends AppCompatActivity {
 
     //Initializing all Views
     private void Initialize(){
+        serviceBound = false;
+
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
         comTimeTv   = findViewById(R.id.com_time);
@@ -113,6 +131,14 @@ public class Player extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.pause:
+                    if(MusicService.isPaused){
+                        musicService.resumeSong();
+                        pauseBt.setImageResource(R.drawable.pause_icon);
+                    }
+                    else {
+                        musicService.pauseSong();
+                        pauseBt.setImageResource(R.drawable.play_icon);
+                    }
                     break;
                 case R.id.previous:
 
@@ -141,6 +167,4 @@ public class Player extends AppCompatActivity {
             }
         }
     };
-
-
 }

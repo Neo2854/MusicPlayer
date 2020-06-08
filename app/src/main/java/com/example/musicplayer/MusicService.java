@@ -17,6 +17,7 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.ArraySet;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -35,8 +36,11 @@ public class MusicService extends Service implements
         MediaPlayer.OnBufferingUpdateListener,
         MediaPlayer.OnInfoListener{
     //Shared Variables
+    public static boolean isPaused = false;
     public static int songPosition;
     public static ArrayList<Song> songsList;
+    //Variables
+
     //Media Player
     private MediaPlayer mediaPlayer;
     private long songID;
@@ -116,6 +120,10 @@ public class MusicService extends Service implements
         if(mediaPlayer.isPlaying()){
             mediaPlayer.reset();
         }
+        else if(isPaused){
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+        }
         songID = songsList.get(songPosition).getId();
         Uri musicUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,songID);
 
@@ -129,6 +137,7 @@ public class MusicService extends Service implements
 
     private void playSong(){
         mediaPlayer.prepareAsync();
+        isPaused = false;
     }
 
     private void buildNotification(){
@@ -149,5 +158,17 @@ public class MusicService extends Service implements
                                             .build();
 
         startForeground(1,notification);
+    }
+
+    public void pauseSong(){
+        mediaPlayer.pause();
+        isPaused = true;
+    }
+
+    public void resumeSong(){
+        if(isPaused){
+            mediaPlayer.start();
+            isPaused = false;
+        }
     }
 }
