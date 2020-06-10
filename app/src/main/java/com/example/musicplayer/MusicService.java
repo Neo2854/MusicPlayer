@@ -3,9 +3,11 @@ package com.example.musicplayer;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioAttributes;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
@@ -15,9 +17,8 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.provider.MediaStore;
-import android.util.ArraySet;
 import android.util.Log;
-import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -36,16 +37,40 @@ public class MusicService extends Service implements
         MediaPlayer.OnBufferingUpdateListener,
         MediaPlayer.OnInfoListener{
     //Shared Variables
-    public static boolean isPaused = false;
     public static int songPosition;
     public static ArrayList<Song> songsList;
+    //Broadcast actions
+    public static final String REQUEST_SONG_STATE = "com.example.musicplayer.request_song_state";
     //Variables
-
+    private boolean isPaused;
     //Media Player
     private MediaPlayer mediaPlayer;
     private long songID;
     //Binder
     private final IBinder musicBinder = new MusicBinder();
+    //Broadcast Receiver
+    private BroadcastReceiver musicBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action){
+                case REQUEST_SONG_STATE:
+                    Log.d("REQUEST_SONG_STATE","called");
+                    if(isPaused){
+                        Intent d_intent = new Intent(Player.SONG_PAUSED);
+                        sendBroadcast(d_intent);
+                    }
+                    else {
+                        Intent d_intent = new Intent(Player.SONG_RESUMED);
+                        sendBroadcast(d_intent);
+                    }
+                    break;
+                default:
+
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onCreate() {
@@ -56,6 +81,11 @@ public class MusicService extends Service implements
         mediaPlayer.setOnPreparedListener(this);
         mediaPlayer.setOnCompletionListener(this);
         mediaPlayer.setOnErrorListener(this);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(REQUEST_SONG_STATE);
+
+        registerReceiver(musicBroadcastReceiver,intentFilter);
     }
 
     @Override
@@ -87,6 +117,12 @@ public class MusicService extends Service implements
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(musicBroadcastReceiver);
+    }
+
+    @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
 
     }
@@ -109,6 +145,10 @@ public class MusicService extends Service implements
     @Override
     public void onPrepared(MediaPlayer mp) {
         mp.start();
+        isPaused = false;
+
+        Intent intent = new Intent(Player.SONG_RESUMED);
+        sendBroadcast(intent);
     }
 
     @Override
@@ -137,7 +177,6 @@ public class MusicService extends Service implements
 
     private void playSong(){
         mediaPlayer.prepareAsync();
-        isPaused = false;
     }
 
     private void buildNotification(){
@@ -160,15 +199,20 @@ public class MusicService extends Service implements
         startForeground(1,notification);
     }
 
-    public void pauseSong(){
-        mediaPlayer.pause();
-        isPaused = true;
-    }
-
-    public void resumeSong(){
+    public void playNpause(){
         if(isPaused){
             mediaPlayer.start();
             isPaused = false;
+            Intent intent = new Intent(Player.SONG_RESUMED);
+            sendBroadcast(intent);
+        }
+        else {
+            mediaPlayer.pause();
+            isPaused = true;
+            Intent intent = new Intent(Player.SONG_PAUSED);
+            sendBroadcast(intent);
         }
     }
+
+
 }

@@ -1,14 +1,15 @@
 package com.example.musicplayer;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -21,6 +22,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 public class Player extends AppCompatActivity {
+    //Broadcast actions
+    public static final String SONG_RESUMED = "com.example.musicplayer.song_resumed";
+    public static final String SONG_PAUSED  = "com.example.musicplayer.song_paused";
     //Variables
     private boolean serviceBound;
     //Views in activity
@@ -39,7 +43,7 @@ public class Player extends AppCompatActivity {
     private ImageButton favouriteBt;
     //Services
     private MusicService musicService;
-
+    //Service Connection
     private ServiceConnection musicServiceConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -53,14 +57,41 @@ public class Player extends AppCompatActivity {
             serviceBound = false;
         }
     };
+    //Broadcast receivers
+    private BroadcastReceiver playerBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action){
+                case SONG_PAUSED:
+                    Log.d("SONG_PAUSED","Called");
+                    pauseBt.setImageResource(R.drawable.play_icon);
+                    break;
+                case SONG_RESUMED:
+                    Log.d("SONG_RESUMED","Called");
+                    pauseBt.setImageResource(R.drawable.pause_icon);
+                    break;
+                default:
+
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player);
 
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SONG_PAUSED);
+        intentFilter.addAction(SONG_RESUMED);
+
+        registerReceiver(playerBroadcastReceiver,intentFilter);
+
         Intent intent = new Intent(this,MusicService.class);
         ContextCompat.startForegroundService(this,intent);
+
+
 
         Initialize();
     }
@@ -68,17 +99,13 @@ public class Player extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         Intent intent = new Intent(this,MusicService.class);
         if(!serviceBound){
             bindService(intent,musicServiceConn,Context.BIND_AUTO_CREATE);
         }
 
-        if(MusicService.isPaused){
-            pauseBt.setImageResource(R.drawable.play_icon);
-        }
-        else{
-            pauseBt.setImageResource(R.drawable.pause_icon);
-        }
+
     }
 
     @Override
@@ -96,11 +123,15 @@ public class Player extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(playerBroadcastReceiver);
     }
 
     //Initializing all Views
     private void Initialize(){
         serviceBound = false;
+
+        Intent intent = new Intent(MusicService.REQUEST_SONG_STATE);
+        sendBroadcast(intent);
 
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
@@ -131,14 +162,7 @@ public class Player extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.pause:
-                    if(MusicService.isPaused){
-                        musicService.resumeSong();
-                        pauseBt.setImageResource(R.drawable.pause_icon);
-                    }
-                    else {
-                        musicService.pauseSong();
-                        pauseBt.setImageResource(R.drawable.play_icon);
-                    }
+                    musicService.playNpause();
                     break;
                 case R.id.previous:
 
