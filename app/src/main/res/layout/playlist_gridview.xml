@@ -34,6 +34,28 @@
             android:maxLines="1"
             android:textColor="@color/colorWhite"/>
 
+        <ImageButton
+            android:id="@+id/playlistPlayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/playlistImage"
+            android:layout_alignBottom="@+id/playlistImage"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/play_icon" />
+
+        <ImageButton
+            android:id="@+id/playlistMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/playlistImage"
+            android:layout_alignBottom="@+id/playlistImage"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/vertical_3dots_icon" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
