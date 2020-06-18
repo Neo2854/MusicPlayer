@@ -27,7 +27,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.8"
-        android:thumbTint="@color/colorBlack" />
+        android:thumbTint="@color/colorBlack"
+        android:progressTint="@color/colorBlack"/>
 
     <ImageButton
         android:id="@+id/pause"

@@ -35,6 +35,28 @@
             android:textColor="@color/colorWhite"
             android:textSize="20sp" />
 
+        <ImageButton
+            android:id="@+id/albumPlayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/albumImage"
+            android:layout_alignBottom="@+id/albumImage"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="0dp"
+            app:srcCompat="@drawable/play_icon"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/albumMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/albumImage"
+            android:layout_alignBottom="@+id/albumImage"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            app:srcCompat="@drawable/vertical_3dots_icon"
+            android:background="@android:color/transparent"/>
+
     </RelativeLayout>
 
 
