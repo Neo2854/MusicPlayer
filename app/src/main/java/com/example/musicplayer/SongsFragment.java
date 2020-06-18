@@ -42,8 +42,8 @@ public class SongsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.songs_fragment,container,false);
 
-        if(MusicService.songsList == null){
-            MusicService.songsList = new ArrayList<>();
+        if(MusicService.songsSet == null){
+            MusicService.songsSet = new SongSet();
         }
 
         Initialize();
@@ -87,20 +87,15 @@ public class SongsFragment extends Fragment {
                 long id       = musicCursor.getLong(idCol);
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
-                MusicService.songsList.add(new Song(id,title,artist));
+                MusicService.songsSet.add(new Song(id,title,artist));
             }while (musicCursor.moveToNext());
         }
 
-        Collections.sort(MusicService.songsList, new Comparator<Song>() {
-            @Override
-            public int compare(Song o1, Song o2) {
-                return o1.getTitle().compareTo(o2.getTitle());
-            }
-        });
+        MusicService.songsSet.sort();
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(MusicService.songsList);
+        songsRecyclerAdapter = new SongsRecyclerAdapter(MusicService.songsSet);
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

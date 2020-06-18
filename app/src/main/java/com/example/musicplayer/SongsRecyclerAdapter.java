@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdapter.SongViewHolder> {
 
-    private ArrayList<Song> Songs;
+    private SongSet Songs;
     private onItemClickListener listener;
 
     public interface onItemClickListener{
@@ -25,7 +25,7 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
         this.listener = listener;
     }
 
-    public SongsRecyclerAdapter(ArrayList<Song> titles){
+    public SongsRecyclerAdapter(SongSet titles){
         this.Songs   = titles;
     }
 

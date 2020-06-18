@@ -20,11 +20,14 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
 import static com.example.musicplayer.App.MUSCI_CHANNEL_ID;
@@ -38,9 +41,15 @@ public class MusicService extends Service implements
         MediaPlayer.OnInfoListener{
     //Shared Variables
     public static int songPosition;
-    public static ArrayList<Song> songsList;
+    public static SongSet songsSet;
+    //Extra Keys
+    public static final String SONG_NAME = "com.example.musicplayer.song_name";
     //Broadcast actions
     public static final String REQUEST_SONG_STATE = "com.example.musicplayer.request_song_state";
+    //Constants
+    private String[] actions = {
+            REQUEST_SONG_STATE
+    };
     //Variables
     private boolean isPaused;
     //Media Player
@@ -83,14 +92,16 @@ public class MusicService extends Service implements
         mediaPlayer.setOnErrorListener(this);
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(REQUEST_SONG_STATE);
+        for (int i=0;i<actions.length;i++){
+            intentFilter.addAction(actions[i]);
+        }
 
         registerReceiver(musicBroadcastReceiver,intentFilter);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(songID != songsList.get(songPosition).getId()){
+        if(songID != songsSet.get(songPosition).getId()){
             setSong();
             playSong();
             buildNotification();
@@ -164,7 +175,7 @@ public class MusicService extends Service implements
             mediaPlayer.stop();
             mediaPlayer.reset();
         }
-        songID = songsList.get(songPosition).getId();
+        songID = songsSet.get(songPosition).getId();
         Uri musicUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,songID);
 
         try {
@@ -187,11 +198,11 @@ public class MusicService extends Service implements
 
         Intent[] intents = new Intent[]{mainIntent,playerIntent};
 
-        PendingIntent notificationIntent = PendingIntent.getActivities(this,0,intents,PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent notificationIntent = PendingIntent.getActivities(this,0,intents,0);
 
         Notification notification = new NotificationCompat.Builder(this, MUSCI_CHANNEL_ID)
-                                            .setContentTitle(songsList.get(songPosition).getTitle())
-                                            .setContentText(songsList.get(songPosition).getArtist())
+                                            .setContentTitle(songsSet.get(songPosition).getTitle())
+                                            .setContentText(songsSet.get(songPosition).getArtist())
                                             .setSmallIcon(R.drawable.play_icon)
                                             .setContentIntent(notificationIntent)
                                             .build();
@@ -214,5 +225,29 @@ public class MusicService extends Service implements
         }
     }
 
+    public void playPrev(){
+        if(songPosition > 0){
+            songPosition--;
+            setSong();
+            playSong();
+            buildNotification();
+        }
 
+        Intent intent = new Intent(Player.UPDATE_PLAYER_UI);
+        intent.putExtra(SONG_NAME,songsSet.get(songPosition).getTitle());
+        sendBroadcast(intent);
+    }
+
+    public void playNext(){
+        if(songPosition < songsSet.size()-1){
+            songPosition++;
+            setSong();
+            playSong();
+            buildNotification();
+        }
+
+        Intent intent = new Intent(Player.UPDATE_PLAYER_UI);
+        intent.putExtra(SONG_NAME,songsSet.get(songPosition).getTitle());
+        sendBroadcast(intent);
+    }
 }

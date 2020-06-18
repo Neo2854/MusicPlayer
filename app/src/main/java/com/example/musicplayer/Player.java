@@ -23,8 +23,15 @@ import androidx.core.content.ContextCompat;
 
 public class Player extends AppCompatActivity {
     //Broadcast actions
+    public static final String UPDATE_PLAYER_UI = "com.example.musicplayer.update_player_ui";
     public static final String SONG_RESUMED = "com.example.musicplayer.song_resumed";
     public static final String SONG_PAUSED  = "com.example.musicplayer.song_paused";
+    //Constants
+    private String[] actions = {
+            UPDATE_PLAYER_UI,
+            SONG_RESUMED,
+            SONG_PAUSED
+    };
     //Variables
     private boolean serviceBound;
     //Views in activity
@@ -63,6 +70,11 @@ public class Player extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             switch (action){
+                case UPDATE_PLAYER_UI:
+                    String songTitle = intent.getStringExtra(MusicService.SONG_NAME);
+
+                    songTv.setText(songTitle);
+                    break;
                 case SONG_PAUSED:
                     Log.d("SONG_PAUSED","Called");
                     pauseBt.setImageResource(R.drawable.play_icon);
@@ -83,15 +95,14 @@ public class Player extends AppCompatActivity {
         setContentView(R.layout.player);
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(SONG_PAUSED);
-        intentFilter.addAction(SONG_RESUMED);
+        for (int i=0;i<actions.length;i++){
+            intentFilter.addAction(actions[i]);
+        }
 
         registerReceiver(playerBroadcastReceiver,intentFilter);
 
         Intent intent = new Intent(this,MusicService.class);
         ContextCompat.startForegroundService(this,intent);
-
-
 
         Initialize();
     }
@@ -104,7 +115,6 @@ public class Player extends AppCompatActivity {
         if(!serviceBound){
             bindService(intent,musicServiceConn,Context.BIND_AUTO_CREATE);
         }
-
 
     }
 
@@ -155,6 +165,10 @@ public class Player extends AppCompatActivity {
         collapseBt.setOnClickListener(buttonListener);
         menuBt.setOnClickListener(buttonListener);
         favouriteBt.setOnClickListener(buttonListener);
+
+        playerSb.setOnSeekBarChangeListener(seekBarChangeListener);
+
+        songTv.setText(MusicService.songsSet.get(MusicService.songPosition).getTitle());
     }
 
     private View.OnClickListener buttonListener = new View.OnClickListener() {
@@ -165,10 +179,10 @@ public class Player extends AppCompatActivity {
                     musicService.playNpause();
                     break;
                 case R.id.previous:
-
+                    musicService.playPrev();
                     break;
                 case R.id.next:
-
+                    musicService.playNext();
                     break;
                 case R.id.shuffle:
 
@@ -189,6 +203,23 @@ public class Player extends AppCompatActivity {
 
                     break;
             }
+        }
+    };
+
+    private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            Log.d("SEEK BAR","Touch Released");
         }
     };
 }
