@@ -37,20 +37,10 @@ public class PlaylistFragment extends Fragment {
     }
 
     private void createPlaylists(){
-        ArrayList<String> a = new ArrayList<>();
-        a.add("Playlist 1");
-        a.add("Playlist 2");
-        a.add("Playlist 3");
-        a.add("Long named playlist abchbvbudvujwbdb 2");
-        a.add("Playlist 4");
-        a.add("Long named playlist vbdvuwehiocwiodncnodiwd 4");
-
-        playlistRecyclerAdapter = new PlaylistRecyclerAdapter(a);
 
     }
 
     private void populatePlaylists(){
-        playlistRecyclerView.setAdapter(playlistRecyclerAdapter);
         playlistRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
     }
 }

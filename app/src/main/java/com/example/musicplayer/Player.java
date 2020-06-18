@@ -1,14 +1,15 @@
 package com.example.musicplayer;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -21,6 +22,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 public class Player extends AppCompatActivity {
+    //Broadcast actions
+    public static final String UPDATE_PLAYER_UI = "com.example.musicplayer.update_player_ui";
+    public static final String SONG_RESUMED = "com.example.musicplayer.song_resumed";
+    public static final String SONG_PAUSED  = "com.example.musicplayer.song_paused";
+    //Constants
+    private String[] actions = {
+            UPDATE_PLAYER_UI,
+            SONG_RESUMED,
+            SONG_PAUSED
+    };
     //Variables
     private boolean serviceBound;
     //Views in activity
@@ -39,7 +50,7 @@ public class Player extends AppCompatActivity {
     private ImageButton favouriteBt;
     //Services
     private MusicService musicService;
-
+    //Service Connection
     private ServiceConnection musicServiceConn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -53,11 +64,42 @@ public class Player extends AppCompatActivity {
             serviceBound = false;
         }
     };
+    //Broadcast receivers
+    private BroadcastReceiver playerBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action){
+                case UPDATE_PLAYER_UI:
+                    String songTitle = intent.getStringExtra(MusicService.SONG_NAME);
+
+                    songTv.setText(songTitle);
+                    break;
+                case SONG_PAUSED:
+                    Log.d("SONG_PAUSED","Called");
+                    pauseBt.setImageResource(R.drawable.play_icon);
+                    break;
+                case SONG_RESUMED:
+                    Log.d("SONG_RESUMED","Called");
+                    pauseBt.setImageResource(R.drawable.pause_icon);
+                    break;
+                default:
+
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player);
+
+        IntentFilter intentFilter = new IntentFilter();
+        for (int i=0;i<actions.length;i++){
+            intentFilter.addAction(actions[i]);
+        }
+
+        registerReceiver(playerBroadcastReceiver,intentFilter);
 
         Intent intent = new Intent(this,MusicService.class);
         ContextCompat.startForegroundService(this,intent);
@@ -68,8 +110,12 @@ public class Player extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         Intent intent = new Intent(this,MusicService.class);
-        bindService(intent,musicServiceConn, Context.BIND_AUTO_CREATE);
+        if(!serviceBound){
+            bindService(intent,musicServiceConn,Context.BIND_AUTO_CREATE);
+        }
+
     }
 
     @Override
@@ -78,12 +124,25 @@ public class Player extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        unbindService(musicServiceConn);
+        musicService = null;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(playerBroadcastReceiver);
     }
 
     //Initializing all Views
     private void Initialize(){
+        serviceBound = false;
+
+        Intent intent = new Intent(MusicService.REQUEST_SONG_STATE);
+        sendBroadcast(intent);
+
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
         comTimeTv   = findViewById(R.id.com_time);
@@ -106,6 +165,10 @@ public class Player extends AppCompatActivity {
         collapseBt.setOnClickListener(buttonListener);
         menuBt.setOnClickListener(buttonListener);
         favouriteBt.setOnClickListener(buttonListener);
+
+        playerSb.setOnSeekBarChangeListener(seekBarChangeListener);
+
+        songTv.setText(MusicService.songsSet.get(MusicService.songPosition).getTitle());
     }
 
     private View.OnClickListener buttonListener = new View.OnClickListener() {
@@ -113,12 +176,13 @@ public class Player extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.pause:
+                    musicService.playNpause();
                     break;
                 case R.id.previous:
-
+                    musicService.playPrev();
                     break;
                 case R.id.next:
-
+                    musicService.playNext();
                     break;
                 case R.id.shuffle:
 
@@ -142,5 +206,20 @@ public class Player extends AppCompatActivity {
         }
     };
 
+    private SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            Log.d("SEEK BAR","Touch Released");
+        }
+    };
 }

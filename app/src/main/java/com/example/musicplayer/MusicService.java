@@ -3,9 +3,11 @@ package com.example.musicplayer;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioAttributes;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
@@ -15,14 +17,17 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.provider.MediaStore;
-import android.util.ArraySet;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
 import static com.example.musicplayer.App.MUSCI_CHANNEL_ID;
@@ -36,12 +41,45 @@ public class MusicService extends Service implements
         MediaPlayer.OnInfoListener{
     //Shared Variables
     public static int songPosition;
-    public static ArrayList<Song> songsList;
+    public static SongSet songsSet;
+    //Extra Keys
+    public static final String SONG_NAME = "com.example.musicplayer.song_name";
+    //Broadcast actions
+    public static final String REQUEST_SONG_STATE = "com.example.musicplayer.request_song_state";
+    //Constants
+    private String[] actions = {
+            REQUEST_SONG_STATE
+    };
+    //Variables
+    private boolean isPaused;
     //Media Player
     private MediaPlayer mediaPlayer;
     private long songID;
     //Binder
     private final IBinder musicBinder = new MusicBinder();
+    //Broadcast Receiver
+    private BroadcastReceiver musicBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action){
+                case REQUEST_SONG_STATE:
+                    Log.d("REQUEST_SONG_STATE","called");
+                    if(isPaused){
+                        Intent d_intent = new Intent(Player.SONG_PAUSED);
+                        sendBroadcast(d_intent);
+                    }
+                    else {
+                        Intent d_intent = new Intent(Player.SONG_RESUMED);
+                        sendBroadcast(d_intent);
+                    }
+                    break;
+                default:
+
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onCreate() {
@@ -52,11 +90,18 @@ public class MusicService extends Service implements
         mediaPlayer.setOnPreparedListener(this);
         mediaPlayer.setOnCompletionListener(this);
         mediaPlayer.setOnErrorListener(this);
+
+        IntentFilter intentFilter = new IntentFilter();
+        for (int i=0;i<actions.length;i++){
+            intentFilter.addAction(actions[i]);
+        }
+
+        registerReceiver(musicBroadcastReceiver,intentFilter);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(songID != songsList.get(songPosition).getId()){
+        if(songID != songsSet.get(songPosition).getId()){
             setSong();
             playSong();
             buildNotification();
@@ -83,6 +128,12 @@ public class MusicService extends Service implements
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(musicBroadcastReceiver);
+    }
+
+    @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
 
     }
@@ -105,6 +156,10 @@ public class MusicService extends Service implements
     @Override
     public void onPrepared(MediaPlayer mp) {
         mp.start();
+        isPaused = false;
+
+        Intent intent = new Intent(Player.SONG_RESUMED);
+        sendBroadcast(intent);
     }
 
     @Override
@@ -116,7 +171,11 @@ public class MusicService extends Service implements
         if(mediaPlayer.isPlaying()){
             mediaPlayer.reset();
         }
-        songID = songsList.get(songPosition).getId();
+        else if(isPaused){
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+        }
+        songID = songsSet.get(songPosition).getId();
         Uri musicUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,songID);
 
         try {
@@ -139,15 +198,56 @@ public class MusicService extends Service implements
 
         Intent[] intents = new Intent[]{mainIntent,playerIntent};
 
-        PendingIntent notificationIntent = PendingIntent.getActivities(this,0,intents,PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent notificationIntent = PendingIntent.getActivities(this,0,intents,0);
 
         Notification notification = new NotificationCompat.Builder(this, MUSCI_CHANNEL_ID)
-                                            .setContentTitle(songsList.get(songPosition).getTitle())
-                                            .setContentText(songsList.get(songPosition).getArtist())
+                                            .setContentTitle(songsSet.get(songPosition).getTitle())
+                                            .setContentText(songsSet.get(songPosition).getArtist())
                                             .setSmallIcon(R.drawable.play_icon)
                                             .setContentIntent(notificationIntent)
                                             .build();
 
         startForeground(1,notification);
+    }
+
+    public void playNpause(){
+        if(isPaused){
+            mediaPlayer.start();
+            isPaused = false;
+            Intent intent = new Intent(Player.SONG_RESUMED);
+            sendBroadcast(intent);
+        }
+        else {
+            mediaPlayer.pause();
+            isPaused = true;
+            Intent intent = new Intent(Player.SONG_PAUSED);
+            sendBroadcast(intent);
+        }
+    }
+
+    public void playPrev(){
+        if(songPosition > 0){
+            songPosition--;
+            setSong();
+            playSong();
+            buildNotification();
+        }
+
+        Intent intent = new Intent(Player.UPDATE_PLAYER_UI);
+        intent.putExtra(SONG_NAME,songsSet.get(songPosition).getTitle());
+        sendBroadcast(intent);
+    }
+
+    public void playNext(){
+        if(songPosition < songsSet.size()-1){
+            songPosition++;
+            setSong();
+            playSong();
+            buildNotification();
+        }
+
+        Intent intent = new Intent(Player.UPDATE_PLAYER_UI);
+        intent.putExtra(SONG_NAME,songsSet.get(songPosition).getTitle());
+        sendBroadcast(intent);
     }
 }
