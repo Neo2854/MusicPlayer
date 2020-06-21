@@ -43,11 +43,15 @@ public class MusicService extends Service implements
     public static int songPosition;
     public static SongSet songsSet;
     //Extra Keys
-    public static final String SONG_NAME = "com.example.musicplayer.song_name";
+    public static final String SONG_NAME = "com.example.musicplayer.musicservice,song_name";
+    public static final String SONG_DURATION = "com.example.musicplayer.musicservice.song_duration";
+    public static final String IS_PAUSED = "com.example.musicplayer.musicservice.is_paused";
     //Broadcast actions
-    public static final String REQUEST_SONG_STATE = "com.example.musicplayer.request_song_state";
+    public static final String REQUEST_UI = "com.example.musicplayer.musicservice.request_ui";
+    public static final String REQUEST_SONG_STATE = "com.example.musicplayer.musicservice.request_song_state";
     //Constants
     private String[] actions = {
+            REQUEST_UI,
             REQUEST_SONG_STATE
     };
     //Variables
@@ -63,16 +67,16 @@ public class MusicService extends Service implements
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             switch (action){
+                case REQUEST_UI:
+                    Intent uiIntent = new Intent(Player.UPDATE_PLAYER_UI);
+                    uiIntent.putExtra(SONG_NAME,songsSet.get(songPosition).getTitle());
+                    uiIntent.putExtra(SONG_DURATION,mediaPlayer.getDuration()/1000);
+                    uiIntent.putExtra(IS_PAUSED,isPaused);
+                    sendBroadcast(uiIntent);
+                    break;
                 case REQUEST_SONG_STATE:
                     Log.d("REQUEST_SONG_STATE","called");
-                    if(isPaused){
-                        Intent d_intent = new Intent(Player.SONG_PAUSED);
-                        sendBroadcast(d_intent);
-                    }
-                    else {
-                        Intent d_intent = new Intent(Player.SONG_RESUMED);
-                        sendBroadcast(d_intent);
-                    }
+
                     break;
                 default:
 
@@ -140,7 +144,8 @@ public class MusicService extends Service implements
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-
+        mp.reset();
+        playNext();
     }
 
     @Override
@@ -158,7 +163,8 @@ public class MusicService extends Service implements
         mp.start();
         isPaused = false;
 
-        Intent intent = new Intent(Player.SONG_RESUMED);
+        Intent intent = new Intent(REQUEST_UI);
+
         sendBroadcast(intent);
     }
 
@@ -210,19 +216,28 @@ public class MusicService extends Service implements
         startForeground(1,notification);
     }
 
+    public int getSongProgress(){
+        return mediaPlayer.getCurrentPosition()/1000;
+    }
+
     public void playNpause(){
+        Intent intent = new Intent(Player.UPDATE_PLAYER_UI_SONG_STATE);
         if(isPaused){
             mediaPlayer.start();
             isPaused = false;
-            Intent intent = new Intent(Player.SONG_RESUMED);
-            sendBroadcast(intent);
+            intent.putExtra(IS_PAUSED,isPaused);
         }
         else {
             mediaPlayer.pause();
             isPaused = true;
-            Intent intent = new Intent(Player.SONG_PAUSED);
-            sendBroadcast(intent);
+            intent.putExtra(IS_PAUSED,isPaused);
         }
+
+        sendBroadcast(intent);
+    }
+
+    public void seekTo(int seekPosition){
+        mediaPlayer.seekTo(seekPosition*1000);
     }
 
     public void playPrev(){
@@ -232,10 +247,6 @@ public class MusicService extends Service implements
             playSong();
             buildNotification();
         }
-
-        Intent intent = new Intent(Player.UPDATE_PLAYER_UI);
-        intent.putExtra(SONG_NAME,songsSet.get(songPosition).getTitle());
-        sendBroadcast(intent);
     }
 
     public void playNext(){
@@ -245,9 +256,5 @@ public class MusicService extends Service implements
             playSong();
             buildNotification();
         }
-
-        Intent intent = new Intent(Player.UPDATE_PLAYER_UI);
-        intent.putExtra(SONG_NAME,songsSet.get(songPosition).getTitle());
-        sendBroadcast(intent);
     }
 }
