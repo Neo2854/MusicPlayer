@@ -3,7 +3,6 @@ package com.example.musicplayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,8 +25,8 @@ public class PlaylistRecyclerAdapter extends RecyclerView.Adapter<PlaylistRecycl
         public PlaylistViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            Iv = itemView.findViewById(R.id.playlistImage);
-            Tv = itemView.findViewById(R.id.playlistName);
+            Iv = itemView.findViewById(R.id.genreImage);
+            Tv = itemView.findViewById(R.id.genreName);
             Iv.setImageResource(R.drawable.heart_filled_icon);
         }
     }
