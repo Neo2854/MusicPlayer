@@ -15,9 +15,9 @@
         android:contentDescription="@string/image_of_the_song"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/artistName"
         app:srcCompat="@drawable/reputation" />
 
     <SeekBar
@@ -28,7 +28,7 @@
         android:thumbTint="@color/colorBlack"
         app:layout_constraintBottom_toTopOf="@+id/pause"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.558"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -43,7 +43,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/favourite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBar"
         app:srcCompat="@drawable/pause_icon" />
@@ -142,7 +142,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pause"
         app:srcCompat="@drawable/heart_outline_icon" />
@@ -188,7 +188,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/collapseIcon"
         app:layout_constraintEnd_toStartOf="@+id/vertical3Dots"
-        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toEndOf="@+id/collapseIcon"
         app:layout_constraintTop_toTopOf="@+id/vertical3Dots" />
 
@@ -213,7 +213,7 @@
         app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/artistName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="artistName"
@@ -221,7 +221,7 @@
         android:textSize="20sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/songName" />
 
