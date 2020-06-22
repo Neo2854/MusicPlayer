@@ -52,6 +52,7 @@ public class Player extends AppCompatActivity {
                 case UPDATE_UI:
                     //Song Details
                     songTv.setText(MusicService.songsSet.get(MusicService.songPosition).getTitle());
+                    artistTv.setText(MusicService.songsSet.get(MusicService.songPosition).getArtist());
                     //Shared Prefs
                     if(MusicService.shuffle){
                         shuffleBt.setImageResource(R.drawable.shuffle_icon_on);
@@ -224,7 +225,7 @@ public class Player extends AppCompatActivity {
 
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
-
+        artistTv    = findViewById(R.id.artistName);
         comTimeTv   = findViewById(R.id.com_time);
         remTimeTv   = findViewById(R.id.rem_time);
         songIv      = findViewById(R.id.imageView);
@@ -279,7 +280,7 @@ public class Player extends AppCompatActivity {
 
                     break;
                 case R.id.collapseIcon:
-
+                    finish();
                     break;
                 case R.id.vertical3Dots:
 
