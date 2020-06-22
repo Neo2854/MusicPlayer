@@ -1,102 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/image_of_the_song"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".3"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/reputation" />
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.8"
+        android:progressTint="@color/colorBlack"
         android:thumbTint="@color/colorBlack"
-        android:progressTint="@color/colorBlack"/>
+        app:layout_constraintBottom_toTopOf="@+id/pause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.558"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageButton
         android:id="@+id/pause"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/button_selector"
+        android:contentDescription="@string/to_pause"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/favourite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/pause_icon"
-        android:contentDescription="@string/to_pause" />
+        app:layout_constraintTop_toBottomOf="@+id/seekBar"
+        app:srcCompat="@drawable/pause_icon" />
 
     <ImageButton
         android:id="@+id/previous"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/button_selector"
+        android:contentDescription="@string/to_go_to_previous_song"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/pause"
         app:layout_constraintEnd_toStartOf="@+id/pause"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/previous_icon"
-        android:contentDescription="@string/to_go_to_previous_song" />
+        app:layout_constraintTop_toTopOf="@+id/pause"
+        app:srcCompat="@drawable/previous_icon" />
 
     <ImageButton
         android:id="@+id/next"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:padding="10dp"
+        android:background="@drawable/button_selector"
+        android:contentDescription="@string/to_go_to_next_song"
+        app:layout_constraintBottom_toBottomOf="@+id/pause"
         app:layout_constraintStart_toEndOf="@+id/pause"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/next_icon"
-        android:contentDescription="@string/to_go_to_next_song" />
+        app:layout_constraintTop_toTopOf="@+id/pause"
+        app:srcCompat="@drawable/next_icon" />
 
     <ImageButton
         android:id="@+id/shuffle"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:adjustViewBounds="true"
         android:background="@android:color/transparent"
         android:contentDescription="@string/to_shuffle"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
-        app:layout_constraintEnd_toStartOf="@+id/previous"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/shuffle_icon" />
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_info"
+        app:layout_constraintEnd_toStartOf="@+id/edit_info"
+        app:layout_constraintTop_toTopOf="@+id/edit_info"
+        app:srcCompat="@drawable/shuffle_icon_off" />
 
     <ImageButton
         android:id="@+id/repeat"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:adjustViewBounds="true"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
-        app:layout_constraintStart_toEndOf="@+id/next"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/repeat_icon"
-        android:contentDescription="@string/to_repeat" />
+        android:contentDescription="@string/to_repeat"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/add_playlist"
+        app:layout_constraintStart_toEndOf="@+id/add_playlist"
+        app:layout_constraintTop_toTopOf="@+id/add_playlist"
+        app:srcCompat="@drawable/repeat_icon" />
 
     <ImageButton
         android:id="@+id/collapseIcon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:padding="10dp"
+        android:background="@drawable/button_selector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/collapse_icon"
@@ -106,7 +121,10 @@
         android:id="@+id/vertical3Dots"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:padding="10dp"
+        android:background="@drawable/button_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/vertical_3dots_icon"
@@ -114,27 +132,65 @@
 
     <ImageButton
         android:id="@+id/favourite"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/pause"
+        android:contentDescription="@string/to_add_to_favourites"
+        android:padding="12dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:srcCompat="@drawable/heart_outline_icon"
-        android:contentDescription="@string/to_add_to_favourites" />
+        app:layout_constraintTop_toBottomOf="@+id/pause"
+        app:srcCompat="@drawable/heart_outline_icon" />
+
+    <ImageButton
+        android:id="@+id/edit_info"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/button_selector"
+        android:contentDescription="To edit song info"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/favourite"
+        app:layout_constraintEnd_toStartOf="@+id/favourite"
+        app:layout_constraintTop_toTopOf="@+id/favourite"
+        app:srcCompat="@drawable/edit_icon" />
+
+    <ImageButton
+        android:id="@+id/add_playlist"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/button_selector"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/favourite"
+        app:layout_constraintStart_toEndOf="@+id/favourite"
+        app:layout_constraintTop_toTopOf="@+id/favourite"
+        app:srcCompat="@drawable/playlist_add_icon" />
 
     <TextView
         android:id="@+id/songName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"
         android:text="@string/song_name"
-        android:textSize="30sp"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collapseIcon" />
+        app:layout_constraintBottom_toBottomOf="@+id/collapseIcon"
+        app:layout_constraintEnd_toStartOf="@+id/vertical3Dots"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toEndOf="@+id/collapseIcon"
+        app:layout_constraintTop_toTopOf="@+id/vertical3Dots" />
 
     <TextView
         android:id="@+id/com_time"
@@ -142,10 +198,9 @@
         android:layout_height="wrap_content"
         android:text="@string/_00_00"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBar"
-        app:layout_constraintEnd_toStartOf="@+id/seekBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/seekBar" />
+        android:textColor="@color/colorGrey"
+        app:layout_constraintStart_toStartOf="@+id/seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
     <TextView
         android:id="@+id/rem_time"
@@ -153,10 +208,22 @@
         android:layout_height="wrap_content"
         android:text="@string/_10_00"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/seekBar"
+        android:textColor="@color/colorGrey"
+        app:layout_constraintEnd_toEndOf="@+id/seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="artistName"
+        android:textColor="@color/colorGrey"
+        android:textSize="20sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/seekBar"
-        app:layout_constraintTop_toTopOf="@+id/seekBar" />
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/songName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,8 @@
     <color name="colorBlack">#000000</color>
     <color name="colorRed">#FF0000</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorGrey">#C3BEBE</color>
+    <color name="colorGrey">#808080</color>
     <color name="semiTransparent">#1Affffff</color>
     <color name="semiTransparent50">#80ffffff</color>
+    <color name="colorDeepPink">#FF1493</color>
 </resources>
