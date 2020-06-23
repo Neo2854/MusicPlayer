@@ -46,7 +46,7 @@
         app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBar"
-        app:srcCompat="@drawable/pause_icon" />
+        app:srcCompat="@drawable/pause_selector" />
 
     <ImageButton
         android:id="@+id/previous"
@@ -152,7 +152,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:adjustViewBounds="true"
-        android:background="@color/colorGrey"
+        android:background="@android:color/transparent"
         android:contentDescription="To edit song info"
         android:padding="10dp"
         android:scaleType="fitCenter"
@@ -166,7 +166,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:adjustViewBounds="true"
-        android:background="@color/colorGrey"
+        android:background="@android:color/transparent"
         android:padding="10dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/favourite"
