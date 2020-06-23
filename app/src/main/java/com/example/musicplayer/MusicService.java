@@ -3,6 +3,7 @@ package com.example.musicplayer;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -196,18 +197,12 @@ public class MusicService extends Service implements
     }
 
     private void buildNotification(){
-        Intent mainActivityIntent = new Intent(this,MainActivity.class);
-        mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        Intent playerIntent = new Intent(this,Player.class);
 
-        Intent intents[] = {
-                mainActivityIntent,
-                new Intent(this,Player.class)
-        };
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntentWithParentStack(playerIntent);
 
-        PendingIntent pendingIntent = PendingIntent.getActivities(this,
-                0,
-                intents,
-                0);
+        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(this,MUSCI_CHANNEL_ID)
                 .setContentTitle(songsSet.get(songPosition).getTitle())
