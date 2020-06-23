@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/next_on_icon"
+    <item android:drawable="@drawable/play_on_icon"
         android:state_pressed="true"
         android:state_focused="true"/>
-    <item android:drawable="@drawable/next_on_icon"
+    <item android:drawable="@drawable/play_on_icon"
         android:state_pressed="true"
         android:state_focused="false"/>
-    <item android:drawable="@drawable/next_icon"
+    <item android:drawable="@drawable/play_icon"
         android:state_pressed="false"
         android:state_focused="true"/>
-    <item android:drawable="@drawable/next_icon"
+    <item android:drawable="@drawable/play_icon"
         android:state_focused="false"
         android:state_pressed="false"/>
 </selector>
