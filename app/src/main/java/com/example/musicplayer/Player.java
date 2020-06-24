@@ -331,11 +331,11 @@ public class Player extends AppCompatActivity {
 
     private void handlePause(){
         if(MusicService.isPaused){
-            pauseBt.setImageResource(R.drawable.play_icon);
+            pauseBt.setImageResource(R.drawable.play_selector);
             sbHandler.removeCallbacks(sbRunnable);
         }
         else {
-            pauseBt.setImageResource(R.drawable.pause_icon);
+            pauseBt.setImageResource(R.drawable.pause_selector);
             sbHandler.postDelayed(sbRunnable,200);
         }
     }
