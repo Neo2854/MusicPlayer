@@ -18,45 +18,54 @@
             android:id="@+id/genreImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
             android:src="@drawable/reputation"/>
-
-        <TextView
-            android:id="@+id/genreName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="playlistName"
-            android:layout_below="@+id/genreImage"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            android:textSize="20sp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/colorWhite"/>
 
         <ImageButton
             android:id="@+id/genrePlayButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/genreImage"
-            android:layout_alignBottom="@+id/genreImage"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="0dp"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/play_icon" />
-
-        <ImageButton
-            android:id="@+id/genreMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignEnd="@+id/genreImage"
             android:layout_alignBottom="@+id/genreImage"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/vertical_3dots_icon" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/grid_play_selector" />
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/genreImage"
+            android:layout_alignStart="@+id/genreImage"
+            android:layout_alignEnd="@+id/genreImage"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:id="@+id/genreName"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="genreName"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/genreMenu"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/vertical_3dots_icon" />
+        </LinearLayout>
 
     </RelativeLayout>
+
+
 
 </androidx.cardview.widget.CardView>
