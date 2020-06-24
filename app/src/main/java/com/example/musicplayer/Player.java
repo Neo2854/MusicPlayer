@@ -69,6 +69,8 @@ public class Player extends AppCompatActivity {
                     }
 
                     //Pause,Play and Seekbar
+                    previousBt.setEnabled(true);
+                    nextBt.setEnabled(true);
                     int duration = musicService.getSongDuration();
                     if(duration > 0){
                         remTimeTv.setText(formatMillis(duration));
@@ -262,9 +264,13 @@ public class Player extends AppCompatActivity {
                     break;
                 case R.id.previous:
                     musicService.playPrev();
+                    previousBt.setEnabled(false);
+                    nextBt.setEnabled(false);
                     break;
                 case R.id.next:
                     musicService.playNext();
+                    previousBt.setEnabled(false);
+                    nextBt.setEnabled(false);
                     break;
                 case R.id.shuffle:
                     if(MusicService.shuffle){
@@ -325,11 +331,11 @@ public class Player extends AppCompatActivity {
 
     private void handlePause(){
         if(MusicService.isPaused){
-            pauseBt.setImageResource(R.drawable.play_icon);
+            pauseBt.setImageResource(R.drawable.play_selector);
             sbHandler.removeCallbacks(sbRunnable);
         }
         else {
-            pauseBt.setImageResource(R.drawable.pause_icon);
+            pauseBt.setImageResource(R.drawable.pause_selector);
             sbHandler.postDelayed(sbRunnable,200);
         }
     }
