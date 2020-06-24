@@ -22,40 +22,67 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/reputation" />
 
-        <TextView
-            android:id="@+id/albumName"
-            android:layout_width="wrap_content"
+        <TableLayout
+            android:id="@+id/albumTableLayout"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/albumImage"
+            android:layout_alignStart="@+id/albumImage"
+            android:layout_alignEnd="@+id/albumImage"
+            android:layout_marginStart="0dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="albumName"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:background="@color/colorWhite">
+
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/albumLinearLayout">
+
+                <TextView android:id="@+id/albumName"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:text="albumName"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+                <ImageButton
+                    android:id="@+id/albumMenu"
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/vertical_3dots_icon" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/albumArtistName"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:text="albumArtistName"
+                android:textColor="@color/colorGrey"
+                android:textSize="10sp"
+                android:textStyle="italic"
+                android:ellipsize="end"
+                android:lines="1"/>
+
+        </TableLayout>
 
         <ImageButton
             android:id="@+id/albumPlayButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/albumImage"
-            android:layout_alignBottom="@+id/albumImage"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="0dp"
-            app:srcCompat="@drawable/play_icon"
-            android:background="@android:color/transparent"/>
-
-        <ImageButton
-            android:id="@+id/albumMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignEnd="@+id/albumImage"
             android:layout_alignBottom="@+id/albumImage"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
-            app:srcCompat="@drawable/vertical_3dots_icon"
-            android:background="@android:color/transparent"/>
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/grid_play_selector" />
 
     </RelativeLayout>
 

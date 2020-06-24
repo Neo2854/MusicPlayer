@@ -18,6 +18,5 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@android:color/transparent"
         android:scrollbars="vertical"
-        android:scrollbarStyle="insideInset"
         android:padding="4dp"/>
 </LinearLayout>
