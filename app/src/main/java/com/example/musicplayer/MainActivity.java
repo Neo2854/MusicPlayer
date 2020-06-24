@@ -23,11 +23,12 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    private final int tabIconsCount = 3;
     private int[] tabIcons = {
             R.drawable.albums_icon,
             R.drawable.songs_icon,
-            R.drawable.playlist_icon
+            R.drawable.play_icon,
+            R.drawable.playlist_icon,
+            R.drawable.genre_icon
     };
 
     private ViewPager viewPager;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         //Setting Tab Icons
-        for (int i=0;i<tabIconsCount;i++){
+        for (int i=0;i<tabIcons.length;i++){
             tabLayout.getTabAt(i).setIcon(tabIcons[i]);
         }
 

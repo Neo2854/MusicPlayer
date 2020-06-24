@@ -32,14 +32,12 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
     public static class SongViewHolder extends RecyclerView.ViewHolder {
         private TextView songTv;
         private TextView artistTv;
-        private ImageView albumIv;
 
         public SongViewHolder(@NonNull View itemView, final onItemClickListener listener) {
             super(itemView);
 
             songTv   = itemView.findViewById(R.id.sName);
             artistTv = itemView.findViewById(R.id.aName);
-            albumIv  = itemView.findViewById(R.id.image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

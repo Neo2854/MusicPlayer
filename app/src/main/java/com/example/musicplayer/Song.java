@@ -11,13 +11,11 @@ public class Song {
     private long id;
     private String title;
     private String artist;
-    private long duration;
 
-    public Song(long id,String title,String artist,long duration){
+    public Song(long id,String title,String artist){
         this.id       = id;
         this.title    = title;
         this.artist   = artist;
-        this.duration = duration;
     }
 
     public long getId(){
@@ -30,9 +28,5 @@ public class Song {
 
     public String getArtist() {
         return artist;
-    }
-
-    public long getDuration() {
-        return duration;
     }
 }

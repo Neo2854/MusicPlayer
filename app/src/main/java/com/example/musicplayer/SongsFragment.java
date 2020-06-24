@@ -83,13 +83,11 @@ public class SongsFragment extends Fragment {
             int idCol       = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
             int titleCol    = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int artistCol   = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-            int durationCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             do {
                 long id       = musicCursor.getLong(idCol);
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
-                long duration = musicCursor.getLong(durationCol);
-                MusicService.songsSet.add(new Song(id,title,artist,duration));
+                MusicService.songsSet.add(new Song(id,title,artist));
             }while (musicCursor.moveToNext());
         }
 
