@@ -16,7 +16,7 @@ public class GenreFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentView = inflater.inflate(R.layout.genre_fragment,container,false);
+        fragmentView = inflater.inflate(R.layout.artist_fragment,container,false);
 
         return fragmentView;
     }

@@ -10,7 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/genreRecyclerView"
+        android:id="@+id/artistRecyclerView"
         android:scrollbars="vertical"
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
