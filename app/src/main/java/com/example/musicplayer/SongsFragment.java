@@ -76,22 +76,23 @@ public class SongsFragment extends Fragment {
 
     private void createSongsList(){
         if(musicResolver != null){
-            musicCursor = musicResolver.query(musicUri,null,null,null,null);
+            musicCursor = musicResolver.query(musicUri,null,"is_music != 0",null,null);
         }
 
         if(musicCursor != null && musicCursor.moveToFirst()){
             int idCol       = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
             int titleCol    = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
             int artistCol   = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-            int durationCol = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
             do {
                 long id       = musicCursor.getLong(idCol);
                 String title  = musicCursor.getString(titleCol);
                 String artist = musicCursor.getString(artistCol);
-                long duration = musicCursor.getLong(durationCol);
-                MusicService.songsSet.add(new Song(id,title,artist,duration));
+                if(!title.matches("^AUD-.*-WA.*"))
+                MusicService.songsSet.add(new Song(id,title,artist));
             }while (musicCursor.moveToNext());
         }
+
+        Log.d("SIZE",Integer.toString(MusicService.songsSet.size()));
 
         MusicService.songsSet.sort();
     }

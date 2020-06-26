@@ -7,10 +7,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -23,11 +27,12 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    private final int tabIconsCount = 3;
     private int[] tabIcons = {
             R.drawable.albums_icon,
             R.drawable.songs_icon,
-            R.drawable.playlist_icon
+            R.drawable.play_icon,
+            R.drawable.playlist_icon,
+            R.drawable.artist_icon
     };
 
     private ViewPager viewPager;
@@ -88,6 +93,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void createLocalDataBase(){
+        ContentResolver contentResolver = getContentResolver();
+        Uri mediaUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+
+        Cursor cursor = contentResolver.query(mediaUri,LocalDatabase.projection,LocalDatabase.selection,null,null);
+
+        if(cursor.moveToFirst()){
+
+        }
+    }
+
     private void Initialize(){
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
@@ -96,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         //Setting Tab Icons
-        for (int i=0;i<tabIconsCount;i++){
+        for (int i=0;i<tabIcons.length;i++){
             tabLayout.getTabAt(i).setIcon(tabIcons[i]);
         }
 

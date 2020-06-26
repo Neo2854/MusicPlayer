@@ -17,7 +17,7 @@ public class PlaylistFragment extends Fragment {
     //Views
     private View fragmentView;
     private RecyclerView playlistRecyclerView;
-    private PlaylistRecyclerAdapter playlistRecyclerAdapter;
+    private GridRecyclerAdapter playlistRecyclerAdapter;
 
     @Nullable
     @Override

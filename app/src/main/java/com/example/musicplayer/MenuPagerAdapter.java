@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class MenuPagerAdapter extends FragmentPagerAdapter {
 
-    private final int menuItemsCount = 3;
+    private final int menuItemsCount = 5;
 
     public MenuPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -19,13 +19,15 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new PlaylistFragment();
+                return new AlbumFragment();
             case 1:
                 return new SongsFragment();
-            case 2:
-                return new AlbumFragment();
+            case 3:
+                return new PlaylistFragment();
+            case 4:
+                return new GenreFragment();
             default:
-                return null;
+                return new GenreFragment();
         }
     }
 
