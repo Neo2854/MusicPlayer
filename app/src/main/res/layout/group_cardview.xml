@@ -1,47 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="@color/card_selector"
     app:cardPreventCornerOverlap="true"
+    app:cardBackgroundColor="@color/card_selector"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/groupImage"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="2dp" />
+            android:padding="2dp"/>
 
         <TextView
-            android:id="@+id/sName"
+            android:id="@+id/groupSongName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/image"
-            android:text="songName"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-            android:ellipsize="end"
-            android:maxLines="1"/>
-
-        <TextView
-            android:id="@+id/aName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_toEndOf="@+id/image"
+            android:layout_toEndOf="@+id/groupImage"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="albumName"
-            android:textColor="@color/colorWhite"
+            android:text="groupSongName"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/groupArtistName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/groupSongName"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/groupImage"
+            android:text="groupArtistName"
             android:textSize="15sp" />
+
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

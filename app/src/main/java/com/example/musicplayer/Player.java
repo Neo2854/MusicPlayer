@@ -10,15 +10,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -27,7 +24,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 
 public class Player extends AppCompatActivity {
@@ -227,7 +223,7 @@ public class Player extends AppCompatActivity {
 
         playerSb    = findViewById(R.id.seekBar);
         songTv      = findViewById(R.id.songName);
-        artistTv    = findViewById(R.id.artistName);
+        artistTv    = findViewById(R.id.playerArtistName);
         comTimeTv   = findViewById(R.id.com_time);
         remTimeTv   = findViewById(R.id.rem_time);
         songIv      = findViewById(R.id.imageView);
