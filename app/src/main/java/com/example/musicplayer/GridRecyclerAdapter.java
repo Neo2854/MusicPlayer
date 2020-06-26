@@ -11,6 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapter.GridViewHolder> {
     private int layout;
+    private onItemClickListener listener;
+
+    public interface onItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(onItemClickListener listener){
+        this.listener = listener;
+    }
 
     public GridRecyclerAdapter(int layout){
         this.layout = layout;
