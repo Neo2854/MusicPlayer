@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         cursor.getString(LocalDatabase.ALBUM),
                         cursor.getString(LocalDatabase.ARTIST)
                 );
-                if(!song.getTitle().matches("^AUD-.*-WA.*")){
+                if(!song.getTitle().matches("^(AUD-.*-WA.*|Rec.*|REC.*)")){
                     LocalDatabase.allSongsSet.add(song);
                     LocalDatabase.albumsSet.add(song.getAlbum());
                     LocalDatabase.artistsSet.add(song.getArtist());

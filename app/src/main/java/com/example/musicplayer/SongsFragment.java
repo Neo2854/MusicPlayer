@@ -42,10 +42,6 @@ public class SongsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.songs_fragment,container,false);
 
-        if(MusicService.songsSet == null){
-            MusicService.songsSet = new SongSet();
-        }
-
         Initialize();
         createSongsList();
         populateSongs();
@@ -72,12 +68,10 @@ public class SongsFragment extends Fragment {
 
     private void createSongsList(){
         LocalDatabase.allSongsSet.sort();
-
-        MusicService.songsSet = LocalDatabase.allSongsSet;
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(MusicService.songsSet);
+        songsRecyclerAdapter = new SongsRecyclerAdapter(LocalDatabase.allSongsSet);
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -87,6 +81,11 @@ public class SongsFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 playerActivityIntent = new Intent(getContext(),Player.class);
+                if(MusicService.playType != MusicService.songs){
+                    MusicService.playType = MusicService.songs;
+                    MusicService.songsSet = LocalDatabase.allSongsSet;
+                }
+
                 MusicService.songPosition = position;
                 startActivity(playerActivityIntent);
             }
