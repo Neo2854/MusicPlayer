@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private int[] tabIcons = {
             R.drawable.albums_icon,
             R.drawable.songs_icon,
-            R.drawable.play_icon,
+            R.drawable.music_note_icon,
             R.drawable.playlist_icon,
             R.drawable.artist_icon
     };
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(arePermissionsGranted()){
+            createLocalDataBase();
             Initialize();
         }
         else{
@@ -100,8 +102,33 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = contentResolver.query(mediaUri,LocalDatabase.projection,LocalDatabase.selection,null,null);
 
         if(cursor.moveToFirst()){
+            do {
+                Song song = new Song(
+                        cursor.getLong(LocalDatabase.ID),
+                        cursor.getString(LocalDatabase.TITLE),
+                        cursor.getInt(LocalDatabase.ALBUM_ID),
+                        cursor.getString(LocalDatabase.ALBUM),
+                        cursor.getString(LocalDatabase.ARTIST)
+                );
+                if(!song.getTitle().matches("^AUD-.*-WA.*")){
+                    LocalDatabase.allSongsSet.add(song);
+                    LocalDatabase.albumsSet.add(song.getAlbum());
+                    LocalDatabase.artistsSet.add(song.getArtist());
 
+                    if(LocalDatabase.albumMap.get(song.getAlbum()) == null){
+                        LocalDatabase.albumMap.put(song.getAlbum(),new SongSet());
+                    }
+                    LocalDatabase.albumMap.get(song.getAlbum()).add(song);
+
+                    if(LocalDatabase.artistMap.get(song.getArtist()) == null){
+                        LocalDatabase.artistMap.put(song.getArtist(),new SongSet());
+                    }
+                    LocalDatabase.artistMap.get(song.getArtist()).add(song);
+                }
+            }while (cursor.moveToNext());
         }
+
+        cursor.close();
     }
 
     private void Initialize(){
