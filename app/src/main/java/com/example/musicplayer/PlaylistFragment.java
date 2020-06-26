@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class PlaylistFragment extends Fragment {
+    private static final int COL_COUNT = 2;
     //Views
     private View fragmentView;
     private RecyclerView playlistRecyclerView;
@@ -41,6 +42,6 @@ public class PlaylistFragment extends Fragment {
     }
 
     private void populatePlaylists(){
-        playlistRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        playlistRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),COL_COUNT));
     }
 }

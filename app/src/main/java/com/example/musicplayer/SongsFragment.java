@@ -57,44 +57,23 @@ public class SongsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        musicCursor.close();
     }
 
     private void Initialize(){
         songsRecyclerView = fragmentView.findViewById(R.id.songsRecyclerView);
         songsRecyclerView.setHasFixedSize(true);
 
-        musicResolver = getActivity().getContentResolver();
-        musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
     }
 
     private void createSongsList(){
-        if(musicResolver != null){
-            musicCursor = musicResolver.query(musicUri,null,"is_music != 0",null,null);
-        }
+        LocalDatabase.allSongsSet.sort();
 
-        if(musicCursor != null && musicCursor.moveToFirst()){
-            int idCol       = musicCursor.getColumnIndex(MediaStore.Audio.Media._ID);
-            int titleCol    = musicCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-            int artistCol   = musicCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-            do {
-                long id       = musicCursor.getLong(idCol);
-                String title  = musicCursor.getString(titleCol);
-                String artist = musicCursor.getString(artistCol);
-                if(!title.matches("^AUD-.*-WA.*"))
-                MusicService.songsSet.add(new Song(id,title,artist));
-            }while (musicCursor.moveToNext());
-        }
-
-        Log.d("SIZE",Integer.toString(MusicService.songsSet.size()));
-
-        MusicService.songsSet.sort();
+        MusicService.songsSet = LocalDatabase.allSongsSet;
     }
 
     private void populateSongs(){

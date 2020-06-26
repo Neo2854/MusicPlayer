@@ -13,10 +13,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class AlbumFragment extends Fragment {
+    private static final int COL_COUNT = 2;
     //Views
     private View fragmentView;
+    private RecyclerView albumsRecyclerView;
+    private GridRecyclerAdapter albumsRecyclerAdapter;
 
     @Nullable
     @Override
@@ -31,25 +36,17 @@ public class AlbumFragment extends Fragment {
     }
 
     private void Initialize(){
-        ContentResolver contentResolver = getActivity().getContentResolver();
-        Uri albumUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-
-        Cursor albumCursor = contentResolver.query(albumUri,null,"is_music != 0 and duration > 50000",null,null);
-
-        if(albumCursor != null &&  albumCursor.moveToFirst()){
-            int albumCol = albumCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
-            int alnumName = albumCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-            do {
-                Log.d("ALBUM",Integer.toString(albumCursor.getInt(albumCol)) + "  "+ albumCursor.getString(alnumName));
-            }while (albumCursor.moveToNext());
-        }
+        albumsRecyclerView = fragmentView.findViewById(R.id.albumRecyclerView);
+        albumsRecyclerView.setHasFixedSize(true);
     }
 
     private void createAlbums(){
-
+        LocalDatabase.albumsSet.sort();
     }
 
     private void populateAlbums(){
-
+        albumsRecyclerAdapter = new GridRecyclerAdapter(R.layout.albums_gridview);
+        albumsRecyclerView.setAdapter(albumsRecyclerAdapter);
+        albumsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),COL_COUNT));
     }
 }

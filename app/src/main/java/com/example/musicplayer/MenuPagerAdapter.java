@@ -25,9 +25,9 @@ public class MenuPagerAdapter extends FragmentPagerAdapter {
             case 3:
                 return new PlaylistFragment();
             case 4:
-                return new GenreFragment();
+                return new ArtistFragment();
             default:
-                return new GenreFragment();
+                return new ArtistFragment();
         }
     }
 
