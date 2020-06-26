@@ -25,8 +25,8 @@ public class PlaylistRecyclerAdapter extends RecyclerView.Adapter<PlaylistRecycl
         public PlaylistViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            Iv = itemView.findViewById(R.id.genreImage);
-            Tv = itemView.findViewById(R.id.genreName);
+            Iv = itemView.findViewById(R.id.artistImage);
+            Tv = itemView.findViewById(R.id.artistName);
             Iv.setImageResource(R.drawable.heart_filled_icon);
         }
     }
