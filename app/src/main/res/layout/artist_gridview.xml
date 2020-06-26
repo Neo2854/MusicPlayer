@@ -15,7 +15,7 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/genreImage"
+            android:id="@+id/artistImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginLeft="0dp"
@@ -23,11 +23,11 @@
             android:src="@drawable/reputation"/>
 
         <ImageButton
-            android:id="@+id/genrePlayButton"
+            android:id="@+id/artistPlayButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignEnd="@+id/genreImage"
-            android:layout_alignBottom="@+id/genreImage"
+            android:layout_alignEnd="@+id/artistImage"
+            android:layout_alignBottom="@+id/artistImage"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
@@ -35,18 +35,19 @@
             android:src="@drawable/grid_play_selector" />
 
         <LinearLayout
+            android:id="@+id/artistLinearLayout"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/genreImage"
-            android:layout_alignStart="@+id/genreImage"
-            android:layout_alignEnd="@+id/genreImage"
+            android:layout_below="@+id/artistImage"
+            android:layout_alignStart="@+id/artistImage"
+            android:layout_alignEnd="@+id/artistImage"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
             android:background="@color/colorWhite">
 
             <TextView
-                android:id="@+id/genreName"
+                android:id="@+id/artistName"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -57,7 +58,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/genreMenu"
+                android:id="@+id/artistMenu"
                 android:layout_width="25dp"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
