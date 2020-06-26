@@ -7,10 +7,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -28,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.songs_icon,
             R.drawable.play_icon,
             R.drawable.playlist_icon,
-            R.drawable.genre_icon
+            R.drawable.artist_icon
     };
 
     private ViewPager viewPager;
@@ -86,6 +90,17 @@ public class MainActivity extends AppCompatActivity {
             else {
                 requestPermissions(PERMISSIONS,STORAGE_PERMISSION_CODE);
             }
+        }
+    }
+
+    private void createLocalDataBase(){
+        ContentResolver contentResolver = getContentResolver();
+        Uri mediaUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+
+        Cursor cursor = contentResolver.query(mediaUri,LocalDatabase.projection,LocalDatabase.selection,null,null);
+
+        if(cursor.moveToFirst()){
+
         }
     }
 

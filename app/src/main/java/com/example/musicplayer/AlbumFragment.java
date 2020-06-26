@@ -1,6 +1,11 @@
 package com.example.musicplayer;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +31,18 @@ public class AlbumFragment extends Fragment {
     }
 
     private void Initialize(){
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Uri albumUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
 
+        Cursor albumCursor = contentResolver.query(albumUri,null,"is_music != 0 and duration > 50000",null,null);
+
+        if(albumCursor != null &&  albumCursor.moveToFirst()){
+            int albumCol = albumCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
+            int alnumName = albumCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
+            do {
+                Log.d("ALBUM",Integer.toString(albumCursor.getInt(albumCol)) + "  "+ albumCursor.getString(alnumName));
+            }while (albumCursor.moveToNext());
+        }
     }
 
     private void createAlbums(){
