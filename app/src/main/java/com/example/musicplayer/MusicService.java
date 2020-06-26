@@ -40,6 +40,10 @@ public class MusicService extends Service implements
         MediaPlayer.OnSeekCompleteListener,
         MediaPlayer.OnBufferingUpdateListener,
         MediaPlayer.OnInfoListener{
+    //Constants
+    public static final int album = 0;
+    public static final int songs = 1;
+    public static final int artist = 3;
     //Broadcast Actions
     public static final String REQUEST_UI = "com.example.musicplayer.musicservice.request_ui";
 
@@ -59,8 +63,9 @@ public class MusicService extends Service implements
         }
     };
     //Shared Variables
-    public static SongSet songsSet;
+    public static SongSet songsSet = new SongSet();
     public static FavSet favSet;
+    public static int playType;
     public static int songPosition;
     public static boolean isPaused = false;
     public static boolean isServiceStarted = false;
