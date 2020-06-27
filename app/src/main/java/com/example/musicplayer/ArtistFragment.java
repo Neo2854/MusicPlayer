@@ -52,7 +52,11 @@ public class ArtistFragment extends Fragment {
         artistRecyclerAdapter.setOnItemClickListener(new GridRecyclerAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.d("CLICKED ARTIST",Integer.toString(position));
+                GroupActivity.playType = MusicService.artist;
+                GroupActivity.songSet = LocalDatabase.artistMap.get(LocalDatabase.artistsSet.get(position));
+
+                Intent groupActivityIntent = new Intent(getContext(),GroupActivity.class);
+                startActivity(groupActivityIntent);
             }
 
             @Override

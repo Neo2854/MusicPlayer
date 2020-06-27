@@ -30,12 +30,6 @@ public class SongsFragment extends Fragment {
     private View fragmentView;
     private RecyclerView songsRecyclerView;
     private SongsRecyclerAdapter songsRecyclerAdapter;
-    //Contents
-    private ContentResolver musicResolver;
-    private Cursor musicCursor;
-    //Intents and Uris
-    private Uri musicUri;
-    private Intent playerActivityIntent;
 
     @Nullable
     @Override
@@ -80,7 +74,7 @@ public class SongsFragment extends Fragment {
         songsRecyclerAdapter.setOnItemClickListener(new SongsRecyclerAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                playerActivityIntent = new Intent(getContext(),Player.class);
+                Intent playerActivityIntent = new Intent(getContext(),Player.class);
                 if(MusicService.playType != MusicService.songs){
                     MusicService.playType = MusicService.songs;
                     MusicService.songsSet = LocalDatabase.allSongsSet;
