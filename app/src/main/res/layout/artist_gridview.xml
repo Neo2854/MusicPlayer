@@ -13,54 +13,74 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/artistImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/reputation" />
 
         <TableLayout
             android:id="@+id/artistTableLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/artistImage"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp">
 
-            <ImageView
-                android:id="@+id/artistImage"
+            <LinearLayout
+                android:id="@+id/artistLinearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/reputation"
-                android:scaleType="fitXY"
-                android:layout_weight="1"/>
+                android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/artistLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/artistName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingLeft="7dp"
+                    android:text="artistName"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/artistMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/cardview_menu_icon" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/artistName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:layout_weight="1"
-                android:text="artistName"
+                android:id="@+id/artistSongsNumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="artistSongsNumber"
                 android:textColor="@color/colorWhite"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:paddingLeft="7dp"/>
-
-            <ImageButton
-                android:id="@+id/artistMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:src="@drawable/vertical_3dots_icon" />
-        </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="nothing"
-                android:textColor="@android:color/transparent"
+                android:textSize="10sp"
                 android:textStyle="italic"
-                android:textSize="10sp"/>
+                android:paddingLeft="7dp"/>
         </TableLayout>
+
+        <ImageButton
+            android:id="@+id/artistPlayButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/artistImage"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/grid_play_selector" />
     </RelativeLayout>
+
 
 
 
