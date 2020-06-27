@@ -43,6 +43,7 @@ public class MusicService extends Service implements
     //Constants
     public static final int album = 0;
     public static final int songs = 1;
+    public static final int playlist = 2;
     public static final int artist = 3;
     //Broadcast Actions
     public static final String REQUEST_UI = "com.example.musicplayer.musicservice.request_ui";
