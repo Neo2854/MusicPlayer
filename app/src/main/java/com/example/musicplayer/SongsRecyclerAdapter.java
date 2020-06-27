@@ -1,6 +1,11 @@
 package com.example.musicplayer;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +20,7 @@ import java.util.ArrayList;
 public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdapter.SongViewHolder> {
 
     private SongSet Songs;
+    private ContentResolver contentResolver;
     private onItemClickListener listener;
 
     public interface onItemClickListener{
@@ -25,19 +31,22 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
         this.listener = listener;
     }
 
-    public SongsRecyclerAdapter(SongSet titles){
+    public SongsRecyclerAdapter(SongSet titles,ContentResolver contentResolver){
         this.Songs   = titles;
+        this.contentResolver = contentResolver;
     }
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {
         private TextView songTv;
         private TextView artistTv;
+        private ImageView albumIv;
 
         public SongViewHolder(@NonNull View itemView, final onItemClickListener listener) {
             super(itemView);
 
             songTv   = itemView.findViewById(R.id.sName);
             artistTv = itemView.findViewById(R.id.aName);
+            albumIv = itemView.findViewById(R.id.image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,7 +59,9 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
                     }
                 }
             });
+
         }
+
     }
 
     @NonNull
@@ -62,10 +73,18 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SongsRecyclerAdapter.SongViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SongsRecyclerAdapter.SongViewHolder holder, int position) {
         holder.songTv.setText(Songs.get(position).getTitle());
         holder.artistTv.setText(Songs.get(position).getArtist());
 
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+
+        thread.start();
     }
 
     @Override

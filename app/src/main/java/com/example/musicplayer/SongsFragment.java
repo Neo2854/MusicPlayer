@@ -65,7 +65,7 @@ public class SongsFragment extends Fragment {
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(LocalDatabase.allSongsSet);
+        songsRecyclerAdapter = new SongsRecyclerAdapter(LocalDatabase.allSongsSet,getActivity().getContentResolver());
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

@@ -79,7 +79,7 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(songSet);
+        songsRecyclerAdapter = new SongsRecyclerAdapter(songSet,getContentResolver());
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
