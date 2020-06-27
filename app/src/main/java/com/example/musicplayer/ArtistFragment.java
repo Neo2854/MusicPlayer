@@ -1,6 +1,8 @@
 package com.example.musicplayer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ public class ArtistFragment extends Fragment {
         Initialize();
         createArtists();
         populateArtists();
+        setRecyclerViewListener();
 
         return fragmentView;
     }
@@ -43,6 +46,26 @@ public class ArtistFragment extends Fragment {
         artistRecyclerAdapter = new GridRecyclerAdapter(R.layout.artist_gridview);
         artistRecyclerView.setAdapter(artistRecyclerAdapter);
         artistRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),COL_COUNT));
+    }
+
+    private void setRecyclerViewListener(){
+        artistRecyclerAdapter.setOnItemClickListener(new GridRecyclerAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.d("CLICKED ARTIST",Integer.toString(position));
+            }
+
+            @Override
+            public void onPlayClick(int position) {
+                MusicService.playType = MusicService.artist;
+
+                MusicService.songsSet = LocalDatabase.artistMap.get(LocalDatabase.artistsSet.get(position));
+                MusicService.songPosition = 0;
+
+                Intent playerActivityIntent = new Intent(getContext(),Player.class);
+                startActivity(playerActivityIntent);
+            }
+        });
     }
 
 

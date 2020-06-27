@@ -1,6 +1,7 @@
 package com.example.musicplayer;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class AlbumFragment extends Fragment {
         Initialize();
         createAlbums();
         populateAlbums();
+        setRecyclerViewListener();
 
         return fragmentView;
     }
@@ -48,5 +50,24 @@ public class AlbumFragment extends Fragment {
         albumsRecyclerAdapter = new GridRecyclerAdapter(R.layout.albums_gridview);
         albumsRecyclerView.setAdapter(albumsRecyclerAdapter);
         albumsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),COL_COUNT));
+    }
+
+    private void setRecyclerViewListener(){
+        albumsRecyclerAdapter.setOnItemClickListener(new GridRecyclerAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.d("CLICKED ALBUM",Integer.toString(position));
+            }
+
+            @Override
+            public void onPlayClick(int position) {
+                MusicService.playType = MusicService.album;
+                MusicService.songsSet = LocalDatabase.albumMap.get(LocalDatabase.albumsSet.get(position));
+                MusicService.songPosition = 0;
+
+                Intent playerActivityIntent = new Intent(getContext(),Player.class);
+                startActivity(playerActivityIntent);
+            }
+        });
     }
 }
