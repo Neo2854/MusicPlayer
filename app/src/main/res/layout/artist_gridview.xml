@@ -1,70 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="7dp"
     app:cardPreventCornerOverlap="true"
     app:cardBackgroundColor="@color/card_selector"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/artistImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:src="@drawable/reputation"/>
 
-        <ImageButton
-            android:id="@+id/artistPlayButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignEnd="@+id/artistImage"
-            android:layout_alignBottom="@+id/artistImage"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/grid_play_selector" />
+        <TableLayout
+            android:id="@+id/artistTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/artistImage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/reputation"
+                android:scaleType="fitXY"
+                android:layout_weight="1"/>
 
         <LinearLayout
             android:id="@+id/artistLinearLayout"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/artistImage"
-            android:layout_alignStart="@+id/artistImage"
-            android:layout_alignEnd="@+id/artistImage"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="@color/colorWhite">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/artistName"
-                android:layout_width="125dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:layout_weight="1"
                 android:text="artistName"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorWhite"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingLeft="7dp"/>
 
             <ImageButton
                 android:id="@+id/artistMenu"
-                android:layout_width="25dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:src="@drawable/vertical_3dots_icon" />
         </LinearLayout>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="nothing"
+                android:textColor="@android:color/transparent"
+                android:textStyle="italic"
+                android:textSize="10sp"/>
+        </TableLayout>
     </RelativeLayout>
 
 

@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="7dp"
     app:cardPreventCornerOverlap="true"
     app:cardBackgroundColor="@color/card_selector"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/playlistImage"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
             android:src="@drawable/reputation"/>
 
         <ImageButton
@@ -36,7 +34,7 @@
 
         <LinearLayout
             android:id="@+id/playlistLinearLayout"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/playlistImage"
             android:layout_alignStart="@+id/playlistImage"
@@ -48,18 +46,20 @@
 
             <TextView
                 android:id="@+id/playlistName"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:layout_weight="1"
                 android:text="playlistName"
                 android:textColor="@color/colorBlack"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingLeft="7dp"/>
 
             <ImageButton
                 android:id="@+id/playlistMenu"
-                android:layout_width="25dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:src="@drawable/vertical_3dots_icon" />
