@@ -3,6 +3,7 @@ package com.example.musicplayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
 
     public interface onItemClickListener{
         void onItemClick(int position);
+        void onPlayClick(int position);
     }
 
     public void setOnItemClickListener(onItemClickListener listener){
@@ -29,7 +31,8 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
         private ImageView art;
         private TextView boldTv;
         private TextView lightTv;
-        public GridViewHolder(@NonNull View itemView,int layout) {
+        private ImageButton playIb;
+        public GridViewHolder(@NonNull View itemView,int layout,final onItemClickListener listener) {
             super(itemView);
 
             switch (layout){
@@ -37,15 +40,43 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
                     art = itemView.findViewById(R.id.albumImage);
                     boldTv = itemView.findViewById(R.id.albumName);
                     lightTv = itemView.findViewById(R.id.albumArtistName);
+                    playIb = itemView.findViewById(R.id.albumPlayButton);
                     break;
                 case R.layout.artist_gridview:
                     art = itemView.findViewById(R.id.artistImage);
                     boldTv = itemView.findViewById(R.id.artistName);
+                    playIb = itemView.findViewById(R.id.artistPlayButton);
                     break;
                 case R.layout.playlist_gridview:
-
+                    art = itemView.findViewById(R.id.playlistImage);
+                    boldTv = itemView.findViewById(R.id.playlistName);
+                    playIb = itemView.findViewById(R.id.playlistPlayButton);
                     break;
             }
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            playIb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onPlayClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -54,7 +85,7 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
     public GridRecyclerAdapter.GridViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(this.layout,parent,false);
-        return new GridViewHolder(view,layout);
+        return new GridViewHolder(view,layout,listener);
     }
 
     @Override
