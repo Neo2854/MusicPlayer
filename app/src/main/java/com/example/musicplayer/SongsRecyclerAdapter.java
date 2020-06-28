@@ -60,7 +60,7 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
 
             songTv   = itemView.findViewById(R.id.sName);
             artistTv = itemView.findViewById(R.id.aName);
-            albumIv = itemView.findViewById(R.id.image);
+            albumIv = itemView.findViewById(R.id.albumArt);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
