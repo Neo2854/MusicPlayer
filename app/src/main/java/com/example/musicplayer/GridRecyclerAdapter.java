@@ -45,11 +45,13 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
                 case R.layout.artist_gridview:
                     art = itemView.findViewById(R.id.artistImage);
                     boldTv = itemView.findViewById(R.id.artistName);
+                    lightTv = itemView.findViewById(R.id.artistSongsNumber);
                     playIb = itemView.findViewById(R.id.artistPlayButton);
                     break;
                 case R.layout.playlist_gridview:
                     art = itemView.findViewById(R.id.playlistImage);
                     boldTv = itemView.findViewById(R.id.playlistName);
+                    lightTv = itemView.findViewById(R.id.playlistSongsNumber);
                     playIb = itemView.findViewById(R.id.playlistPlayButton);
                     break;
             }
@@ -98,6 +100,15 @@ public class GridRecyclerAdapter extends RecyclerView.Adapter<GridRecyclerAdapte
                 break;
             case R.layout.artist_gridview:
                 holder.boldTv.setText(LocalDatabase.artistsSet.get(position));
+                int songNum = LocalDatabase.artistMap.get(LocalDatabase.artistsSet.get(position)).size();
+                String lightText;
+                if(songNum > 1){
+                    lightText = String.format("%d Songs",songNum);
+                }
+                else {
+                    lightText = String.format("%d Song",songNum);
+                }
+                holder.lightTv.setText(lightText);
                 holder.art.setImageResource(R.drawable.reputation);
                 break;
             case R.layout.playlist_gridview:

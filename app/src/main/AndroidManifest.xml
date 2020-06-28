@@ -26,6 +26,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".GroupActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".Player"
             android:parentActivityName=".MainActivity"/>
         <service android:name=".MusicService"/>

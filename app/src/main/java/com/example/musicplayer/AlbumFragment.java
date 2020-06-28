@@ -56,7 +56,11 @@ public class AlbumFragment extends Fragment {
         albumsRecyclerAdapter.setOnItemClickListener(new GridRecyclerAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.d("CLICKED ALBUM",Integer.toString(position));
+                GroupActivity.playType = MusicService.album;
+                GroupActivity.songSet = LocalDatabase.albumMap.get(LocalDatabase.albumsSet.get(position));
+
+                Intent groupActivityIntent = new Intent(getContext(),GroupActivity.class);
+                startActivity(groupActivityIntent);
             }
 
             @Override
