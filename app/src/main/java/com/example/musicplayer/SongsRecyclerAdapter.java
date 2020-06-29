@@ -109,7 +109,6 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
                             else {
                                 holder.albumIv.setImageResource(R.drawable.reputation);
                             }
-                            Log.d("CALLED THREAD",Integer.toString(position));
                         }
                     });
             }

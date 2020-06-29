@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -47,9 +48,15 @@ public class MusicService extends Service implements
     public static final int artist = 3;
     //Broadcast Actions
     public static final String REQUEST_UI = "com.example.musicplayer.musicservice.request_ui";
+    public static final String PLAY_N_PAUSE = "com.example.musicplayer.musicservice.play_n_pause";
+    public static final String PLAY_NEXT = "com.example.musicplayer.musicservice.play_next";
+    public static final String PLAY_PREV = "com.example.musicplayer.musicservice.play_prev";
 
     private String[] actions = {
-            REQUEST_UI
+            REQUEST_UI,
+            PLAY_N_PAUSE,
+            PLAY_NEXT,
+            PLAY_PREV
     };
     //Broadcast Receiver
     private BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
@@ -59,6 +66,29 @@ public class MusicService extends Service implements
             switch (action){
                 case REQUEST_UI:
                     updatePlayerUI();
+                case PLAY_N_PAUSE:
+                    playNpause();
+                    if(isPaused){
+                        musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.play_icon);
+                    }
+                    else {
+                        musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.pause_icon);
+                    }
+
+                    buildNotification();
+
+                    break;
+                case PLAY_NEXT:
+                    if(!isSettingSong){
+                        isSettingSong = true;
+                        playNext();
+                    }
+                    break;
+                case PLAY_PREV:
+                    if(!isSettingSong){
+                        isSettingSong = true;
+                        playPrev();
+                    }
                     break;
             }
         }
@@ -74,11 +104,15 @@ public class MusicService extends Service implements
 
     public static boolean isFavourite = false;
     //Variables
-
+    private boolean isSettingSong = false;
     //player and binder
     private MediaPlayer mediaPlayer;
     private long currSongID = -1;
     private final IBinder musicBinder = new MusicBinder();
+    //Intents
+
+    //VIews
+    RemoteViews musicNotificationView;
 
     @Override
     public void onCreate() {
@@ -90,6 +124,10 @@ public class MusicService extends Service implements
         mediaPlayer.setOnCompletionListener(this);
         mediaPlayer.setOnErrorListener(this);
         mediaPlayer.setOnSeekCompleteListener(this);
+
+        musicNotificationView = new RemoteViews(getPackageName(),R.layout.notification_layout);
+
+        setNotificationListeners();
 
         IntentFilter intentFilter = new IntentFilter();
 
@@ -155,6 +193,7 @@ public class MusicService extends Service implements
         mp.start();
         isPaused = false;
         isServiceStarted = true;
+        isSettingSong = false;
 
         isFavourite = false;
         for(int i=0;i<favSet.size();i++){
@@ -171,6 +210,27 @@ public class MusicService extends Service implements
     public void onSeekComplete(MediaPlayer mp) {
         Intent intent = new Intent(Player.UPDATE_SEEK_UI);
         sendBroadcast(intent);
+    }
+
+    private void setNotificationListeners(){
+        PendingIntent playPendingIntent = PendingIntent.getBroadcast(this,
+                0,
+                new Intent(PLAY_N_PAUSE),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        PendingIntent nextPendingIntent = PendingIntent.getBroadcast(this,
+                0,
+                new Intent(PLAY_NEXT),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        PendingIntent prevPendingIntent = PendingIntent.getBroadcast(this,
+                0,
+                new Intent(PLAY_PREV),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        musicNotificationView.setOnClickPendingIntent(R.id.notificationPreviousButton,prevPendingIntent);
+        musicNotificationView.setOnClickPendingIntent(R.id.notificationPlayButton,playPendingIntent);
+        musicNotificationView.setOnClickPendingIntent(R.id.notificationNextButton,nextPendingIntent);
     }
 
     private void updatePlayerUI(){
@@ -210,11 +270,15 @@ public class MusicService extends Service implements
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
+        //musicNotificationView.setTextViewText(R.id.NotificationAppName,"Music Player");
+        musicNotificationView.setTextViewText(R.id.notificationSongName,songsSet.get(songPosition).getTitle());
+        //musicNotificationView.setTextViewText(R.id.notificationArtistName,songsSet.get(songPosition).getArtist());
+
         Notification notification = new NotificationCompat.Builder(this,MUSCI_CHANNEL_ID)
-                .setContentTitle(songsSet.get(songPosition).getTitle())
-                .setContentText(songsSet.get(songPosition).getArtist())
                 .setSmallIcon(R.drawable.play_icon)
+                .setCustomContentView(musicNotificationView)
                 .setContentIntent(pendingIntent)
+
                 .build();
 
         startForeground(1,notification);
@@ -261,6 +325,7 @@ public class MusicService extends Service implements
     }
 
     public void playNext(){
+
         if(shuffle){
             songPosition = new Random().nextInt(songsSet.size());
         }
