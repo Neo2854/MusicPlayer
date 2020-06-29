@@ -23,8 +23,8 @@
             android:scaleType="fitXY"
             />
 
-        <TableLayout
-            android:id="@+id/albumTableLayout"
+        <LinearLayout
+            android:id="@+id/albumsLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/albumImage"
@@ -34,11 +34,12 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp">
 
-
-            <LinearLayout
-                android:id="@+id/albumLinearLayout"
+            <TableLayout
+                android:id="@+id/albumTableLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/albumImage"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/albumName"
@@ -53,27 +54,28 @@
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
-                <ImageButton
-                    android:id="@+id/albumMenu"
-                    android:layout_width="wrap_content"
+
+                <TextView
+                    android:id="@+id/albumArtistName"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/cardview_menu_icon" />
-            </LinearLayout>
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:paddingLeft="7dp"
+                    android:text="albumArtistName"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="10sp"
+                    android:textStyle="italic" />
 
-            <TextView
-                android:id="@+id/albumArtistName"
-                android:layout_width="match_parent"
+            </TableLayout>
+
+            <ImageButton
+                android:id="@+id/albumMenu"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:ellipsize="end"
-                android:lines="1"
-                android:paddingLeft="7dp"
-                android:text="albumArtistName"
-                android:textColor="@color/colorWhite"
-                android:textSize="10sp"
-                android:textStyle="italic" />
-
-        </TableLayout>
+                android:background="@android:color/transparent"
+                android:src="@drawable/cardview_menu_icon" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/albumPlayButton"

@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         android:contentDescription="@string/image_of_the_song"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"

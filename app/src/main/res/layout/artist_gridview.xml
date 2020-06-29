@@ -20,8 +20,8 @@
             android:scaleType="fitXY"
             android:src="@drawable/reputation" />
 
-        <TableLayout
-            android:id="@+id/artistTableLayout"
+        <LinearLayout
+            android:id="@+id/artistLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/artistImage"
@@ -29,18 +29,22 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp">
+            android:layout_marginEnd="0dp"
+            >
 
-            <LinearLayout
-                android:id="@+id/artistLinearLayout"
+            <TableLayout
+                android:id="@+id/artistTableLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/artistName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:paddingLeft="7dp"
@@ -49,24 +53,25 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <ImageButton
-                    android:id="@+id/artistMenu"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/artistSongsNumber"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/cardview_menu_icon" />
-            </LinearLayout>
+                    android:paddingLeft="7dp"
+                    android:text="artistSongsNumber"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="10sp"
+                    android:textStyle="italic" />
+            </TableLayout>
 
-            <TextView
-                android:id="@+id/artistSongsNumber"
-                android:layout_width="match_parent"
+            <ImageButton
+                android:id="@+id/artistMenu"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="artistSongsNumber"
-                android:textColor="@color/colorWhite"
-                android:textSize="10sp"
-                android:textStyle="italic"
-                android:paddingLeft="7dp"/>
-        </TableLayout>
+                android:background="@android:color/transparent"
+                android:src="@drawable/cardview_menu_icon" />
+
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/artistPlayButton"

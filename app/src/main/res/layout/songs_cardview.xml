@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="7dp"
+    app:cardElevation="1dp"
+    app:cardMaxElevation="1dp"
     app:cardBackgroundColor="@color/card_selector"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true">
@@ -22,7 +24,7 @@
             android:id="@+id/albumArt"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:scaleType="fitCenter"
+            android:scaleType="fitXY"
             android:src="@drawable/reputation"/>
 
         <TableLayout
