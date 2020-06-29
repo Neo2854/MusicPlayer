@@ -1,106 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="64dp">
+    android:layout_height="64dp"
+    app:layout_constraintCircleRadius="5dp">
 
-    <androidx.cardview.widget.CardView
+
+    <LinearLayout
+        android:id="@+id/notificationLinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="5dp"
-        android:padding="2dp">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TableRow android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/notificationImage"
-                    android:layout_width="64dp"
-                    android:layout_height="match_parent"
-                    android:layout_column="1"
-                    android:src="@drawable/reputation"
-                    android:scaleType="fitCenter"/>
-
-                <LinearLayout android:layout_height="match_parent"
-                    android:layout_width="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    >
-
-                    <TextView
-                        android:id="@+id/NotificationAppName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="appName"
-                        android:textStyle="italic"
-                        android:textSize="10sp"
-                        android:textColor="@color/colorBlack"/>
-
-                    <TextView
-                        android:id="@+id/notificationSongName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="songName"
-                        android:layout_weight="1"
-                        android:textSize="20sp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorBlack"/>
-
-                    <TextView
-                        android:id="@+id/notificationArtistName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="artistName"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="15sp"
-                        android:textStyle="normal||italic"/>
-
-                </LinearLayout>
-
-                <ImageButton
-                    android:id="@+id/notificationPreviousButton"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:src="@drawable/previous_icon"
-                    android:scaleType="fitCenter"
-                    android:background="@android:color/transparent"/>
-
-                <ImageButton
-                    android:id="@+id/notificationPlayButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/pause_icon"
-                    android:scaleType="fitCenter"
-                    android:background="@android:color/transparent"/>
-
-                <ImageButton
-                    android:id="@+id/notificationNextButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/next_icon"
-                    android:scaleType="fitCenter"
-                    android:background="@android:color/transparent"/>
-
-            </TableRow>
-
-        </TableLayout>
+        android:orientation="horizontal">
 
 
+        <ImageView
+            android:id="@+id/notificationImage"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/reputation"
+            android:scaleType="fitCenter"/>
 
-    </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:id="@+id/NotificationLinearLayout2"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="10">
+
+            <TextView
+                android:id="@+id/NotificationAppName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="appName"
+                android:textStyle="italic"
+                android:textSize="10sp"
+                android:textColor="@color/colorBlack"/>
+
+            <TextView
+                android:id="@+id/notificationSongName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="songName"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"/>
+
+            <TextView
+                android:id="@+id/notificationArtistName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="artistName"
+                android:textColor="@color/colorBlack"
+                android:textSize="15sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/notificationPreviousButton"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:src="@drawable/previous_icon"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/notificationPlayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/pause_icon"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"/>
+
+        <ImageButton
+            android:id="@+id/notificationNextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/next_icon"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"/>
 
 
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
