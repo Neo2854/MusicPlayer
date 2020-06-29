@@ -36,23 +36,29 @@
 
 
 
-                <ImageView
-                    android:id="@+id/notificationPreviousButton"
-                    android:layout_height="match_parent"
-                    android:layout_width="wrap_content"
-                    android:background="@drawable/previous_selector"/>
+                <ImageButton
+            android:id="@+id/notificationPreviousButton"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:src="@drawable/previous_icon"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"/>
 
-                <ImageView
-                    android:id="@+id/notificationPlayButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/pause_icon"/>
+        <ImageButton
+            android:id="@+id/notificationPlayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/pause_icon"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"/>
 
-                <ImageView
-                    android:id="@+id/notificationNextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/next_selector"/>
+        <ImageButton
+            android:id="@+id/notificationNextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/next_icon"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"/>
 
 
         </LinearLayout>
