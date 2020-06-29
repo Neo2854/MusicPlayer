@@ -1,41 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="64dp">
+    android:layout_height="64dp"
+    app:layout_constraintCircleRadius="5dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="5dp"
-        android:padding="2dp">
 
-        <TableLayout
+        <LinearLayout
+            android:id="@+id/notificationLinearLayout1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <TableRow android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/notificationImage"
                     android:layout_width="64dp"
                     android:layout_height="match_parent"
-                    android:layout_column="1"
                     android:src="@drawable/reputation"
                     android:scaleType="fitCenter"/>
 
-                <LinearLayout android:layout_height="match_parent"
+                <LinearLayout
+                    android:id="@+id/NotificationLinearLayout2"
+                    android:layout_height="match_parent"
                     android:layout_width="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="1"
-                    >
+                    android:layout_weight="10">
 
                     <TextView
                         android:id="@+id/NotificationAppName"
@@ -65,21 +56,21 @@
                         android:text="artistName"
                         android:textColor="@color/colorBlack"
                         android:textSize="15sp"
-                        android:textStyle="normal||italic"/>
+                        android:textStyle="italic" />
 
                 </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/notificationPreviousButton"
                     android:layout_height="match_parent"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:src="@drawable/previous_icon"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"/>
 
                 <ImageButton
                     android:id="@+id/notificationPlayButton"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/pause_icon"
                     android:scaleType="fitCenter"
@@ -87,20 +78,13 @@
 
                 <ImageButton
                     android:id="@+id/notificationNextButton"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/next_icon"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"/>
 
-            </TableRow>
 
-        </TableLayout>
+        </LinearLayout>
 
-
-
-    </androidx.cardview.widget.CardView>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
