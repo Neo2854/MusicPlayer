@@ -21,21 +21,6 @@
                     android:src="@drawable/reputation"
                     android:scaleType="fitCenter"/>
 
-                <LinearLayout
-                    android:id="@+id/NotificationLinearLayout2"
-                    android:layout_height="match_parent"
-                    android:layout_width="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="10">
-
-                    <TextView
-                        android:id="@+id/NotificationAppName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="appName"
-                        android:textStyle="italic"
-                        android:textSize="10sp"
-                        android:textColor="@color/colorBlack"/>
 
                     <TextView
                         android:id="@+id/notificationSongName"
@@ -49,40 +34,25 @@
                         android:textStyle="bold"
                         android:textColor="@color/colorBlack"/>
 
-                    <TextView
-                        android:id="@+id/notificationArtistName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="artistName"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="15sp"
-                        android:textStyle="italic" />
 
-                </LinearLayout>
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/notificationPreviousButton"
                     android:layout_height="match_parent"
                     android:layout_width="wrap_content"
-                    android:src="@drawable/previous_icon"
-                    android:scaleType="fitCenter"
-                    android:background="@android:color/transparent"/>
+                    android:background="@drawable/previous_selector"/>
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/notificationPlayButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/pause_icon"
-                    android:scaleType="fitCenter"
-                    android:background="@android:color/transparent"/>
+                    android:background="@drawable/pause_icon"/>
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/notificationNextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/next_icon"
-                    android:scaleType="fitCenter"
-                    android:background="@android:color/transparent"/>
+                    android:background="@drawable/next_selector"/>
 
 
         </LinearLayout>
