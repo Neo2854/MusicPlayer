@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -47,9 +48,11 @@ public class MusicService extends Service implements
     public static final int artist = 3;
     //Broadcast Actions
     public static final String REQUEST_UI = "com.example.musicplayer.musicservice.request_ui";
+    public static final String PLAY_N_PAUSE = "com.example.musicplayer.musicservice.play_n_pause";
 
     private String[] actions = {
-            REQUEST_UI
+            REQUEST_UI,
+            PLAY_N_PAUSE
     };
     //Broadcast Receiver
     private BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
@@ -59,6 +62,8 @@ public class MusicService extends Service implements
             switch (action){
                 case REQUEST_UI:
                     updatePlayerUI();
+                case PLAY_N_PAUSE:
+                    playNpause();
                     break;
             }
         }
@@ -79,6 +84,10 @@ public class MusicService extends Service implements
     private MediaPlayer mediaPlayer;
     private long currSongID = -1;
     private final IBinder musicBinder = new MusicBinder();
+    //Intents
+
+    //VIews
+    RemoteViews musicNotificationView;
 
     @Override
     public void onCreate() {
@@ -90,6 +99,8 @@ public class MusicService extends Service implements
         mediaPlayer.setOnCompletionListener(this);
         mediaPlayer.setOnErrorListener(this);
         mediaPlayer.setOnSeekCompleteListener(this);
+
+        musicNotificationView = new RemoteViews(getPackageName(),R.layout.notification_layout);
 
         IntentFilter intentFilter = new IntentFilter();
 
@@ -211,10 +222,9 @@ public class MusicService extends Service implements
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(this,MUSCI_CHANNEL_ID)
-                .setContentTitle(songsSet.get(songPosition).getTitle())
-                .setContentText(songsSet.get(songPosition).getArtist())
                 .setSmallIcon(R.drawable.play_icon)
-                .setContentIntent(pendingIntent)
+                .setCustomContentView(musicNotificationView)
+
                 .build();
 
         startForeground(1,notification);
