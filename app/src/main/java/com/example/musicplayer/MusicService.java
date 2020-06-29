@@ -270,9 +270,9 @@ public class MusicService extends Service implements
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        musicNotificationView.setTextViewText(R.id.NotificationAppName,"Music Player");
+        //musicNotificationView.setTextViewText(R.id.NotificationAppName,"Music Player");
         musicNotificationView.setTextViewText(R.id.notificationSongName,songsSet.get(songPosition).getTitle());
-        musicNotificationView.setTextViewText(R.id.notificationArtistName,songsSet.get(songPosition).getArtist());
+        //musicNotificationView.setTextViewText(R.id.notificationArtistName,songsSet.get(songPosition).getArtist());
 
         Notification notification = new NotificationCompat.Builder(this,MUSCI_CHANNEL_ID)
                 .setSmallIcon(R.drawable.play_icon)
