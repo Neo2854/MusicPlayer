@@ -2,8 +2,6 @@ package com.example.musicplayer;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdapter.SongViewHolder> {
 
@@ -60,7 +57,7 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
 
             songTv   = itemView.findViewById(R.id.sName);
             artistTv = itemView.findViewById(R.id.aName);
-            albumIv = itemView.findViewById(R.id.image);
+            albumIv = itemView.findViewById(R.id.albumArt);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
