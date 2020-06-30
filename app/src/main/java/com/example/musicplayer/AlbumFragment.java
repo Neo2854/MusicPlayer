@@ -47,7 +47,7 @@ public class AlbumFragment extends Fragment {
     }
 
     private void populateAlbums(){
-        albumsRecyclerAdapter = new GridRecyclerAdapter(R.layout.albums_gridview);
+        albumsRecyclerAdapter = new GridRecyclerAdapter(getContext(),R.layout.albums_gridview);
         albumsRecyclerView.setAdapter(albumsRecyclerAdapter);
         albumsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),COL_COUNT));
     }

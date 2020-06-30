@@ -1,6 +1,8 @@
 package com.example.musicplayer;
 
+import android.content.ContentUris;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,12 +14,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 public class GroupActivity extends AppCompatActivity {
     //Shared
     public static SongSet songSet;
     public static int playType;
+    //Variables
+    private String albumArtUri = "content://media/external/audio/albumart";
     //Views
-    private ImageView imageView;
+    private ImageView groupBigImage;
+    private ImageView groupImage;
     private TextView boldTv;
     private TextView lightTv;
     private ImageButton menuIb;
@@ -38,7 +45,8 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     private void Initialize(){
-        imageView = findViewById(R.id.groupImage);
+        groupBigImage = findViewById(R.id.groupBigImage);
+        groupImage = findViewById(R.id.groupImage);
         boldTv = findViewById(R.id.groupName);
         lightTv = findViewById(R.id.groupSongsNumber);
         menuIb = findViewById(R.id.groupMenu);
@@ -72,6 +80,10 @@ public class GroupActivity extends AppCompatActivity {
 
         boldTv.setText(groupName);
         lightTv.setText(songsNum);
+
+        Uri uri = getAlbumArtUri(songSet.get(0).getAlbumID());
+        Glide.with(this).load(uri).placeholder(R.drawable.reputation).into(groupImage);
+        Glide.with(this).load(uri).placeholder(R.drawable.reputation).into(groupBigImage);
     }
 
     private void createSongsList(){
@@ -79,7 +91,7 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(songSet,getContentResolver());
+        songsRecyclerAdapter = new SongsRecyclerAdapter(this,songSet);
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -111,5 +123,11 @@ public class GroupActivity extends AppCompatActivity {
         MusicService.songsSet = songSet;
 
         startActivity(playerActivityIntent);
+    }
+
+    private Uri getAlbumArtUri(int albumID){
+        Uri uri = Uri.parse(albumArtUri);
+
+        return ContentUris.withAppendedId(uri,albumID);
     }
 }

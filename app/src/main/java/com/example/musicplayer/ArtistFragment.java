@@ -43,7 +43,7 @@ public class ArtistFragment extends Fragment {
     }
 
     private void populateArtists(){
-        artistRecyclerAdapter = new GridRecyclerAdapter(R.layout.artist_gridview);
+        artistRecyclerAdapter = new GridRecyclerAdapter(getContext(),R.layout.artist_gridview);
         artistRecyclerView.setAdapter(artistRecyclerAdapter);
         artistRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),COL_COUNT));
     }

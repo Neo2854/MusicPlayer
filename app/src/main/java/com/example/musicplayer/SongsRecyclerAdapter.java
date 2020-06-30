@@ -2,6 +2,7 @@ package com.example.musicplayer;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,19 +20,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.IOException;
+import com.bumptech.glide.Glide;
 
 public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdapter.SongViewHolder> {
 
-    private String[] projection = {
-            MediaStore.Audio.Albums._ID,
-            MediaStore.Audio.Albums.ALBUM_ART
-    };
     private String albumArtUri = "content://media/external/audio/albumart";
-    private Bitmap albumArt;
 
     private SongSet Songs;
-    private ContentResolver contentResolver;
+    private Context context;
     private onItemClickListener listener;
 
     public interface onItemClickListener{
@@ -42,9 +38,9 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
         this.listener = listener;
     }
 
-    public SongsRecyclerAdapter(SongSet titles,ContentResolver contentResolver){
+    public SongsRecyclerAdapter(Context context,SongSet titles){
+        this.context = context;
         this.Songs   = titles;
-        this.contentResolver = contentResolver;
     }
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {
@@ -86,35 +82,7 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
         holder.songTv.setText(Songs.get(position).getTitle());
         holder.artistTv.setText(Songs.get(position).getArtist());
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-                    try {
-                        albumArt = contentResolver.loadThumbnail(getAlbumArtUri(position),new Size(100,100),null);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else {
-                    albumArt = BitmapFactory.decodeFile(getAlbumArtPath(position));
-                }
-
-                    holder.albumIv.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(albumArt != null){
-                                holder.albumIv.setImageBitmap(albumArt);
-                            }
-                            else {
-                                holder.albumIv.setImageResource(R.drawable.reputation);
-                            }
-                        }
-                    });
-            }
-        });
-
-        thread.start();
+        Glide.with(context).load(getAlbumArtUri(position)).placeholder(R.drawable.reputation).into(holder.albumIv);
     }
 
     @Override
@@ -128,16 +96,4 @@ public class SongsRecyclerAdapter extends RecyclerView.Adapter<SongsRecyclerAdap
         return ContentUris.withAppendedId(uri,Songs.get(position).getAlbumID());
     }
 
-    private String getAlbumArtPath(int position){
-        Cursor cursor = contentResolver.query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
-                projection,
-                MediaStore.Audio.Albums._ID + "=?",
-                new String[]{String.valueOf(Songs.get(position).getAlbumID())},
-                null);
-
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
-        cursor.close();
-        return path;
-    }
 }
