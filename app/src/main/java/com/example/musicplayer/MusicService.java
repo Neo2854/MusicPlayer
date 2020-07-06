@@ -63,6 +63,7 @@ public class MusicService extends Service implements
             PLAY_NEXT,
             PLAY_PREV
     };
+    private boolean isHandlingBroadcasts = false;
     //Broadcast Receiver
     private BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -89,6 +90,7 @@ public class MusicService extends Service implements
                     }
                     break;
             }
+
         }
     };
     //Shared Variables

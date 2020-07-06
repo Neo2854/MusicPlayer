@@ -52,6 +52,23 @@
         app:titleTextColor="?attr/colorPrimary"
         app:titleMarginStart="40dp"/>
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tabLayout"
+        app:cardCornerRadius="28dp">
+
+        <ImageButton
+            android:id="@+id/main_song_image_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:scaleType="fitCenter"
+            android:background="@drawable/reputation"/>
+
+    </androidx.cardview.widget.CardView>
 
 
 

@@ -17,10 +17,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -36,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private final int[] tabIcons = {
             R.drawable.albums_icon,
             R.drawable.songs_icon,
-            R.drawable.music_note_icon,
             R.drawable.playlist_icon,
             R.drawable.artist_icon
     };
@@ -44,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
     private final String[] tabTexts = {
             "Albums",
             "Songs",
-            "Music",
             "Playlists",
             "Artists"
     };
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private ImageButton playerImageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
         else{
             requestStoragePermissions();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initializePlayerButton();
     }
 
     private boolean arePermissionsGranted(){
@@ -148,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
     private void Initialize(){
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
+        playerImageButton = findViewById(R.id.main_song_image_button);
 
         viewPager.setAdapter(new MenuPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
         tabLayout.setupWithViewPager(viewPager);
@@ -164,6 +172,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Setting default page
         viewPager.setCurrentItem(1);
+    }
+
+    private void initializePlayerButton(){
+
     }
 
     @Override
