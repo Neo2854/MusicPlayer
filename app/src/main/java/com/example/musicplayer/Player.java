@@ -266,8 +266,7 @@ public class Player extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.pause:
-                    Intent playNpauseIntent = new Intent(MusicService.PLAY_N_PAUSE);
-                    sendBroadcast(playNpauseIntent);
+                    musicService.playNpause();
                     break;
                 case R.id.previous:
                     musicService.playPrev();

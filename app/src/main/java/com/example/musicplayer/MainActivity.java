@@ -1,6 +1,7 @@
 package com.example.musicplayer;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -16,9 +17,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,12 +33,20 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    private int[] tabIcons = {
+    private final int[] tabIcons = {
             R.drawable.albums_icon,
             R.drawable.songs_icon,
             R.drawable.music_note_icon,
             R.drawable.playlist_icon,
             R.drawable.artist_icon
+    };
+
+    private final String[] tabTexts = {
+            "Albums",
+            "Songs",
+            "Music",
+            "Playlists",
+            "Artists"
     };
 
     private ViewPager viewPager;
@@ -141,7 +154,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Setting Tab Icons
         for (int i=0;i<tabIcons.length;i++){
-            tabLayout.getTabAt(i).setIcon(tabIcons[i]);
+            tabLayout.getTabAt(i).setCustomView(R.layout.custom_tab);
+            ImageView tabIv = tabLayout.getTabAt(i).getCustomView().findViewById(R.id.tabIcon);
+            TextView tabTv = tabLayout.getTabAt(i).getCustomView().findViewById(R.id.tabText);
+
+            tabIv.setImageResource(tabIcons[i]);
+            tabTv.setText(tabTexts[i]);
         }
 
         //Setting default page
@@ -164,4 +182,5 @@ public class MainActivity extends AppCompatActivity {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
 }

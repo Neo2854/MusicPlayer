@@ -75,8 +75,6 @@ public class MusicService extends Service implements
                 case PLAY_N_PAUSE:
                     playNpause();
 
-                    buildNotification();
-
                     break;
                 case PLAY_NEXT:
                     if(!isSettingSong){
@@ -109,6 +107,7 @@ public class MusicService extends Service implements
     private MediaPlayer mediaPlayer;
     private long currSongID = -1;
     private final IBinder musicBinder = new MusicBinder();
+    private Notification notification;
     //Intents
 
     //VIews
@@ -203,6 +202,9 @@ public class MusicService extends Service implements
             }
         }
 
+        musicNotificationView.setTextViewText(R.id.notificationSongName,songsSet.get(songPosition).getTitle());
+        musicNotificationView.setTextViewText(R.id.notificationArtistName,songsSet.get(songPosition).getArtist());
+        musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.notification_pause);
         updatePlayerUI();
         buildNotification();
     }
@@ -271,18 +273,8 @@ public class MusicService extends Service implements
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        musicNotificationView.setTextViewText(R.id.notificationSongName,songsSet.get(songPosition).getTitle());
-        musicNotificationView.setTextViewText(R.id.notificationArtistName,songsSet.get(songPosition).getArtist());
 
-
-        if(isPaused){
-            musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.notification_play);
-        }
-        else {
-            musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.notification_pause);
-        }
-
-        Notification notification = new NotificationCompat.Builder(this,MUSCI_CHANNEL_ID)
+        notification = new NotificationCompat.Builder(this,MUSCI_CHANNEL_ID)
                 .setSmallIcon(R.drawable.play_icon)
                 .setCustomContentView(musicNotificationView)
                 .setContentIntent(pendingIntent)
@@ -295,10 +287,9 @@ public class MusicService extends Service implements
                 notification,
                 1);
 
-        Glide.with(this.getApplicationContext())
+        Glide.with(this)
                 .asBitmap()
                 .load(getAlbumArtUri(songPosition))
-                .placeholder(R.drawable.reputation)
                 .into(notificationTarget);
 
         startForeground(1,notification);
@@ -326,14 +317,18 @@ public class MusicService extends Service implements
         if(isPaused){
             mediaPlayer.start();
             isPaused = false;
+            musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.notification_pause);
         }
         else {
             mediaPlayer.pause();
             isPaused  = true;
+            musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.notification_play);
         }
 
         Intent intent = new Intent(Player.UPDATE_PAUSE_UI);
         sendBroadcast(intent);
+
+        buildNotification();
     }
 
     public void playPrev(){
