@@ -8,4 +8,5 @@
     <color name="semiTransparent">#1AFFFFFF</color>
     <color name="semiTransparent50">#80ffffff</color>
     <color name="colorDeepPink">#FF1493</color>
+    <color name="circularProgressBar">#6C3CC1</color>
 </resources>

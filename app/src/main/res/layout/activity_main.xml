@@ -53,8 +53,8 @@
         app:titleMarginStart="40dp"/>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,10 +63,19 @@
 
         <ImageButton
             android:id="@+id/main_song_image_button"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
             android:scaleType="fitCenter"
             android:background="@drawable/reputation"/>
+
+        <ProgressBar
+            android:id="@+id/main_song_progress_bar"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circular_progress_bar_foreground"
+            android:background="@drawable/circular_progress_bar_background"
+            style="?android:attr/progressBarStyleHorizontal"/>
 
     </androidx.cardview.widget.CardView>
 
