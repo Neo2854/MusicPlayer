@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,6 +36,13 @@ public class Player extends AppCompatActivity {
     public static final String UPDATE_SEEK_UI = "com.example.musicplayer.player.update_seek_ui";
     public static final String UPDATE_PAUSE_UI = "com.example.musicplayer.player.update_pause_ui";
     public static final String UPDATE_FAVOURITE = "com.example.musicplayer.player.update_favourite";
+
+    public static final int[] PLAYBACK_ICONS = {
+            R.drawable.normal_playback_icon,
+            R.drawable.shuffle_icon,
+            R.drawable.repeat_icon,
+            R.drawable.repeat_icon
+    };
 
     private String[] actions = {
             UPDATE_UI,
@@ -60,12 +68,7 @@ public class Player extends AppCompatActivity {
                             .placeholder(R.drawable.reputation)
                             .into(songIv);
                     //Shared Prefs
-                    if(MusicService.shuffle){
-                        shuffleBt.setImageResource(R.drawable.shuffle_icon_on);
-                    }
-                    else {
-                        shuffleBt.setImageResource(R.drawable.shuffle_icon_off);
-                    }
+                    playbackBt.setImageResource(PLAYBACK_ICONS[MusicService.playbackMode]);
 
                     if(MusicService.isFavourite){
                         favouriteBt.setImageResource(R.drawable.heart_filled_icon);
@@ -109,8 +112,7 @@ public class Player extends AppCompatActivity {
         }
     };
     //Shared Prefs Keys
-    private String SHUFFLE = "shuffle";
-    private String REPEAT  = "repeat";
+    private String PLAYBACK_MODE = "playback_mode";
     private String FAVOURITES = "favourites";
     //Shared Prefs
     private SharedPreferences sharedPreferences;
@@ -125,7 +127,7 @@ public class Player extends AppCompatActivity {
     private ImageButton pauseBt;
     private ImageButton previousBt;
     private ImageButton nextBt;
-    private ImageButton shuffleBt;
+    private ImageButton playbackBt;
     private ImageButton repeatBt;
     private ImageButton collapseBt;
     private ImageButton menuBt;
@@ -207,7 +209,11 @@ public class Player extends AppCompatActivity {
 
     private void loadSharedPrefs(){
         sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        MusicService.shuffle = sharedPreferences.getBoolean(SHUFFLE,false);
+        MusicService.playbackMode = sharedPreferences.getInt(PLAYBACK_MODE,0);
+
+        if(MusicService.playbackMode >= PLAYBACK_ICONS.length){
+            MusicService.playbackMode = 0;
+        }
 
         Gson gson = new Gson();
         String json = sharedPreferences.getString(FAVOURITES,null);
@@ -220,7 +226,7 @@ public class Player extends AppCompatActivity {
 
     private void saveSharedPrefs(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(SHUFFLE,MusicService.shuffle);
+        editor.putInt(PLAYBACK_MODE,MusicService.playbackMode);
 
         Gson gson = new Gson();
         String json = gson.toJson(MusicService.favSet);
@@ -240,7 +246,7 @@ public class Player extends AppCompatActivity {
         pauseBt     = findViewById(R.id.pause);
         previousBt  = findViewById(R.id.previous);
         nextBt      = findViewById(R.id.next);
-        shuffleBt   = findViewById(R.id.shuffle);
+        playbackBt   = findViewById(R.id.playback_mode_button);
         repeatBt    = findViewById(R.id.repeat);
         collapseBt  = findViewById(R.id.collapseIcon);
         menuBt      = findViewById(R.id.vertical3Dots);
@@ -249,7 +255,7 @@ public class Player extends AppCompatActivity {
         pauseBt.setOnClickListener(buttonListener);
         previousBt.setOnClickListener(buttonListener);
         nextBt.setOnClickListener(buttonListener);
-        shuffleBt.setOnClickListener(buttonListener);
+        playbackBt.setOnClickListener(buttonListener);
         repeatBt.setOnClickListener(buttonListener);
         collapseBt.setOnClickListener(buttonListener);
         menuBt.setOnClickListener(buttonListener);
@@ -278,15 +284,14 @@ public class Player extends AppCompatActivity {
                     previousBt.setEnabled(false);
                     nextBt.setEnabled(false);
                     break;
-                case R.id.shuffle:
-                    if(MusicService.shuffle){
-                        MusicService.shuffle = false;
-                        shuffleBt.setImageResource(R.drawable.shuffle_icon_off);
+                case R.id.playback_mode_button:
+                    MusicService.isOneLoopFinished = false;
+                    MusicService.playbackMode++;
+                    Log.d("PLAY_BACK",Integer.toString(MusicService.playbackMode));
+                    if(MusicService.playbackMode >= PLAYBACK_ICONS.length){
+                        MusicService.playbackMode = 0;
                     }
-                    else {
-                        MusicService.shuffle = true;
-                        shuffleBt.setImageResource(R.drawable.shuffle_icon_on);
-                    }
+                    playbackBt.setImageResource(PLAYBACK_ICONS[MusicService.playbackMode]);
                     break;
                 case R.id.repeat:
 

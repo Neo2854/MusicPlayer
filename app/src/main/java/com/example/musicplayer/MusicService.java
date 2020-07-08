@@ -50,6 +50,11 @@ public class MusicService extends Service implements
     public static final int playlist = 2;
     public static final int artist = 3;
 
+    public static final int normal = 0;
+    public static final int shuffle = 1;
+    public static final int loop = 2;
+    public static final int loop_once = 3;
+
     private String albumArtUri = "content://media/external/audio/albumart";
     //Broadcast Actions
     public static final String REQUEST_UI = "com.example.musicplayer.musicservice.request_ui";
@@ -97,10 +102,11 @@ public class MusicService extends Service implements
     public static SongSet songsSet = new SongSet();
     public static FavSet favSet;
     public static int playType;
+    public static int playbackMode;
     public static int songPosition;
+    public static boolean isOneLoopFinished = false;
     public static boolean isPaused = false;
     public static boolean isServiceStarted = false;
-    public static boolean shuffle = false;
 
     public static boolean isFavourite = false;
     //Variables
@@ -334,28 +340,64 @@ public class MusicService extends Service implements
     }
 
     public void playPrev(){
-        if(shuffle){
-            songPosition = new Random().nextInt(songsSet.size());
-        }
-        else {
-            if(songPosition > 0){
+        switch (playbackMode){
+            case shuffle:
+                int position = new Random().nextInt(songsSet.size());
+                if(songPosition == position){
+                    songPosition++;
+                }
+                else {
+                    songPosition = position;
+                }
+                break;
+            case loop:
                 songPosition--;
-            }
+                if(songPosition < 0){
+                    songPosition = songsSet.size() - 1;
+                }
+                break;
+            default:
+                if(songPosition > 0){
+                    songPosition--;
+                }
+                break;
         }
+
         setSong();
         playSong();
     }
 
     public void playNext(){
-
-        if(shuffle){
-            songPosition = new Random().nextInt(songsSet.size());
-        }
-        else {
-            if(songPosition < songsSet.size()-1){
+        switch (playbackMode){
+            case normal:
+                if(songPosition < songsSet.size()-1){
+                    songPosition++;
+                }
+                break;
+            case shuffle:
+                int position = new Random().nextInt(songsSet.size());
+                if(songPosition == position){
+                    songPosition++;
+                }
+                else {
+                    songPosition = position;
+                }
+                break;
+            case loop:
                 songPosition++;
-            }
+                if(songPosition > songsSet.size() - 1){
+                    songPosition = 0;
+                }
+                break;
+            case loop_once:
+                songPosition++;
+                if(songPosition > songsSet.size() - 1 && !isOneLoopFinished){
+                    songPosition = 0;
+                    isOneLoopFinished = true;
+                }
+                break;
         }
+
         setSong();
         playSong();
     }
