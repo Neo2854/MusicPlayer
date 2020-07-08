@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/addedPlaylistLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/addedPlaylistImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/reputation"
+            android:scaleType="fitXY"
+            />
+
+        <TextView
+            android:id="@+id/addedPlaylistName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="addedPlaylistName"
+            android:textColor="@color/colorBlack"
+            android:textSize="25sp"
+            android:layout_weight="1"
+            android:gravity="center"
+           />
+            <ImageButton
+                android:id="@+id/addSongToPlaylistButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/add_icon"
+                android:scaleType="fitCenter"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
