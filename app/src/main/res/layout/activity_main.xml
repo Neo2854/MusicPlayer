@@ -50,7 +50,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
         app:titleTextColor="?attr/colorPrimary"
-        app:titleMarginStart="40dp" />
+        app:titleMarginStart="40dp"
+        app:menu="@menu/search_view"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="56dp"
