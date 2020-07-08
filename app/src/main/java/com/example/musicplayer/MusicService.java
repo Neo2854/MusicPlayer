@@ -182,7 +182,18 @@ public class MusicService extends Service implements
     @Override
     public void onCompletion(MediaPlayer mp) {
         mp.reset();
-        playNext();
+        switch (playbackMode){
+            case loop_once:
+                setSong();
+                playSong();
+                break;
+            case normal:
+                if(songPosition == songsSet.size() - 1)
+                    mediaPlayer.reset();
+                break;
+            default:
+                playNext();
+        }
     }
 
     @Override
@@ -286,7 +297,7 @@ public class MusicService extends Service implements
                 .setSmallIcon(R.drawable.play_icon)
                 .setCustomContentView(musicNotificationView)
                 .setContentIntent(pendingIntent)
-
+                .setStyle(new androidx.media.app.NotificationCompat.DecoratedMediaCustomViewStyle())
                 .build();
 
         NotificationTarget notificationTarget = new NotificationTarget(this,
@@ -350,6 +361,7 @@ public class MusicService extends Service implements
                     songPosition = position;
                 }
                 break;
+            case loop_once:
             case loop:
                 songPosition--;
                 if(songPosition < 0){
@@ -383,19 +395,14 @@ public class MusicService extends Service implements
                     songPosition = position;
                 }
                 break;
+            case loop_once:
             case loop:
                 songPosition++;
                 if(songPosition > songsSet.size() - 1){
                     songPosition = 0;
                 }
                 break;
-            case loop_once:
-                songPosition++;
-                if(songPosition > songsSet.size() - 1 && !isOneLoopFinished){
-                    songPosition = 0;
-                    isOneLoopFinished = true;
-                }
-                break;
+
         }
 
         setSong();

@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +42,7 @@ public class Player extends AppCompatActivity {
             R.drawable.normal_playback_icon,
             R.drawable.shuffle_icon,
             R.drawable.repeat_icon,
-            R.drawable.repeat_icon
+            R.drawable.repeat_once_icon
     };
 
     private String[] actions = {
@@ -293,11 +294,29 @@ public class Player extends AppCompatActivity {
                 case R.id.playback_mode_button:
                     MusicService.isOneLoopFinished = false;
                     MusicService.playbackMode++;
-                    Log.d("PLAY_BACK",Integer.toString(MusicService.playbackMode));
                     if(MusicService.playbackMode >= PLAYBACK_ICONS.length){
                         MusicService.playbackMode = 0;
                     }
                     playbackBt.setImageResource(PLAYBACK_ICONS[MusicService.playbackMode]);
+                    String toastText;
+                    switch (MusicService.playbackMode){
+                        case MusicService.normal:
+                            toastText = "Playing as Default";
+                            break;
+                        case MusicService.shuffle:
+                            toastText = "Shuffle On";
+                            break;
+                        case MusicService.loop:
+                            toastText = "Repeat On";
+                            break;
+                        case MusicService.loop_once:
+                            toastText = "Repeating Current Song";
+                            break;
+                        default:
+                            toastText = "";
+                            break;
+                    }
+                    Toast.makeText(v.getContext(),toastText,Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.queue_info:
 

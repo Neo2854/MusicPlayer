@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -19,6 +20,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ImageButton playerImageButton;
     private ProgressBar songCircularPb;
+    private Toolbar toolbar;
 
     private Intent playerIntent;
     private Handler imageHandler = new Handler();
@@ -178,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         playerImageButton = findViewById(R.id.main_song_image_button);
         songCircularPb = findViewById(R.id.main_song_progress_bar);
+        toolbar = findViewById(R.id.toolBar);
 
         playerIntent = new Intent(this,Player.class);
 
