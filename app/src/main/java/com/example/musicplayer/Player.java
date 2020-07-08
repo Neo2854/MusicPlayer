@@ -41,7 +41,7 @@ public class Player extends AppCompatActivity {
             R.drawable.normal_playback_icon,
             R.drawable.shuffle_icon,
             R.drawable.repeat_icon,
-            R.drawable.repeat_icon
+            R.drawable.repeat_once_icon
     };
 
     private String[] actions = {
