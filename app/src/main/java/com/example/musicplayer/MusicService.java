@@ -190,6 +190,7 @@ public class MusicService extends Service implements
             case normal:
                 if(songPosition == songsSet.size() - 1)
                     mediaPlayer.reset();
+                break;
             default:
                 playNext();
         }
