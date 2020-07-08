@@ -10,13 +10,16 @@ import androidx.viewpager.widget.ViewPager;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -54,6 +57,22 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ImageButton playerImageButton;
     private ProgressBar songCircularPb;
+
+    private Intent playerIntent;
+    private Handler imageHandler = new Handler();
+    private Handler pbHandler = new Handler();
+    private Runnable imageRunnable = new Runnable() {
+        @Override
+        public void run() {
+
+        }
+    };
+    private Runnable pbRunnable = new Runnable() {
+        @Override
+        public void run() {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
         playerImageButton = findViewById(R.id.main_song_image_button);
         songCircularPb = findViewById(R.id.main_song_progress_bar);
 
+        playerIntent = new Intent(this,Player.class);
+
         viewPager.setAdapter(new MenuPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
         tabLayout.setupWithViewPager(viewPager);
 
@@ -179,6 +200,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializePlayerButton(){
 
+        if(MusicService.isServiceStarted){
+            playerImageButton.setEnabled(true);
+
+        }
+        else {
+            playerImageButton.setEnabled(false);
+        }
+
+        playerImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(playerIntent);
+            }
+        });
     }
 
     @Override
