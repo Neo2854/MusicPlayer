@@ -128,7 +128,9 @@ public class Player extends AppCompatActivity {
     private ImageButton previousBt;
     private ImageButton nextBt;
     private ImageButton playbackBt;
-    private ImageButton repeatBt;
+    private ImageButton queueInfoBt;
+    private ImageButton addtoPlaylistBt;
+    private ImageButton editInfoBt;
     private ImageButton collapseBt;
     private ImageButton menuBt;
     private ImageButton favouriteBt;
@@ -247,7 +249,9 @@ public class Player extends AppCompatActivity {
         previousBt  = findViewById(R.id.previous);
         nextBt      = findViewById(R.id.next);
         playbackBt   = findViewById(R.id.playback_mode_button);
-        repeatBt    = findViewById(R.id.repeat);
+        queueInfoBt = findViewById(R.id.queue_info);
+        addtoPlaylistBt = findViewById(R.id.add_playlist);
+        editInfoBt    = findViewById(R.id.edit_info);
         collapseBt  = findViewById(R.id.collapseIcon);
         menuBt      = findViewById(R.id.vertical3Dots);
         favouriteBt = findViewById(R.id.favourite);
@@ -256,7 +260,9 @@ public class Player extends AppCompatActivity {
         previousBt.setOnClickListener(buttonListener);
         nextBt.setOnClickListener(buttonListener);
         playbackBt.setOnClickListener(buttonListener);
-        repeatBt.setOnClickListener(buttonListener);
+        queueInfoBt.setOnClickListener(buttonListener);
+        addtoPlaylistBt.setOnClickListener(buttonListener);
+        editInfoBt.setOnClickListener(buttonListener);
         collapseBt.setOnClickListener(buttonListener);
         menuBt.setOnClickListener(buttonListener);
         favouriteBt.setOnClickListener(buttonListener);
@@ -293,7 +299,13 @@ public class Player extends AppCompatActivity {
                     }
                     playbackBt.setImageResource(PLAYBACK_ICONS[MusicService.playbackMode]);
                     break;
-                case R.id.repeat:
+                case R.id.queue_info:
+
+                    break;
+                case R.id.add_playlist:
+
+                    break;
+                case R.id.edit_info:
 
                     break;
                 case R.id.collapseIcon:

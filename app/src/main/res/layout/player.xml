@@ -83,13 +83,13 @@
         android:contentDescription="@string/to_shuffle"
         android:padding="10dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_info"
-        app:layout_constraintEnd_toStartOf="@+id/edit_info"
-        app:layout_constraintTop_toTopOf="@+id/edit_info"
+        app:layout_constraintBottom_toBottomOf="@+id/queue_info"
+        app:layout_constraintEnd_toStartOf="@+id/queue_info"
+        app:layout_constraintTop_toTopOf="@+id/queue_info"
         app:srcCompat="@drawable/normal_playback_icon" />
 
     <ImageButton
-        android:id="@+id/repeat"
+        android:id="@+id/edit_info"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:adjustViewBounds="true"
@@ -100,7 +100,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/add_playlist"
         app:layout_constraintStart_toEndOf="@+id/add_playlist"
         app:layout_constraintTop_toTopOf="@+id/add_playlist"
-        app:srcCompat="@drawable/repeat_icon" />
+        app:srcCompat="@drawable/edit_icon" />
 
     <ImageButton
         android:id="@+id/collapseIcon"
@@ -146,7 +146,7 @@
         app:srcCompat="@drawable/heart_outline_icon" />
 
     <ImageButton
-        android:id="@+id/edit_info"
+        android:id="@+id/queue_info"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:adjustViewBounds="true"
@@ -157,7 +157,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/favourite"
         app:layout_constraintEnd_toStartOf="@+id/favourite"
         app:layout_constraintTop_toTopOf="@+id/favourite"
-        app:srcCompat="@drawable/edit_icon" />
+        app:srcCompat="@drawable/queue_icon" />
 
     <ImageButton
         android:id="@+id/add_playlist"
