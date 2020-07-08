@@ -1,6 +1,7 @@
 package com.example.musicplayer;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -9,16 +10,26 @@ import androidx.viewpager.widget.ViewPager;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,16 +39,40 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    private int[] tabIcons = {
+    private final int[] tabIcons = {
             R.drawable.albums_icon,
             R.drawable.songs_icon,
-            R.drawable.music_note_icon,
             R.drawable.playlist_icon,
             R.drawable.artist_icon
     };
 
+    private final String[] tabTexts = {
+            "Albums",
+            "Songs",
+            "Playlists",
+            "Artists"
+    };
+
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private ImageButton playerImageButton;
+    private ProgressBar songCircularPb;
+
+    private Intent playerIntent;
+    private Handler imageHandler = new Handler();
+    private Handler pbHandler = new Handler();
+    private Runnable imageRunnable = new Runnable() {
+        @Override
+        public void run() {
+
+        }
+    };
+    private Runnable pbRunnable = new Runnable() {
+        @Override
+        public void run() {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
         else{
             requestStoragePermissions();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initializePlayerButton();
     }
 
     private boolean arePermissionsGranted(){
@@ -135,17 +176,44 @@ public class MainActivity extends AppCompatActivity {
     private void Initialize(){
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
+        playerImageButton = findViewById(R.id.main_song_image_button);
+        songCircularPb = findViewById(R.id.main_song_progress_bar);
+
+        playerIntent = new Intent(this,Player.class);
 
         viewPager.setAdapter(new MenuPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
         tabLayout.setupWithViewPager(viewPager);
 
         //Setting Tab Icons
         for (int i=0;i<tabIcons.length;i++){
-            tabLayout.getTabAt(i).setIcon(tabIcons[i]);
+            tabLayout.getTabAt(i).setCustomView(R.layout.custom_tab);
+            ImageView tabIv = tabLayout.getTabAt(i).getCustomView().findViewById(R.id.tabIcon);
+            TextView tabTv = tabLayout.getTabAt(i).getCustomView().findViewById(R.id.tabText);
+
+            tabIv.setImageResource(tabIcons[i]);
+            tabTv.setText(tabTexts[i]);
         }
 
         //Setting default page
         viewPager.setCurrentItem(1);
+    }
+
+    private void initializePlayerButton(){
+
+        if(MusicService.isServiceStarted){
+            playerImageButton.setEnabled(true);
+
+        }
+        else {
+            playerImageButton.setEnabled(false);
+        }
+
+        playerImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(playerIntent);
+            }
+        });
     }
 
     @Override
@@ -164,4 +232,5 @@ public class MainActivity extends AppCompatActivity {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
 }

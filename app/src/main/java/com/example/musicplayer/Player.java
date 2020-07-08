@@ -2,11 +2,13 @@ package com.example.musicplayer;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -20,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -39,6 +42,8 @@ public class Player extends AppCompatActivity {
             UPDATE_PAUSE_UI,
             UPDATE_FAVOURITE
     };
+    //Variables
+    private String albumArtUri = "content://media/external/audio/albumart";
     //Broadcat Receiver
     private BroadcastReceiver playerBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -49,6 +54,11 @@ public class Player extends AppCompatActivity {
                     //Song Details
                     songTv.setText(MusicService.songsSet.get(MusicService.songPosition).getTitle());
                     artistTv.setText(MusicService.songsSet.get(MusicService.songPosition).getArtist());
+
+                    Glide.with(context)
+                            .load(getAlbumArtUri(MusicService.songPosition))
+                            .placeholder(R.drawable.reputation)
+                            .into(songIv);
                     //Shared Prefs
                     if(MusicService.shuffle){
                         shuffleBt.setImageResource(R.drawable.shuffle_icon_on);
@@ -334,6 +344,12 @@ public class Player extends AppCompatActivity {
             pauseBt.setImageResource(R.drawable.pause_selector);
             sbHandler.postDelayed(sbRunnable,200);
         }
+    }
+
+    private Uri getAlbumArtUri(int position){
+        Uri uri = Uri.parse(albumArtUri);
+
+        return ContentUris.withAppendedId(uri,MusicService.songsSet.get(position).getAlbumID());
     }
 
     private String formatMillis(int Millis){

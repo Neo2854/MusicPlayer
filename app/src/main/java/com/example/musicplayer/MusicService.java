@@ -27,6 +27,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.NotificationTarget;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -46,6 +49,8 @@ public class MusicService extends Service implements
     public static final int songs = 1;
     public static final int playlist = 2;
     public static final int artist = 3;
+
+    private String albumArtUri = "content://media/external/audio/albumart";
     //Broadcast Actions
     public static final String REQUEST_UI = "com.example.musicplayer.musicservice.request_ui";
     public static final String PLAY_N_PAUSE = "com.example.musicplayer.musicservice.play_n_pause";
@@ -58,6 +63,7 @@ public class MusicService extends Service implements
             PLAY_NEXT,
             PLAY_PREV
     };
+    private boolean isHandlingBroadcasts = false;
     //Broadcast Receiver
     private BroadcastReceiver serviceBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -66,16 +72,9 @@ public class MusicService extends Service implements
             switch (action){
                 case REQUEST_UI:
                     updatePlayerUI();
+                    break;
                 case PLAY_N_PAUSE:
                     playNpause();
-                    if(isPaused){
-                        musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.play_icon);
-                    }
-                    else {
-                        musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.pause_icon);
-                    }
-
-                    buildNotification();
 
                     break;
                 case PLAY_NEXT:
@@ -91,6 +90,7 @@ public class MusicService extends Service implements
                     }
                     break;
             }
+
         }
     };
     //Shared Variables
@@ -109,6 +109,7 @@ public class MusicService extends Service implements
     private MediaPlayer mediaPlayer;
     private long currSongID = -1;
     private final IBinder musicBinder = new MusicBinder();
+    private Notification notification;
     //Intents
 
     //VIews
@@ -203,7 +204,11 @@ public class MusicService extends Service implements
             }
         }
 
+        musicNotificationView.setTextViewText(R.id.notificationSongName,songsSet.get(songPosition).getTitle());
+        musicNotificationView.setTextViewText(R.id.notificationArtistName,songsSet.get(songPosition).getArtist());
+        musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.notification_pause);
         updatePlayerUI();
+        buildNotification();
     }
 
     @Override
@@ -270,18 +275,32 @@ public class MusicService extends Service implements
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        //musicNotificationView.setTextViewText(R.id.NotificationAppName,"Music Player");
-        musicNotificationView.setTextViewText(R.id.notificationSongName,songsSet.get(songPosition).getTitle());
-        //musicNotificationView.setTextViewText(R.id.notificationArtistName,songsSet.get(songPosition).getArtist());
 
-        Notification notification = new NotificationCompat.Builder(this,MUSCI_CHANNEL_ID)
+        notification = new NotificationCompat.Builder(this,MUSCI_CHANNEL_ID)
                 .setSmallIcon(R.drawable.play_icon)
                 .setCustomContentView(musicNotificationView)
                 .setContentIntent(pendingIntent)
 
                 .build();
 
+        NotificationTarget notificationTarget = new NotificationTarget(this,
+                R.id.notificationImage,
+                musicNotificationView,
+                notification,
+                1);
+
+        Glide.with(this)
+                .asBitmap()
+                .load(getAlbumArtUri(songPosition))
+                .into(notificationTarget);
+
         startForeground(1,notification);
+    }
+
+    private Uri getAlbumArtUri(int position){
+        Uri uri = Uri.parse(albumArtUri);
+
+        return ContentUris.withAppendedId(uri,songsSet.get(position).getAlbumID());
     }
 
     public int getSongDuration(){
@@ -300,14 +319,18 @@ public class MusicService extends Service implements
         if(isPaused){
             mediaPlayer.start();
             isPaused = false;
+            musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.notification_pause);
         }
         else {
             mediaPlayer.pause();
             isPaused  = true;
+            musicNotificationView.setImageViewResource(R.id.notificationPlayButton,R.drawable.notification_play);
         }
 
         Intent intent = new Intent(Player.UPDATE_PAUSE_UI);
         sendBroadcast(intent);
+
+        buildNotification();
     }
 
     public void playPrev(){
@@ -321,7 +344,6 @@ public class MusicService extends Service implements
         }
         setSong();
         playSong();
-        buildNotification();
     }
 
     public void playNext(){
@@ -336,7 +358,6 @@ public class MusicService extends Service implements
         }
         setSong();
         playSong();
-        buildNotification();
     }
 
     public void toggleFavourite(){

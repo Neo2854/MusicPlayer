@@ -6,101 +6,83 @@
     android:layout_height="64dp"
     >
 
+    <ImageView
+        android:id="@+id/notificationImage"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:src="@drawable/reputation"
+        android:scaleType="fitCenter"/>
 
-        <LinearLayout
-            android:id="@+id/notificationLinearLayout1"
+    <LinearLayout
+        android:id="@+id/songInfoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@+id/notificationImage"
+        android:layout_toStartOf="@+id/controlButtonsLayout"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/notificationSongName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:text="songName"/>
+        <TextView
+            android:id="@+id/notificationArtistName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:textStyle="italic"
+            android:text="artistName"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/controlButtonsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="4dp">
+
+        <ImageButton
+            android:id="@+id/notificationPreviousButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/notification_previous"
+            android:background="@android:color/transparent"/>
+        <ImageButton
+            android:id="@+id/notificationPlayButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_toEndOf="@id/notificationPreviousButton"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/notification_pause"
+            android:background="@android:color/transparent"/>
+        <ImageButton
+            android:id="@+id/notificationNextButton"
+            android:layout_toEndOf="@id/notificationPlayButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/notification_next"
+            android:background="@android:color/transparent"/>
 
 
-                <ImageView
-                    android:id="@+id/notificationImage"
-                    android:layout_width="64dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/reputation"
-                    android:scaleType="fitCenter"/>
+    </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/NotificationRelativeLayout2"
-                    android:layout_width="196dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                        <TextView
-                            android:id="@+id/NotificationAppName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginTop="0dp"
-                            android:text="appName"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="10sp"
-                            android:textStyle="italic" />
-
-                        <TextView
-                            android:id="@+id/notificationSongName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_above="@+id/notificationArtistName"
-                            android:layout_below="@+id/NotificationAppName"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginBottom="0dp"
-                            android:layout_weight="1"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="songName"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/notificationArtistName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="0dp"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="artistName"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="15sp"
-                            android:textStyle="italic" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/notificationPreviousButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginBottom="0dp"
-                            android:background="@drawable/notification_previous"
-                            android:src="@android:color/transparent" />
-                </RelativeLayout>
-                <ImageButton
-                    android:id="@+id/notificationPlayButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/notification_pause"
-                    android:scaleType="fitCenter"
-                    android:background="@android:color/transparent"/>
-
-                <ImageButton
-                    android:id="@+id/notificationNextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/notification_next"/>
-
-
-        </LinearLayout>
 
 </RelativeLayout>
