@@ -8,6 +8,7 @@
     app:cardPreventCornerOverlap="true">
 
     <RelativeLayout
+        android:id="@+id/queue_cardView_RelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -16,8 +17,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:paddingLeft="5dp">
             <TextView
+                android:id="@+id/queue_cardView_songName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="queueSongName"
@@ -27,6 +30,7 @@
                 android:ellipsize="end"
                 />
             <TextView
+                android:id="@+id/queue_cardView_artistName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="queueArtistName"
@@ -38,6 +42,7 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/queue_cardView_menu"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
