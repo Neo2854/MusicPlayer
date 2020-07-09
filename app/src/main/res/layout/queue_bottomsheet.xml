@@ -32,7 +32,7 @@
                 android:background="@android:color/transparent"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/shuffle_icon_off" />
+                android:src="@drawable/shuffle_icon" />
 
             <TextView
                 android:id="@+id/ShuffleName"
