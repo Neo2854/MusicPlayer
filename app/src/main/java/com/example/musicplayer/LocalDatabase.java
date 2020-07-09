@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LocalDatabase {
+    public static String albumArtUri = "content://media/external/audio/albumart";
+
     public static final int ID = 0;
     public static final int TITLE = 1;
     public static final int ALBUM_ID = 2;
