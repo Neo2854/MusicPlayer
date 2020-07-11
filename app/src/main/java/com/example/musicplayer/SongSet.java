@@ -20,6 +20,10 @@ public class SongSet {
         songsList.add(song);
     }
 
+    public Song remove(int position){
+        return  songsList.remove(position);
+    }
+
     public Song get(int position){
         return songsList.get(position);
     }

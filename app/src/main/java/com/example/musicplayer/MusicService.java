@@ -188,9 +188,10 @@ public class MusicService extends Service implements
                 playSong();
                 break;
             case normal:
-                if(songPosition == songsSet.size() - 1)
+                if(songPosition == songsSet.size() - 1) {
                     mediaPlayer.reset();
-                break;
+                    break;
+                }
             default:
                 playNext();
         }
@@ -421,5 +422,9 @@ public class MusicService extends Service implements
 
         Intent intent = new Intent(Player.UPDATE_FAVOURITE);
         sendBroadcast(intent);
+    }
+
+    public void deleteCurrSong(){
+
     }
 }

@@ -16,17 +16,20 @@ public class QueueBottomSheetDialog extends BottomSheetDialogFragment {
     //Views
     private View fragmentView;
     private RecyclerView queueRecyclerView;
-    private QueueRecyclerAdapter queueRecyclerAdapter;
+    private SongsRecyclerAdapter queueRecyclerAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.queue_bottomsheet,container,false);
 
+        return fragmentView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Initialize();
         populateSongs();
-
-        return fragmentView;
     }
 
     private void Initialize(){
@@ -35,9 +38,7 @@ public class QueueBottomSheetDialog extends BottomSheetDialogFragment {
     }
 
     private void populateSongs(){
-        SongSet songSet = new SongSet();
-        songSet.add(MusicService.songsSet.get(0));
-        queueRecyclerAdapter = new QueueRecyclerAdapter(getContext(),songSet);
+        queueRecyclerAdapter = new SongsRecyclerAdapter(getContext(),R.layout.queue_cardview,MusicService.songsSet);
         queueRecyclerView.setAdapter(queueRecyclerAdapter);
         queueRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

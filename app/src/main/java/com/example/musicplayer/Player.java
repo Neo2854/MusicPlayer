@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
@@ -335,25 +336,22 @@ public class Player extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.vertical3Dots:
-                    PopupMenu popupMenu = new PopupMenu(v.getContext(),v);
+                    final PopupMenu popupMenu = new PopupMenu(v.getContext(),v);
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
+                            Song song;
                             switch (item.getItemId()){
                                 case R.id.go_to:
 
                                     break;
                                 case R.id.delete:
 
+
                                     break;
                                 case R.id.share:
-                                    Song shareSong = MusicService.songsSet.get(MusicService.songPosition);
-                                    Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                                            shareSong.getId());
-                                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                                    shareIntent.setType("audio/*");
-                                    shareIntent.putExtra(Intent.EXTRA_STREAM,uri);
-                                    startActivity(Intent.createChooser(shareIntent,String.format("Share '%s'",shareSong.getTitle())));
+                                    song = MusicService.songsSet.get(MusicService.songPosition);
+                                    ShareSong shareSong = new ShareSong(getApplicationContext(),song);
                                     break;
                                 default:
                                     return false;
