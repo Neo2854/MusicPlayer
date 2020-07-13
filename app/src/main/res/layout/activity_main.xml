@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="?attr/colorPrimary"
-    tools:ignore="ExtraText">
+    tools:ignore="ExtraText"
+    android:background="@color/colorBlack">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -18,7 +18,6 @@
         app:tabIndicatorColor="@color/colorWhite"
         app:tabRippleColor="@color/colorWhite"
         app:tabIndicatorHeight="100dp"
-        android:background="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -42,16 +41,13 @@
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryDark"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
-        app:titleTextColor="?attr/colorPrimary"
         app:titleMarginStart="40dp"
-        app:menu="@menu/search_view"/>
+        app:menu="@menu/search_view" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="56dp"
