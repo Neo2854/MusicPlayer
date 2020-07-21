@@ -24,6 +24,10 @@ public class SongSet {
         return  songsList.remove(position);
     }
 
+    public boolean remove(Song song){
+        return songsList.remove(song);
+    }
+
     public Song get(int position){
         return songsList.get(position);
     }

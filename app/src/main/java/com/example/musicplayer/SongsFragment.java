@@ -29,19 +29,21 @@ public class SongsFragment extends Fragment {
     //Views
     private View fragmentView;
     private RecyclerView songsRecyclerView;
-    private SongsRecyclerAdapter songsRecyclerAdapter;
+    public static SongsRecyclerAdapter songsRecyclerAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.songs_fragment,container,false);
+        return fragmentView;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Initialize();
         createSongsList();
         populateSongs();
         setRecyclerViewListener();
-
-        return fragmentView;
     }
 
     @Override

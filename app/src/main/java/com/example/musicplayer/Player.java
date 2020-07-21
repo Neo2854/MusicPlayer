@@ -33,6 +33,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.lang.reflect.Type;
+import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 public class Player extends AppCompatActivity {
@@ -346,12 +347,11 @@ public class Player extends AppCompatActivity {
 
                                     break;
                                 case R.id.delete:
-
-
+                                    musicService.deleteCurrSong();
                                     break;
                                 case R.id.share:
                                     song = MusicService.songsSet.get(MusicService.songPosition);
-                                    ShareSong shareSong = new ShareSong(getApplicationContext(),song);
+                                    ShareSong shareSong = new ShareSong(Player.this,song);
                                     break;
                                 default:
                                     return false;

@@ -5,10 +5,12 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.icu.lang.UProperty;
 import android.media.AudioAttributes;
 import android.media.AudioFocusRequest;
@@ -17,6 +19,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Environment;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -25,12 +28,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.core.os.EnvironmentCompat;
+import androidx.documentfile.provider.DocumentFile;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.NotificationTarget;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
@@ -297,6 +305,7 @@ public class MusicService extends Service implements
         notification = new NotificationCompat.Builder(this,MUSCI_CHANNEL_ID)
                 .setSmallIcon(R.drawable.play_icon)
                 .setCustomContentView(musicNotificationView)
+                .setCustomBigContentView(musicNotificationView)
                 .setContentIntent(pendingIntent)
                 .setStyle(new androidx.media.app.NotificationCompat.DecoratedMediaCustomViewStyle())
                 .build();
@@ -425,6 +434,41 @@ public class MusicService extends Service implements
     }
 
     public void deleteCurrSong(){
+        playNpause();
+        ContentResolver contentResolver = getContentResolver();
+        Song song = songsSet.get(songPosition);
+        Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,songsSet.get(songPosition).getId());
+        if(contentResolver.delete(uri,null,null) > 0){
+            Log.d("DATABASE DELETE","SUCCESS");
 
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q){
+                File file = new File(song.getData());
+                if(file.delete()){
+                    Log.d("DELETE","SUCCESS");
+                }
+                else {
+                    Log.d("DELETE","FAILED");
+                }
+            }
+
+            switch (playType){
+                case album:
+
+                    break;
+                case songs:
+                    SongsFragment.songsRecyclerAdapter.notifyItemRemoved(songPosition);
+                    break;
+                case artist:
+
+                    break;
+            }
+            songsSet.remove(song);
+            LocalDatabase.allSongsSet.remove(song);
+            setSong();
+            playSong();
+        }
+        else {
+            Log.d("DATABASE DELETE","FAILED");
+        }
     }
 }
