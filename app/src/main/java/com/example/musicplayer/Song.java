@@ -13,13 +13,15 @@ public class Song {
     private int albumID;
     private String album;
     private String artist;
+    private String data;
 
-    public Song(long id,String title,int albumID,String album,String artist){
+    public Song(long id,String title,int albumID,String album,String artist,String data){
         this.id      = id;
         this.title   = title;
         this.albumID = albumID;
         this.album   = album;
         this.artist  = artist;
+        this.data = data;
     }
 
     public long getId(){
@@ -40,5 +42,9 @@ public class Song {
 
     public String getArtist() {
         return artist;
+    }
+
+    public String getData() {
+        return data;
     }
 }

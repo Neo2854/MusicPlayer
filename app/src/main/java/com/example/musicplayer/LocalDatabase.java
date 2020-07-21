@@ -6,13 +6,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LocalDatabase {
+    public static String albumArtUri = "content://media/external/audio/albumart";
+
     public static final int ID = 0;
     public static final int TITLE = 1;
     public static final int ALBUM_ID = 2;
     public static final int ALBUM = 3;
     public static final int ARTIST = 4;
+    public static final int DATA = 5;
 
-    public static final String[] projection = {
+    public static final String[] PROJECTION = {
+            MediaStore.Audio.Media._ID,
+            MediaStore.Audio.Media.TITLE,
+            MediaStore.Audio.Media.ALBUM_ID,
+            MediaStore.Audio.Media.ALBUM,
+            MediaStore.Audio.Media.ARTIST,
+            MediaStore.Audio.Media.DATA
+    };
+
+    public static final String[] PROJECTION_Q = {
             MediaStore.Audio.Media._ID,
             MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.ALBUM_ID,
