@@ -12,10 +12,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +31,9 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.lang.reflect.Type;
+import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 public class Player extends AppCompatActivity {
@@ -319,7 +324,8 @@ public class Player extends AppCompatActivity {
                     Toast.makeText(v.getContext(),toastText,Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.queue_info:
-
+                    QueueBottomSheetDialog queueBottomSheetDialog = new QueueBottomSheetDialog();
+                    queueBottomSheetDialog.show(getSupportFragmentManager(),"QUEUE BOTTOMSHEET");
                     break;
                 case R.id.add_playlist:
 
@@ -331,7 +337,30 @@ public class Player extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.vertical3Dots:
+                    final PopupMenu popupMenu = new PopupMenu(v.getContext(),v);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            Song song;
+                            switch (item.getItemId()){
+                                case R.id.go_to:
 
+                                    break;
+                                case R.id.delete:
+                                    musicService.deleteCurrSong();
+                                    break;
+                                case R.id.share:
+                                    song = MusicService.songsSet.get(MusicService.songPosition);
+                                    ShareSong shareSong = new ShareSong(Player.this,song);
+                                    break;
+                                default:
+                                    return false;
+                            }
+                            return true;
+                        }
+                    });
+                    popupMenu.inflate(R.menu.player_menu);
+                    popupMenu.show();
                     break;
                 case R.id.favourite:
                     musicService.toggleFavourite();

@@ -91,7 +91,7 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     private void populateSongs(){
-        songsRecyclerAdapter = new SongsRecyclerAdapter(this,songSet);
+        songsRecyclerAdapter = new SongsRecyclerAdapter(this,R.layout.songs_cardview,songSet);
         songsRecyclerView.setAdapter(songsRecyclerAdapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

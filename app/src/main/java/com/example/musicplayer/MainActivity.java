@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton playerImageButton;
     private ProgressBar songCircularPb;
     private Toolbar toolbar;
+    private SearchView searchView;
 
     private Intent playerIntent;
     private Handler imageHandler = new Handler();
@@ -144,16 +146,33 @@ public class MainActivity extends AppCompatActivity {
         ContentResolver contentResolver = getContentResolver();
         Uri mediaUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
 
-        Cursor cursor = contentResolver.query(mediaUri,LocalDatabase.projection,LocalDatabase.selection,null,null);
+        String[] projection;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            projection = LocalDatabase.PROJECTION_Q;
+        }
+        else {
+            projection = LocalDatabase.PROJECTION;
+        }
+
+        Cursor cursor = contentResolver.query(mediaUri,projection,LocalDatabase.selection,null,null);
 
         if(cursor.moveToFirst()){
             do {
+                String data = "";
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                    data = null;
+                }
+                else {
+                    data = cursor.getString(LocalDatabase.DATA);
+                }
                 Song song = new Song(
                         cursor.getLong(LocalDatabase.ID),
                         cursor.getString(LocalDatabase.TITLE),
                         cursor.getInt(LocalDatabase.ALBUM_ID),
                         cursor.getString(LocalDatabase.ALBUM),
-                        cursor.getString(LocalDatabase.ARTIST)
+                        cursor.getString(LocalDatabase.ARTIST),
+                        data
                 );
                 if(!song.getTitle().matches("^AUD-.*-WA.*") &&
                         !song.getArtist().equals("Voice Recorder")){
