@@ -73,6 +73,13 @@ public class Player extends AppCompatActivity {
                             .load(getAlbumArtUri(MusicService.songPosition))
                             .placeholder(R.drawable.reputation)
                             .into(songIv);
+
+                    Glide.with(context)
+                            .load(getAlbumArtUri(MusicService.songPosition))
+                            .transform(new BlurTransformation(30))
+                            .placeholder(R.drawable.reputation)
+                            .into(backgroundIv);
+
                     //Shared Prefs
                     playbackBt.setImageResource(PLAYBACK_ICONS[MusicService.playbackMode]);
 
@@ -130,6 +137,7 @@ public class Player extends AppCompatActivity {
     private TextView comTimeTv;
     private TextView remTimeTv;
     private ImageView songIv;
+    private ImageView backgroundIv;
     private ImageButton pauseBt;
     private ImageButton previousBt;
     private ImageButton nextBt;
@@ -251,6 +259,7 @@ public class Player extends AppCompatActivity {
         comTimeTv   = findViewById(R.id.com_time);
         remTimeTv   = findViewById(R.id.rem_time);
         songIv      = findViewById(R.id.imageView);
+        backgroundIv = findViewById(R.id.LargeImageViewPlayer);
         pauseBt     = findViewById(R.id.pause);
         previousBt  = findViewById(R.id.previous);
         nextBt      = findViewById(R.id.next);
@@ -343,9 +352,6 @@ public class Player extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
                             Song song;
                             switch (item.getItemId()){
-                                case R.id.go_to:
-
-                                    break;
                                 case R.id.delete:
                                     musicService.deleteCurrSong();
                                     break;

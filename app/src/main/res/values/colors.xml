@@ -9,8 +9,12 @@
     <color name="semiTransparent50">#80ffffff</color>
     <color name="colorDeepPink">#FF1493</color>
     <color name="circularProgressBar">#6C3CC1</color>
-    <color name="semiBlack">#F2000000</color>
+    <color name="semiBlack">#E6000000</color>
     <color name="colorPrimary">@color/colorBlack</color>
     <color name="colorPrimaryDark">@color/semiBlack</color>
     <color name="colorAccent">@color/colorDeepPink</color>
+    <color name="transparentBlack">#1A000000</color>
+    <color name="transparentBlack50">#80000000</color>
+    <color name="transparentRed50">#80ff0000</color>
+    <color name="transparentWhite80">#ccffffff</color>
 </resources>

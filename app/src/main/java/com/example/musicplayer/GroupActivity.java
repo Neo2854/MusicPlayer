@@ -83,7 +83,7 @@ public class GroupActivity extends AppCompatActivity {
 
         Uri uri = getAlbumArtUri(songSet.get(0).getAlbumID());
         Glide.with(this).load(uri).placeholder(R.drawable.reputation).into(groupImage);
-        Glide.with(this).load(uri).placeholder(R.drawable.reputation).into(groupBigImage);
+        Glide.with(this).load(uri).placeholder(R.drawable.reputation).transform(new BlurTransformation(50)).into(groupBigImage);
     }
 
     private void createSongsList(){

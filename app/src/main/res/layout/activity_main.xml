@@ -13,14 +13,14 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed"
-        app:tabIconTint="@color/tab_selector_color"
-        app:tabIndicatorColor="@color/colorWhite"
-        app:tabRippleColor="@color/colorWhite"
-        app:tabIndicatorHeight="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabIconTint="@color/tab_selector_color"
+        app:tabIndicatorColor="@color/colorWhite"
+        app:tabIndicatorHeight="100dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/colorWhite">
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -28,14 +28,16 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolBar"
         app:layout_constraintVertical_bias="0.0">
-
     </androidx.viewpager.widget.ViewPager>
+
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
@@ -47,34 +49,43 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
         app:titleMarginStart="40dp"
-        app:menu="@menu/search_view" />
+        app:menu="@menu/search_view"
+        app:logo="@drawable/menu_icon"/>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tabLayout"
-        app:cardCornerRadius="28dp">
+        app:layout_constraintTop_toTopOf="@+id/tabLayout">
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/main_song_image_button"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:scaleType="fitCenter"
-            android:background="@drawable/reputation"/>
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/music_note_icon"
+            app:backgroundTint="@color/semiBlack"
+            app:rippleColor="@color/colorWhite"
+            app:maxImageSize="35dp"
+            android:tint="@color/colorWhite"
+            />
 
         <ProgressBar
             android:id="@+id/main_song_progress_bar"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:indeterminate="false"
-            android:progressDrawable="@drawable/circular_progress_bar_foreground"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_centerInParent="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/circular_progress_bar_background"
-            style="?android:attr/progressBarStyleHorizontal"/>
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circular_progress_bar_foreground" />
 
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 
 

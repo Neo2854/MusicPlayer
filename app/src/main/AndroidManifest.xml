@@ -30,7 +30,10 @@
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".Player"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity"
+            >
+
+        </activity>
         <service android:name=".MusicService"/>
     </application>
 

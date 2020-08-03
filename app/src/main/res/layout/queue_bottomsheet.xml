@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    app:layout_constraintCircleRadius="5dp">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -27,23 +25,24 @@
                 android:id="@+id/shuffle_queue"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
                 android:background="@android:color/transparent"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/shuffle_icon" />
+                android:src="@drawable/shuffle_icon"
+                android:tint="@color/colorWhite"
+                 />
 
             <TextView
                 android:id="@+id/ShuffleName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shuffle"
                 android:layout_gravity="center"
-                android:textColor="@color/colorBlack"
-                android:textSize="25sp" />
+                android:text="Shuffle"
+                android:textSize="25sp"
+                android:textColor="@color/colorWhite"/>
 
         </LinearLayout>
+
         <ImageButton
             android:id="@+id/delete_queue"
             android:layout_width="50dp"
@@ -54,7 +53,9 @@
             android:background="@android:color/transparent"
             android:padding="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/delete_icon" />
+            android:src="@drawable/delete_icon"
+            android:tint="@color/colorWhite"
+            />
 
         <ImageButton
             android:id="@+id/add_queue"
@@ -66,40 +67,41 @@
             android:background="@android:color/transparent"
             android:padding="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/add_queue_icon" />
+            android:src="@drawable/add_queue_icon"
+            android:tint="@color/colorWhite"
+            />
 
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="match_parent"
+
+    <Button
+        android:id="@+id/close_queue"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/button_back"
+        android:textColor="@color/colorWhite"
+        android:text="Close"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
-        <Button
-            android:id="@+id/close_queue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@android:color/transparent"
-            android:text="Close"
-            android:textAllCaps="false"
-            android:textSize="25sp"
-            android:textStyle="normal" />
-
-    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/queue_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/close_queue"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constrainedHeight="true"/>
+        android:background="@android:color/transparent"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
