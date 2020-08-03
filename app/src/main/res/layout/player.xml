@@ -4,8 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorWhite">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/LargeImageViewPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:alpha=".4"
+        />
 
     <ImageView
         android:id="@+id/imageView"
@@ -19,14 +27,16 @@
         app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playerArtistName"
-        app:srcCompat="@drawable/reputation" />
+        android:src="@drawable/reputation"
+         />
+
 
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:progressTint="@color/colorBlack"
-        android:thumbTint="@color/colorBlack"
+        android:progressTint="@color/colorWhite"
+        android:thumbTint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/pause"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.500"
@@ -46,7 +56,8 @@
         app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBar"
-        app:srcCompat="@drawable/pause_selector" />
+        app:srcCompat="@drawable/pause_selector"
+        android:tint="@color/colorWhite"/>
 
     <ImageButton
         android:id="@+id/previous"
@@ -59,7 +70,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/pause"
         app:layout_constraintEnd_toStartOf="@+id/pause"
         app:layout_constraintTop_toTopOf="@+id/pause"
-        app:srcCompat="@drawable/previous_selector" />
+        app:srcCompat="@drawable/previous_selector"
+        android:tint="@color/colorWhite"/>
 
     <ImageButton
         android:id="@+id/next"
@@ -72,7 +84,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/pause"
         app:layout_constraintStart_toEndOf="@+id/pause"
         app:layout_constraintTop_toTopOf="@+id/pause"
-        app:srcCompat="@drawable/next_selector" />
+        app:srcCompat="@drawable/next_selector"
+        android:tint="@color/colorWhite"/>
 
     <ImageButton
         android:id="@+id/playback_mode_button"
@@ -86,7 +99,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/queue_info"
         app:layout_constraintEnd_toStartOf="@+id/queue_info"
         app:layout_constraintTop_toTopOf="@+id/queue_info"
-        app:srcCompat="@drawable/normal_playback_icon" />
+        app:srcCompat="@drawable/normal_playback_icon"
+        android:tint="@color/colorWhite"/>
 
     <ImageButton
         android:id="@+id/edit_info"
@@ -100,7 +114,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/add_playlist"
         app:layout_constraintStart_toEndOf="@+id/add_playlist"
         app:layout_constraintTop_toTopOf="@+id/add_playlist"
-        app:srcCompat="@drawable/edit_icon" />
+        app:srcCompat="@drawable/edit_icon"
+        android:tint="@color/colorWhite"/>
 
     <ImageButton
         android:id="@+id/collapseIcon"
@@ -113,7 +128,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/collapse_icon"
-        android:contentDescription="@string/to_collapse" />
+        android:contentDescription="@string/to_collapse"
+        android:tint="@color/colorWhite"
+        />
 
     <ImageButton
         android:id="@+id/vertical3Dots"
@@ -126,7 +143,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/vertical_3dots_icon"
-        android:contentDescription="@string/to_open_menu" />
+        android:contentDescription="@string/to_open_menu"
+        android:tint="@color/colorWhite"
+        />
 
     <ImageButton
         android:id="@+id/favourite"
@@ -143,7 +162,8 @@
         app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pause"
-        app:srcCompat="@drawable/heart_outline_icon" />
+        app:srcCompat="@drawable/heart_outline_icon"
+        />
 
     <ImageButton
         android:id="@+id/queue_info"
@@ -157,7 +177,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/favourite"
         app:layout_constraintEnd_toStartOf="@+id/favourite"
         app:layout_constraintTop_toTopOf="@+id/favourite"
-        app:srcCompat="@drawable/queue_icon" />
+        app:srcCompat="@drawable/queue_icon"
+        android:tint="@color/colorWhite"/>
 
     <ImageButton
         android:id="@+id/add_playlist"
@@ -170,7 +191,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/favourite"
         app:layout_constraintStart_toEndOf="@+id/favourite"
         app:layout_constraintTop_toTopOf="@+id/favourite"
-        app:srcCompat="@drawable/playlist_add_icon" />
+        app:srcCompat="@drawable/playlist_add_icon"
+        android:tint="@color/colorWhite"/>
 
     <TextView
         android:id="@+id/songName"
@@ -181,7 +203,7 @@
         android:paddingLeft="70dp"
         android:paddingRight="70dp"
         android:text="@string/song_name"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorWhite"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/collapseIcon"

@@ -19,9 +19,8 @@
             android:id="@+id/groupBigImage"
             android:layout_width="match_parent"
             android:layout_height="224dp"
-            android:scaleType="fitXY"
-
-            android:src="@drawable/reputation" />
+            android:scaleType="centerCrop"
+            />
 
         <ImageView
             android:id="@+id/groupImage"
@@ -30,7 +29,8 @@
             android:background="@color/semiTransparent"
             android:scaleType="fitCenter"
             android:layout_centerInParent="true"
-            android:src="@drawable/reputation" />
+            android:src="@drawable/reputation"
+            />
 
     </RelativeLayout>
 

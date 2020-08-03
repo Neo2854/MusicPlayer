@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardUseCompatPadding="true"
-    app:cardPreventCornerOverlap="true">
+    android:background="@drawable/cardview">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/queue_cardView_RelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
-        <LinearLayout
+        <TableLayout
+            android:paddingRight="5dp"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -24,8 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="queueSongName"
-                android:textSize="25sp"
-                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"
                 android:maxLines="1"
                 android:ellipsize="end"
                 />
@@ -34,21 +36,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="queueArtistName"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textColor="@color/colorGrey"
                 android:textStyle="italic"
                 android:maxLines="1"
                 android:ellipsize="end"/>
-        </LinearLayout>
+        </TableLayout>
 
         <ImageButton
             android:id="@+id/queue_cardView_menu"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:src="@drawable/vertical_3dots_icon"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</RelativeLayout>

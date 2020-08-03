@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="64dp"
     >
+    <ImageView
+        android:id="@+id/bigImageViewNotification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true" />
 
     <ImageView
         android:id="@+id/notificationImage"
