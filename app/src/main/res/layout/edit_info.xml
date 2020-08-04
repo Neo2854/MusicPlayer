@@ -60,7 +60,7 @@
                 android:text="Song: "
                 android:textColor="@color/colorBlack"
                 android:textSize="25sp"
-                android:textStyle="bold||italic" />
+                android:textStyle="italic" />
 
             <EditText
                 android:layout_weight="1"
@@ -79,7 +79,7 @@
                 android:text="Album: "
                 android:textColor="@color/colorBlack"
                 android:textSize="25sp"
-                android:textStyle="italic||bold" />
+                android:textStyle="italic" />
 
             <EditText
                 android:layout_weight="1"
@@ -98,7 +98,7 @@
                 android:text="Artist: "
                 android:textColor="@color/colorBlack"
                 android:textSize="25sp"
-                android:textStyle="italic||bold" />
+                android:textStyle="italic" />
 
             <EditText
                 android:layout_weight="1"
