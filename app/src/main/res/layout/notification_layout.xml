@@ -5,27 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="64dp"
     >
+
+
     <ImageView
         android:id="@+id/bigImageViewNotification"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:tint=".3"/>
 
     <ImageView
         android:id="@+id/notificationImage"
         android:layout_width="64dp"
         android:layout_height="match_parent"
-        android:padding="4dp"
-        android:src="@drawable/reputation"
-        android:scaleType="fitCenter"/>
+        android:layout_alignParentEnd="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/reputation" />
 
     <LinearLayout
         android:id="@+id/songInfoLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="4dp"
-        android:layout_toEndOf="@+id/notificationImage"
+        android:layout_height="49dp"
+        android:layout_below="@+id/notificationToolBar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
         android:layout_toStartOf="@+id/controlButtonsLayout"
         android:orientation="vertical">
 
@@ -33,62 +41,109 @@
             android:id="@+id/notificationSongName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:textSize="14sp"
-            android:maxLines="2"
             android:ellipsize="end"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"
-            android:text="songName"/>
+            android:maxLines="1"
+            android:text="songName"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/notificationArtistName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:textSize="12sp"
             android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingTop="4dp"
+            android:text="artistName"
+            android:textSize="16sp"
             android:textStyle="italic"
-            android:text="artistName"/>
+            android:textColor="@color/colorWhite"/>
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/controlButtonsLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="102dp"
         android:layout_height="match_parent"
-
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="4dp">
+        android:layout_marginEnd="0dp"
+        android:layout_toStartOf="@+id/notificationImage">
 
         <ImageButton
             android:id="@+id/notificationPreviousButton"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
+            android:layout_marginEnd="0dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/notificationPlayButton"
+            android:background="@android:color/transparent"
             android:scaleType="fitXY"
-            android:src="@drawable/notification_previous"
-            android:background="@android:color/transparent"/>
+            android:tint="@color/colorWhite"
+            android:src="@drawable/notification_previous" />
+
         <ImageButton
             android:id="@+id/notificationPlayButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_toEndOf="@id/notificationPreviousButton"
             android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
             android:scaleType="fitXY"
-            android:src="@drawable/notification_pause"
-            android:background="@android:color/transparent"/>
+            android:tint="@color/colorWhite"
+            android:src="@drawable/notification_pause" />
+
         <ImageButton
             android:id="@+id/notificationNextButton"
-            android:layout_toEndOf="@id/notificationPlayButton"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_centerInParent="true"
+            android:layout_marginStart="0dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/notificationPlayButton"
+            android:background="@android:color/transparent"
             android:scaleType="fitXY"
-            android:src="@drawable/notification_next"
-            android:background="@android:color/transparent"/>
+            android:tint="@color/colorWhite"
+            android:src="@drawable/notification_next" />
 
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/notificationToolBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/toolBarIcon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:src="@drawable/music_note_icon"
+            android:tint="@color/colorDeepPink" />
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:text="Music Player."
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+
+
+        <TextView
+            android:id="@+id/notificationAlbumName"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="albumName"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp" />
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>
