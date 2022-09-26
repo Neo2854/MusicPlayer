@@ -1,5 +1,5 @@
 # MusicPlayer
-A highly customizable music player that lets u customize background and tracks info like album arts, playlists and artists.</br>
+A highly customizable music player that lets you customize background and tracks info like album arts, playlists and artists.</br>
 
 Upcoming Features
   * Lightmode, Darkmode
